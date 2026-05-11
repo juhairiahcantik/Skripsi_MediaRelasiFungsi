@@ -1,0 +1,89 @@
+/* resources/css/style.css */
+
+/* Gaya untuk form */
+.form-container {
+    width: 60%;
+    margin: 30px auto;
+    padding: 20px;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Gaya untuk form group */
+.form-group {
+    margin-bottom: 20px;
+}
+
+/* Gaya untuk label */
+.form-group label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+/* Gaya untuk input, textarea, dan file input */
+.form-control, .custom-file-input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    background-color: #fff;
+    box-sizing: border-box;
+}
+
+.form-control:focus, .custom-file-input:focus {
+    border-color: #80bdff;
+    outline: none;
+    box-shadow: 0 0 8px rgba(0, 123, 255, 0.25);
+}
+
+/* Gaya untuk custom file input label */
+.custom-file-label {
+    display: block;
+    padding: 10px;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    background-color: #fff;
+    box-sizing: border-box;
+}
+
+/* Gaya untuk tombol submit */
+.btn-primary {
+    background-color: #007bff;
+    border: none;
+    color: white;
+    cursor: pointer;
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+    display: block;
+    margin-top: 20px;
+}
+
+.btn-primary:hover {
+    background-color: #0056b3;
+}
+
+/* Gaya untuk card */
+.card {
+    background-color: #333;
+    color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Gaya untuk card body */
+.card-body {
+    padding: 20px;
+}
+
+.tess {
+    z-index: 1;
+}
+
+#sidebar.collapsed {
+    margin-left: -260px; /* sesuaikan lebar sidebar */
+}

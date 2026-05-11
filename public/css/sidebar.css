@@ -1,0 +1,322 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+
+*,
+::after,
+::before {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    background-color: #F4E9FF;
+}
+
+.wrapper {
+    display: flex;
+}
+
+
+/* ==========================
+   SIDEBAR
+========================== */
+#sidebar {
+    width: 264px;
+    min-width: 264px;
+    height: 100vh;
+    /* kunci tinggi layar */
+    position: fixed;
+    /* FIX: tidak ikut scroll */
+    top: 0;
+    left: 0;
+    background-color: #C7A2E3 !important;
+    box-shadow: 0 0 35px rgba(140, 100, 180, 0.3);
+    color: white !important;
+    overflow-y: auto;
+    /* sidebar bisa scroll sendiri jika panjang */
+    z-index: 1000;
+}
+
+.sidebar-logo {
+    padding: 1.15rem 1.5rem;
+}
+
+.sidebar-logo a {
+    color: #ffffff;
+    font-size: 1.25rem;
+    font-weight: 700;
+    text-decoration: none !important;
+}
+
+/* NAVIGASI */
+.sidebar-nav {
+    padding: 0;
+}
+
+.sidebar-header {
+    color: #ffffff;
+    font-size: .75rem;
+    padding: 1.5rem 1.5rem .375rem;
+    font-weight: 600;
+}
+
+/* MAIN MENU LINK */
+a.sidebar-link {
+    padding: .625rem 1.625rem;
+    color: white !important;
+    display: block;
+    position: relative;
+    font-size: 1rem;
+    transition: 0.25s ease;
+    text-decoration: none !important;
+    /* border: 2px solid black; */
+    margin: 5px;
+    border-radius: 20px;
+    background-color: #4A2E68;
+
+}
+
+a.sidebar-link:hover {
+    background-color: #2e1843 !important;
+}
+
+/* ARROW ICON */
+.sidebar-link[data-bs-toggle="collapse"]::after {
+    border: solid white;
+    border-width: 0 .075rem .075rem 0;
+    content: "";
+    display: inline-block;
+    padding: 3px;
+    position: absolute;
+    right: 1.5rem;
+    top: 1.3rem;
+    transform: rotate(-135deg);
+    transition: all .2s ease-out;
+}
+
+.sidebar-link[data-bs-toggle="collapse"].collapsed::after {
+    transform: rotate(45deg);
+}
+
+/* ==========================
+   SUBMENU DEFAULT (UNGU)
+========================== */
+
+
+
+/* Hover submenu */
+.sidebar-dropdown .sidebar-link:hover {
+    background-color: #D9C4FB !important;
+    /* hover ungu lebih gelap */
+}
+
+/* collapse behavior */
+/* .sidebar-dropdown.show,
+.collapse.show {
+    background-color: #674c82 !important;
+} */
+
+/* ==========================
+   SUBMENU MENJOROK KE DALAM
+========================== */
+
+.sidebar-dropdown {
+    padding-left: 20px;
+    /* seluruh submenu masuk ke dalam */
+}
+
+/* link submenu */
+.sidebar-dropdown li a {
+    margin: 0;
+    /* jarak tambahan */
+    border-radius: 15px;
+    padding-left: 20px;
+    /* teks makin ke kanan */
+    border-left: 2px solid black;
+    border-bottom: 2px solid black;
+    border-radius: 0;
+    margin-right: 10px;
+}
+
+.collapse.list-unstyled li a {
+    background-color: #E7D4FA !important;
+    color: #4A2E68 !important;
+    text-decoration: none !important;
+}
+
+.collapse.list-unstyled li a:hover {
+    background-color: #D9C4FB !important;
+}
+
+/* ==========================
+   ACTIVE SUBMENU (PUTIH)
+========================== */
+
+.sidebar-dropdown .sidebar-link.active {
+    background-color: #ffffff !important;
+    /* item active = putih */
+    color: #9890a0 !important;
+    font-weight: 600;
+    border-left: 4px solid #B57BEA;
+    border-radius: 4px;
+    text-decoration: none !important;
+}
+
+/* ==========================
+   MAIN CONTENT
+========================== */
+
+.main {
+    margin-left: 250px;
+    /* lebar sidebar */
+    width: calc(100% - 250px);
+    min-height: 100vh;
+    background-color: #ffffff !important;
+}
+
+
+.col.py-3 {
+    background-color: #ffffff !important;
+}
+
+.page-content,
+.content {
+    background-color: #ffffff !important;
+}
+
+.row,
+.col {
+    background-color: transparent !important;
+}
+
+.navbar,
+.navbar .btn,
+.navbar .sidebar-btn {
+    position: relative !important;
+    z-index: 999999 !important;
+}
+
+/* ==========================
+   SIDEBAR FOOTER (KELUAR)
+========================== */
+
+.sidebar-footer {
+    position: sticky;
+    bottom: 0;
+}
+
+.sidebar-exit {
+    background-color: #6B3FA0;
+    color: #ffffff !important;
+    border-radius: 20px;
+    padding: 10px 16px;
+    text-decoration: none !important;
+    transition: 0.3s;
+}
+
+.sidebar-exit:hover {
+    background-color: #4A2E68;
+    color: #ffffff !important;
+}
+
+/* button logout reset */
+.sidebar-footer button {
+    border: none;
+    background: none;
+}
+
+.btn-bawah {
+    position: fixed;
+    /* nempel ke layar */
+    bottom: 10px;
+    /* jarak dari bawah */
+    left: 10px;
+    /* kiri bawah */
+    z-index: 9999;
+    color: white;
+    text-decoration: none;
+    font-size: 19px;
+    background-color: rgb(204, 57, 57);
+    padding-inline: 15px;
+    border-radius: 10px;
+}
+
+
+
+/* ==========================
+   SUBMENU ACTIVE (DIKLIK)
+========================== */
+.sidebar-dropdown li a.active {
+    background-color: #ffffff !important;
+    color: #4A2E68 !important;
+    font-weight: 600;
+    border-left: 4px solid #4A2E68;
+}
+
+.atas {
+    position: fixed;
+    top: 0;
+
+    width: 100%;
+    /* FULL layar */
+    height: 50px;
+
+    background-color: #ad7ed1;
+    color: #ffffff;
+
+    display: flex;
+    align-items: center;
+    /* justify-content: center; */
+
+    z-index: 2000;
+}
+
+/* ==========================
+   USERNAME HEADER
+========================== */
+.username {
+    margin-left: auto;
+    margin-right: 20px;
+    margin-top: 0;
+    margin-bottom: 0;
+    font-size: 18px;
+    background-color: rgb(187, 187, 187);
+    padding: 2px 10px;
+    border-radius: 10px;
+}
+
+/* ==========================
+   RESPONSIVE MOBILE
+========================== */
+@media (max-width: 768px) {
+    #sidebar {
+        transform: translateX(-100%);
+        transition: transform 0.3s ease-in-out;
+    }
+    
+    #sidebar.show-sidebar {
+        transform: translateX(0);
+    }
+
+    .main {
+        margin-left: 0;
+        width: 100%;
+        padding-top: 50px; /* jarak agar konten tidak tertutup header */
+    }
+
+    .username {
+        font-size: 14px; /* perkecil nama user di mobile */
+        margin-left: auto;
+        margin-right: 15px;
+    }
+    
+    .atas h4 {
+        font-size: 1.1rem;
+    }
+}
+
+@media (min-width: 769px) {
+    .main {
+        padding-top: 50px; /* Jarak untuk header di desktop juga */
+    }
+}
