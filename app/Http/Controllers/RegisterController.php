@@ -15,36 +15,28 @@ class RegisterController extends Controller
         return view('register', compact('kelas'));
     }
 
-    public function store(Request $request): RedirectResponse
-    {
-        // Validasi input
-        $validator = $request->validate([
-            // 'namaInput' => 'required',
-            'UsernameInput' => 'required',
-            'nimInput' => 'required|numeric',
-            'passwordInput' => 'required|min:8|confirmed',
-            'role' => 'required|in:siswa,guru',  // Validasi untuk role
-            'kelas' => 'required_if:role,siswa'
-        ], []);
+    public function store(Request $request)
+{
+    $validated = $request->validate([
+        'UsernameInput' => 'required|string|max:255',
+        'nimInput' => 'required|string|max:50|unique:users,nim',
+        'passwordInput' => 'required|string|min:6|confirmed',
+        'kelas' => 'required|string',
+        'role' => 'required|in:siswa',
+    ]);
 
-        // Simpan data ke database
-        $query = User::create([
-            'name' => $request->UsernameInput,
-            'nim' => $request->nimInput,
-            'password' => Hash::make($request->passwordInput),
-            'role' => $request->role,  // Menyimpan role
-            'kelas' => $request->role == 'siswa' ? $request->kelas : null,
-        ]);
+    User::create([
+        'name' => $request->UsernameInput,
+        'nim' => $request->nimInput,
+        'password' => bcrypt($request->passwordInput),
+        'kelas' => $request->kelas,
 
-        // dd($query);
+        // role dikunci, tidak boleh dari input bebas
+        'role' => 'siswa',
+    ]);
 
-        // Redirect jika berhasil atau gagal
-        if ($query) {
-            return redirect()->route('login')->with('success', 'Pendaftaran berhasil!');
-        } else {
-            return redirect()->back()->withErrors(['error' => 'Gagal mendaftar, coba lagi.']);
-        }
-    }
+    return redirect()->route('login')->with('success', 'Registrasi berhasil. Silakan login.');
+}
 
     // Metode lain seperti index, edit, update, destroy tetap sama.
 }

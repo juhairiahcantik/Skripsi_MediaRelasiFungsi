@@ -2147,7 +2147,7 @@ new p5(function(p){
 
             <div class="pasber-title">Susun Himpunan Pasangan Berurut</div>
             <div class="pasber-subtitle">
-                Seret nama anak ke menu makanan yang sesuai. Setiap nama maksimal digunakan 2 kali.
+                Seret nama anak ke menu makanan yang sesuai.
             </div>
 
             <div class="pasber-area">

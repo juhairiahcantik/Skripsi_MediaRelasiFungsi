@@ -34,49 +34,44 @@
                     @csrf
 
                     <!-- SEBAGAI -->
+                    <!-- ROLE DIKUNCI SEBAGAI SISWA -->
+                    <input type="hidden" name="role" value="siswa">
+
                     <div class="mb-1.5">
                         <label class="block font-semibold text-textDark mb-0.5 text-sm">
                             Sebagai
                         </label>
 
-                        <select id="role"
-                                name="role"
-                                class="w-full h-9 border border-gray-300 rounded-lg px-3 text-sm focus:ring-2 focus:ring-primary focus:outline-none @error('role') border-red-500 @enderror"
-                                onchange="toggleKelas(this.value)">
-                            <option value="siswa" {{ old('role') == 'siswa' ? 'selected' : '' }}>Siswa</option>
-                            <option value="guru" {{ old('role') == 'guru' ? 'selected' : '' }}>Guru</option>
-                        </select>
-
-                        @error('role')
-                            <p class="text-red-500 text-xs mt-0.5">{{ $message }}</p>
-                        @enderror
+                        <input type="text"
+                            value="Siswa"
+                            readonly
+                            class="w-full h-9 border border-gray-300 rounded-lg px-3 text-sm bg-gray-100 text-gray-600 cursor-not-allowed">
                     </div>
 
                     <!-- KELAS -->
-                    <div id="kelas_container"
-                         class="mb-1.5"
-                         style="{{ old('role', 'siswa') == 'siswa' ? '' : 'display:none;' }}">
+                    <!-- KELAS -->
+<div id="kelas_container" class="mb-1.5">
 
-                        <label class="block font-semibold text-textDark mb-0.5 text-sm">
-                            Kelas
-                        </label>
+    <label class="block font-semibold text-textDark mb-0.5 text-sm">
+        Kelas
+    </label>
 
-                        <select id="kelas"
-                                name="kelas"
-                                class="w-full h-9 border border-gray-300 rounded-lg px-3 text-sm focus:ring-2 focus:ring-primary focus:outline-none @error('kelas') border-red-500 @enderror">
-                            <option value="">-- Pilih Kelas --</option>
+    <select id="kelas"
+            name="kelas"
+            class="w-full h-9 border border-gray-300 rounded-lg px-3 text-sm focus:ring-2 focus:ring-primary focus:outline-none @error('kelas') border-red-500 @enderror">
+        <option value="">-- Pilih Kelas --</option>
 
-                            @foreach($kelas as $k)
-                                <option value="{{ $k->kelas }}" {{ old('kelas') == $k->kelas ? 'selected' : '' }}>
-                                    {{ $k->kelas }}
-                                </option>
-                            @endforeach
-                        </select>
+        @foreach($kelas as $k)
+            <option value="{{ $k->kelas }}" {{ old('kelas') == $k->kelas ? 'selected' : '' }}>
+                {{ $k->kelas }}
+            </option>
+        @endforeach
+    </select>
 
-                        @error('kelas')
-                            <p class="text-red-500 text-xs mt-0.5">{{ $message }}</p>
-                        @enderror
-                    </div>
+    @error('kelas')
+        <p class="text-red-500 text-xs mt-0.5">{{ $message }}</p>
+    @enderror
+</div>
 
                     <!-- NAMA -->
                     <div class="mb-1.5">
