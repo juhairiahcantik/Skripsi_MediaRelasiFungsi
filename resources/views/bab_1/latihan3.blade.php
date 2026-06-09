@@ -866,7 +866,7 @@ function resetPasangan(){
     <div class="card-body p-4 text-center">
 
 <p>
-Tentukan persamaan fungsi dari jumlah loyang (<b>x</b>) ke total harga <b>f(x)</b>.
+Tentukan persamaan fungsi dari jumlah Perpotong (<b>x</b>) ke total harga <b>f(x)</b>.
 </p>
 
 <h4 style="font-family:'Times New Roman', serif;">
@@ -1080,7 +1080,7 @@ Lengkapi tabel berikut menggunakan rumus <b>f(x) = 20000x</b>
        style="border:2px solid #7b2cbf;">
 <thead style="background:#ede9fe;">
 <tr>
-<th style="width:50%">x (Jumlah Loyang)</th>
+<th style="width:50%">x (Jumlah Perpotong)</th>
 <th>f(x) (Total Harga)</th>
 </tr>
 </thead>

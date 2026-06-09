@@ -1,336 +1,683 @@
+@extends('layouts.main')
 
-<title>Latihan Diagram Himpunan</title>
+@section('container')
 
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.0/p5.min.js"></script>
 
 <style>
-body{
-    overflow-x:hidden;
+    body,
+    html {
+        margin: 0;
+        padding: 0;
+        min-height: 100%;
+        font-family: 'Poppins', sans-serif;
+        background-color: #f8f9fa;
+        overflow-x: hidden;
+    }
+
+    .content-gap {
+        margin-left: 40px;
+        margin-right: 20px;
+        box-sizing: border-box;
+        max-width: 100%;
+        overflow-x: hidden;
+        padding-bottom: 40px;
+    }
+
+    .content-gap *,
+    .content-gap *::before,
+    .content-gap *::after {
+        box-sizing: border-box;
+    }
+
+    .materi-style-card {
+        background: #ffffff;
+        border: 1px solid #eadcf6;
+        border-radius: 26px;
+        padding: 24px;
+        margin-bottom: 28px;
+        box-shadow: 0 14px 32px rgba(91, 44, 111, 0.08);
+        overflow: hidden;
+    }
+
+    .materi-style-title {
+        background: linear-gradient(135deg, #8E44AD, #B57EDC);
+        color: #ffffff;
+        text-align: center;
+        padding: 16px 22px;
+        border-radius: 20px;
+        font-weight: 800;
+        font-size: 1.25rem;
+        margin-bottom: 22px;
+        box-shadow: 0 10px 20px rgba(142, 68, 173, 0.16);
+    }
+
+    .materi-style-body {
+        color: #4B2673;
+        line-height: 1.9;
+    }
+
+    .latihan-hero-grid {
+        display: grid;
+        grid-template-columns: 1.15fr 0.85fr;
+        gap: 28px;
+        align-items: stretch;
+        margin-top: 8px;
+    }
+
+    .latihan-image-side {
+        background: #ffffff;
+        border-radius: 24px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 20px;
+        border: 1px solid #E9D5FF;
+        box-shadow: 0 10px 24px rgba(91, 44, 111, 0.06);
+    }
+
+    .latihan-image-side img {
+        width: 100%;
+        max-height: 520px;
+        object-fit: contain;
+        border-radius: 20px;
+        display: block;
+        box-shadow: 0 14px 28px rgba(91, 44, 111, 0.10);
+    }
+
+    .latihan-text-side {
+        background: #FBF7FF;
+        border: 1px solid #E9D5FF;
+        border-radius: 24px;
+        padding: 28px;
+        display: flex;
+        align-items: center;
+        box-shadow: 0 10px 24px rgba(91, 44, 111, 0.06);
+    }
+
+    .latihan-text-side h2 {
+        color: #1f2937;
+        font-weight: 800;
+        margin-bottom: 24px;
+        font-size: 1.7rem;
+        line-height: 1.35;
+    }
+
+    .latihan-text-side ol {
+        color: #1f2937;
+        font-size: 1.05rem;
+        line-height: 1.9;
+        margin-bottom: 18px;
+    }
+
+    .latihan-text-side p {
+        color: #1f2937;
+        font-size: 1.05rem;
+        line-height: 1.8;
+        margin-bottom: 0;
+    }
+
+    .latihan-text-side strong {
+        color: #4B2673;
+        font-weight: 800;
+    }
+
+    .petunjuk-box {
+        background: #ffffff;
+        border: 3px dashed #A855F7;
+        border-radius: 24px;
+        padding: 24px 28px;
+        margin: 10px 0 28px 0;
+        color: #4B2673;
+        box-shadow: 0 14px 28px rgba(168, 85, 247, 0.13),
+                    0 6px 14px rgba(75, 38, 115, 0.06);
+    }
+
+    .petunjuk-box h4 {
+        display: inline-block;
+        background: linear-gradient(135deg, #8E44AD, #B57EDC);
+        color: #ffffff;
+        padding: 10px 22px;
+        border-radius: 16px;
+        font-weight: 800;
+        font-size: 1.05rem;
+        margin-bottom: 18px;
+        box-shadow: 0 6px 14px rgba(142, 68, 173, 0.16);
+    }
+
+    .petunjuk-box ol {
+        font-size: 1rem;
+        line-height: 1.9;
+        padding-left: 22px;
+        margin-bottom: 0;
+        color: #4B2673;
+    }
+
+    .petunjuk-box li {
+        margin-bottom: 14px;
+    }
+
+    .petunjuk-box .badge {
+        font-size: 0.78rem;
+        border-radius: 999px;
+        padding: 6px 10px;
+    }
+
+    .ayo-title {
+        text-align: center;
+        font-size: 1.35rem;
+        font-weight: 800;
+        color: #4B2673;
+        margin: 24px 0 20px 0;
+        animation: floatText 3s ease-in-out infinite;
+        text-shadow: 0 0 15px rgba(123, 44, 191, 0.22);
+    }
+
+    @keyframes floatText {
+        0% { transform: translateY(0); }
+        50% { transform: translateY(-6px); }
+        100% { transform: translateY(0); }
+    }
+
+    .drawing-card {
+        background: #ffffff;
+        border: 1px solid #eadcf6;
+        border-radius: 26px;
+        padding: 24px;
+        box-shadow: 0 14px 32px rgba(91, 44, 111, 0.08);
+        overflow: hidden;
+    }
+
+    .control-row {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 12px;
+        flex-wrap: wrap;
+        margin-top: 14px;
+    }
+
+    .control-row .btn {
+        min-width: 135px;
+        min-height: 46px;
+        border-radius: 14px;
+        font-weight: 800;
+        font-size: 0.95rem;
+        border: none;
+        box-shadow: 0 8px 16px rgba(91, 44, 111, 0.10);
+        transition: all 0.22s ease;
+    }
+
+    .control-row .btn:hover {
+        transform: translateY(-2px);
+    }
+
+    .control-row .btn-primary {
+        background: linear-gradient(135deg, #8E44AD, #B57EDC);
+        color: #ffffff;
+    }
+
+    .control-row .btn-danger {
+        background: #DC2626;
+        color: #ffffff;
+    }
+
+    .control-row .btn-success {
+        background: #16A34A;
+        color: #ffffff;
+    }
+
+    .control-row .btn-secondary {
+        background: #6B7280;
+        color: #ffffff;
+    }
+
+    .control-row .form-control,
+    .control-row .form-select {
+        min-height: 46px;
+        border-radius: 14px;
+        border: 2px solid #D8B4FE;
+        color: #4B2673;
+        font-weight: 600;
+        box-shadow: none;
+    }
+
+    .control-row .form-control:focus,
+    .control-row .form-select:focus {
+        border-color: #8E44AD;
+        box-shadow: 0 0 0 4px rgba(142, 68, 173, 0.14);
+    }
+
+    .canvas-result-grid {
+        display: grid;
+        grid-template-columns: 1.8fr 0.9fr;
+        gap: 22px;
+        margin-top: 26px;
+        align-items: stretch;
+    }
+
+    #sketch-holder {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        overflow: hidden;
+        border-radius: 24px;
+        background: #FBF7FF;
+        border: 1px solid #E9D5FF;
+        padding: 14px;
+    }
+
+    canvas {
+        width: 100% !important;
+        height: auto !important;
+        border-radius: 20px;
+        box-shadow: 0 15px 40px rgba(123, 44, 191, 0.15);
+    }
+
+    .hasil-panel {
+        background: #ffffff;
+        border: 3px dashed #A855F7;
+        border-radius: 24px;
+        padding: 20px;
+        height: 100%;
+        color: #4B2673;
+        box-shadow: 0 14px 28px rgba(168, 85, 247, 0.13),
+                    0 6px 14px rgba(75, 38, 115, 0.06);
+    }
+
+    .hasil-panel-title {
+        display: inline-block;
+        background: linear-gradient(135deg, #8E44AD, #B57EDC);
+        color: #ffffff;
+        padding: 9px 18px;
+        border-radius: 14px;
+        font-weight: 800;
+        font-size: 0.95rem;
+        margin-bottom: 14px;
+        box-shadow: 0 6px 14px rgba(142, 68, 173, 0.16);
+    }
+
+    #hasilText {
+        color: #4B2673;
+        line-height: 1.8;
+        font-weight: 600;
+    }
+
+    .feedback-benar {
+        background: #EAFBF1;
+        border: 1px solid #BDE8CE;
+        border-left: 6px solid #16A34A;
+        color: #14532D;
+        padding: 16px 18px;
+        border-radius: 16px;
+        line-height: 1.8;
+    }
+
+    .feedback-salah {
+        background: #FFF1F2;
+        border: 1px solid #FECACA;
+        border-left: 6px solid #DC2626;
+        color: #7F1D1D;
+        padding: 16px 18px;
+        border-radius: 16px;
+        line-height: 1.8;
+    }
+
+    .teks-merah {
+        color: #DC2626;
+        font-weight: 800;
+    }
+
+    .teks-hijau {
+        color: #16A34A;
+        font-weight: 800;
+    }
+
+    .jawaban-box {
+        margin-top: 12px;
+        padding: 14px 16px;
+        background: #FBF7FF;
+        border: 1px solid #E9D5FF;
+        border-left: 5px solid #8E44AD;
+        border-radius: 16px;
+        color: #4B2673;
+    }
+
+    .latihan-nav {
+        width: 100%;
+        margin-top: 30px;
+        margin-bottom: 35px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 14px;
+        flex-wrap: wrap;
+    }
+
+    .latihan-nav-btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 150px;
+        min-height: 46px;
+        padding: 8px 18px;
+        color: #6A2C70;
+        border: 1px solid #E3C7F3;
+        border-radius: 12px;
+        font-weight: 800;
+        background-color: #ffffff;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+        text-decoration: none;
+        transition: all 0.22s ease;
+    }
+
+    .latihan-nav-btn:hover {
+        background-color: #F3E5FF;
+        color: #4B2673;
+        transform: translateY(-2px);
+    }
+
+    .latihan-nav-btn.next {
+        background: linear-gradient(135deg, #8E44AD, #B57EDC);
+        border-color: #B57EDC;
+        color: #ffffff;
+    }
+
+    .latihan-nav-btn.next:hover {
+        color: #ffffff;
+        box-shadow: 0 10px 18px rgba(142, 68, 173, 0.18);
+    }
+
+    @media (max-width: 992px) {
+        .latihan-hero-grid,
+        .canvas-result-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .latihan-text-side {
+            padding: 24px;
+        }
+    }
+
+    @media (max-width: 768px) {
+        .content-gap {
+            margin-left: 12px;
+            margin-right: 12px;
+        }
+
+        .materi-style-card,
+        .drawing-card {
+            padding: 18px;
+            border-radius: 20px;
+        }
+
+        .materi-style-title {
+            font-size: 1.05rem;
+            padding: 14px 16px;
+            border-radius: 16px;
+        }
+
+        .latihan-image-side,
+        .latihan-text-side,
+        .petunjuk-box,
+        .hasil-panel {
+            padding: 18px;
+            border-radius: 20px;
+        }
+
+        .latihan-text-side h2 {
+            font-size: 1.25rem;
+            text-align: center;
+        }
+
+        .latihan-text-side ol,
+        .latihan-text-side p {
+            font-size: 0.95rem;
+        }
+
+        .petunjuk-box h4,
+        .hasil-panel-title {
+            width: 100%;
+            text-align: center;
+        }
+
+        .control-row {
+            flex-direction: column;
+            align-items: stretch;
+        }
+
+        .control-row .btn,
+        .control-row .form-control,
+        .control-row .form-select {
+            width: 100% !important;
+            max-width: 100% !important;
+        }
+
+        #sketch-holder {
+            padding: 10px;
+        }
+
+        .latihan-nav {
+            flex-direction: column;
+            align-items: stretch;
+        }
+
+        .latihan-nav-btn {
+            width: 100%;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .content-gap {
+            margin-left: 10px;
+            margin-right: 10px;
+        }
+
+        .materi-style-card,
+        .drawing-card {
+            padding: 14px;
+        }
+    }
+
+    /* ================= HAPUS RUANG KOSONG BAWAH NAVIGASI ================= */
+
+.content-gap {
+    padding-bottom: 0 !important;
 }
 
-.content-wrapper{
-    width:100%;
-    margin:auto;
-    padding:40px 40px 0 40px;
+.latihan-nav {
+    margin-top: 24px !important;
+    margin-bottom: 0 !important;
+    padding-bottom: 0 !important;
 }
 
-.control-row{
-    display:flex;
-    justify-content:center;
-    gap:15px;
-    flex-wrap:wrap;
-    margin-top:10px;
+.latihan-nav-btn {
+    margin-bottom: 0 !important;
 }
 
-#sketch-holder{
-    width:100%;
-    display:flex;
-    justify-content:center;
+/* kalau layout utama masih memberi jarak bawah */
+main,
+.container,
+.container-fluid {
+    padding-bottom: 0 !important;
+    margin-bottom: 0 !important;
 }
 
-canvas{
-    width:100%!important;
-    height:auto!important;
-    border-radius:20px;
-    box-shadow:0 15px 40px rgba(123,44,191,0.15);
+/* card terakhir sebelum tombol jangan terlalu jauh */
+.content-gap .materi-style-card:last-of-type {
+    margin-bottom: 18px !important;
 }
-
-/* ===== FIX HEADER GARIS ===== */
-
-/* Paksa card utama potong header sesuai radius */
-.card.shadow-lg{
-    overflow:hidden;
-}
-
-/* Hilangkan border bawaan bootstrap */
-.card-header{
-    border-bottom:none !important;
-    box-shadow:none !important;
-}
-
-/* Pastikan radius atas ikut parent */
-.card.shadow-lg .card-header{
-    border-top-left-radius:30px !important;
-    border-top-right-radius:30px !important;
-}
-
-/* ====== ANIMASI JUDUL ====== */
-.ayo-title{
-    font-size:30px;
-    font-weight:800;
-    color:#7b2cbf;
-    animation:floatText 3s ease-in-out infinite;
-    text-shadow:0 0 15px rgba(123,44,191,0.4);
-}
-
-@keyframes floatText{
-    0%{transform:translateY(0);}
-    50%{transform:translateY(-8px);}
-    100%{transform:translateY(0);}
-}
-
-
-.petunjuk-box{
-    margin:10px auto 15px auto;
-    padding:25px 35px;
-    border:4px solid #7A4BC4;
-    border-radius:25px;
-    background:linear-gradient(135deg,#ffffff,#f4ecff);
-    box-shadow:0 12px 30px rgba(122,75,196,0.12);
-}
-
-.petunjuk-box h4{
-    text-align:center;
-    font-weight:700;
-    color:#6a0dad;
-    margin-bottom:20px;
-}
-
-.petunjuk-box ol{
-    font-size:16px;
-    line-height:1.8;
-    padding-left:20px;
-    margin-bottom:0;
-}
-
-.petunjuk-box li{
-    margin-bottom:14px;
-}
-
-.feedback-benar{
-    background:#ecfdf5;
-    border:2px solid #86efac;
-    color:#166534;
-    padding:14px;
-    border-radius:14px;
-    line-height:1.7;
-}
-
-.feedback-salah{
-    background:#fef2f2;
-    border:2px solid #fca5a5;
-    color:#991b1b;
-    padding:14px;
-    border-radius:14px;
-    line-height:1.7;
-}
-
-.teks-merah{
-    color:#dc2626;
-    font-weight:700;
-}
-
-.teks-hijau{
-    color:#15803d;
-    font-weight:700;
-}
-
-.jawaban-box{
-    margin-top:10px;
-    padding:10px 12px;
-    background:#faf5ff;
-    border:1.5px solid #d8b4fe;
-    border-radius:12px;
-}
-
 </style>
-</head>
 
-<body>
+<div class="content-gap">
 
-@extends('layouts.main')
-@section('container')
+    <!-- ================= PREMIUM AYO AMATI & LATIHAN ================= -->
+    <div class="materi-style-card mt-4">
 
-<div class="content-wrapper">
-<!-- ================= PREMIUM AYO AMATI & LATIHAN ================= -->
-
-<div class="card shadow-lg mt-4"
-     style="border:3px solid #7A4BC4; border-radius:30px; overflow:hidden;">
-
-    <!-- HEADER -->
-    <div class="card-header text-center"
-     style="background:linear-gradient(90deg,#9d4edd,#7b2cbf);
-            color:white;
-            font-size:1.4rem;
-            font-weight:700;
-            padding:12px 0;">
-        Latihan 1
-    </div>
-
-    <div class="row g-0">
-
-        <!-- ========= 60% GAMBAR ========= -->
-        <div class="col-lg-7 col-md-7 d-flex align-items-center justify-content-center"
-             style="background:#ffffff; min-height:520px; padding:30px;">
-
-            <img src="{{ asset('images/ayo-amati.png') }}"
-                 style="width:100%;
-                        max-height:500px;
-                        object-fit:contain;
-                        border-radius:20px;
-                        box-shadow:0 15px 40px rgba(122,75,196,0.18);">
+        <div class="materi-style-title">
+            Latihan 1
         </div>
 
+        <div class="materi-style-body">
 
-        <!-- ========= 40% LATIHAN ========= -->
-        <div class="col-lg-5 col-md-5 d-flex align-items-center"
-     style="background:#f8f2ff; padding:60px; min-height:520px;">
+            <div class="latihan-hero-grid">
 
-          <div>
+                <div class="latihan-image-side">
+                    <img src="{{ asset('images/ayo-amati.png') }}">
+                </div>
 
-    <h2 style="font-weight:700; 
-               margin-bottom:30px;
-               font-size:28px;">
-        Setelah kamu mengamati, sekarang mari berlatih.
-    </h2>
+                <div class="latihan-text-side">
+                    <div>
+                        <h2>
+                            Setelah kamu mengamati, sekarang mari berlatih.
+                        </h2>
 
-    <ol style="font-size:18px; line-height:1.9;">
-        <li>
-            Bentuklah dua himpunan dari anggota keluarga tersebut.
-        </li>
+                        <ol>
+                            <li>
+                                Bentuklah dua himpunan dari anggota keluarga tersebut.
+                            </li>
 
-        <li>
-            Tentukan anggota dari masing-masing himpunan.
-        </li>
-    </ol>
+                            <li>
+                                Tentukan anggota dari masing-masing himpunan.
+                            </li>
+                        </ol>
 
-    <p style="font-size:18px; margin-top:20px;">
-        Gambarkan himpunan menggunakan 
-        <strong>diagram Venn interaktif</strong> di bawah ini.
-    </p>
+                        <p>
+                            Gambarkan himpunan menggunakan
+                            <strong>diagram Venn interaktif</strong> di bawah ini.
+                        </p>
+                    </div>
+                </div>
 
-</div>
+            </div>
 
         </div>
+    </div>
 
+    <!-- ================= LATIHAN 1 ================= -->
+    <div class="materi-style-card mt-3">
+
+        <div class="materi-style-title">
+            Menggambar Diagram Venn
+        </div>
+
+        <div class="materi-style-body">
+
+            <!-- ===== PETUNJUK DALAM 1 KOTAK ===== -->
+            <div class="petunjuk-box">
+
+                <h4>📘 PETUNJUK PENGGUNAAN</h4>
+
+                <ol>
+                    <li>
+                        <b>Buat Semesta</b><br>
+                        Klik tombol <span class="badge bg-primary">Buat Semesta</span>
+                        untuk menampilkan wilayah himpunan semesta.
+                    </li>
+
+                    <li>
+                        <b>Buat Himpunan</b><br>
+                        Klik tombol <span class="badge bg-primary">Buat Himpunan</span>
+                        untuk membuat lingkaran himpunan (A dan B).
+                    </li>
+
+                    <li>
+                        <b>Isi Nama Anggota</b><br>
+                        Ketik nama anggota pada kolom input, lalu pilih himpunan tujuan.
+                    </li>
+
+                    <li>
+                        <b>Tambah Anggota</b><br>
+                        Klik <span class="badge bg-primary">Tambah Anggota</span>
+                        untuk memasukkan anggota ke dalam himpunan.
+                    </li>
+
+                    <li>
+                        <b>Hapus Himpunan</b><br>
+                        Pilih huruf himpunan, lalu klik
+                        <span class="badge bg-danger">Hapus Himpunan</span>.
+                    </li>
+
+                    <li>
+                        <b>Periksa & Reset</b><br>
+                        Klik <span class="badge bg-success">Periksa</span>
+                        untuk melihat isi himpunan.<br>
+                        Klik <span class="badge bg-secondary">Reset Semua</span>.
+                    </li>
+                </ol>
+
+            </div>
+
+            <!-- ===== JUDUL ANIMASI ===== -->
+            <h4 class="ayo-title">
+                ✏️ Ayo Menggambar
+            </h4>
+
+            <!-- ===== AREA GAMBAR ===== -->
+            <div class="drawing-card">
+
+                <div class="control-row">
+                    <button class="btn btn-primary" onclick="buatSemesta()">Buat Semesta</button>
+                    <button class="btn btn-primary" onclick="buatLingkaran()">Buat Himpunan</button>
+                    <button class="btn btn-danger" onclick="hapusLingkaran()">Hapus Himpunan</button>
+                    <button class="btn btn-success" onclick="periksaDiagram()">Periksa</button>
+                    <button class="btn btn-secondary" onclick="resetSemua()">Reset Semua</button>
+                </div>
+
+                <div class="control-row">
+                    <input id="namaInput" class="form-control" style="max-width:280px;" placeholder="Nama anggota...">
+
+                    <select id="setSelect" class="form-select" style="max-width:200px;">
+                        <option>Pilih Himpunan</option>
+                    </select>
+
+                    <button class="btn btn-primary" onclick="tambahAnggota()">Tambah Anggota</button>
+                </div>
+
+                <div class="canvas-result-grid">
+
+                    <div>
+                        <div id="sketch-holder"></div>
+                    </div>
+
+                    <div>
+                        <div class="hasil-panel">
+                            <div class="hasil-panel-title">
+                                HASIL PEMERIKSAAN
+                            </div>
+
+                            <div id="hasilText"></div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+    <!-- ================= TOMBOL NAVIGASI ================= -->
+    <div class="latihan-nav">
+        <a href="/bab_1/lanjut_1" class="latihan-nav-btn">
+            ← Sebelumnya
+        </a>
+
+        <a href="/petunjuk/petunjuk_bab1" class="latihan-nav-btn next">
+            Selanjutnya →
+        </a>
     </div>
 
 </div>
-<br>
-<!-- ================= LATIHAN 1 ================= -->
-
-<div class="card shadow-lg mt-3"
-     style="border:3px solid #7f3ab7;border-radius:30px;overflow:hidden;">
-
-    <!-- HEADER -->
-    <div class="card-header text-center"
-         style="background:linear-gradient(90deg,#9d4edd,#7b2cbf);
-                color:white;
-                font-size:1.4rem;
-                font-weight:700;
-                padding:12px;">
-      Menggambar Diagram Venn
-    </div>
-
-    <!-- BODY -->
-    <div class="card-body p-3"
-         style="background:#f3e8ff;">
-
-        <!-- ===== PETUNJUK DALAM 1 KOTAK ===== -->
-        <div class="petunjuk-box">
-
-            <h4>📘 PETUNJUK PENGGUNAAN</h4>
-
-            <ol>
-                <li>
-                    <b>Buat Semesta</b><br>
-                    Klik tombol <span class="badge bg-primary">Buat Semesta</span> 
-                    untuk menampilkan wilayah himpunan semesta.
-                </li>
-
-                <li>
-                    <b>Buat Himpunan</b><br>
-                    Klik tombol <span class="badge bg-primary">Buat Himpunan</span> 
-                    untuk membuat lingkaran himpunan (A dan B).
-                </li>
-
-                <li>
-                    <b>Isi Nama Anggota</b><br>
-                    Ketik nama anggota pada kolom input, lalu pilih himpunan tujuan.
-                </li>
-
-                <li>
-                    <b>Tambah Anggota</b><br>
-                    Klik <span class="badge bg-primary">Tambah Anggota</span> 
-                    untuk memasukkan anggota ke dalam himpunan.
-                </li>
-
-                <li>
-                    <b>Hapus Himpunan</b><br>
-                    Pilih huruf himpunan, lalu klik 
-                    <span class="badge bg-danger">Hapus Himpunan</span>.
-                </li>
-
-                <li>
-                    <b>Periksa & Reset</b><br>
-                    Klik <span class="badge bg-success">Periksa</span> 
-                    untuk melihat isi himpunan.<br>
-                    Klik <span class="badge bg-secondary">Reset Semua</span>.
-                </li>
-            </ol>
-
-        </div>
-
- 
-<!-- ===== JUDUL ANIMASI ===== -->
-<h4 class="text-center ayo-title mb-4">
-✏️ Ayo Menggambar
-</h4>
-
-<!-- ===== AREA GAMBAR ===== -->
-
-<div class="card"
-style="border:3px solid #7f3ab7;border-radius:25px;">
-
-<div class="card-body">
-
-<div class="control-row">
-<button class="btn btn-primary" onclick="buatSemesta()">Buat Semesta</button>
-<button class="btn btn-primary" onclick="buatLingkaran()">Buat Himpunan</button>
-<button class="btn btn-danger" onclick="hapusLingkaran()">Hapus Himpunan</button>
-<button class="btn btn-success" onclick="periksaDiagram()">Periksa</button>
-<button class="btn btn-secondary" onclick="resetSemua()">Reset Semua</button>
-</div>
-
-<div class="control-row">
-<input id="namaInput" class="form-control" style="max-width:280px;" placeholder="Nama anggota...">
-<select id="setSelect" class="form-select" style="max-width:200px;">
-<option>Pilih Himpunan</option>
-</select>
-<button class="btn btn-primary" onclick="tambahAnggota()">Tambah Anggota</button>
-</div>
-
-<div class="row mt-4">
-
-<div class="col-md-8">
-<div id="sketch-holder"></div>
-</div>
-
-<div class="col-md-4">
-<div class="p-3"
-style="background:white;border:3px solid #7f3ab7;border-radius:25px;height:100%;">
-<b>HASIL PEMERIKSAAN:</b>
-<div id="hasilText" class="mt-3"></div>
-</div>
-</div>
-
-</div>
-</div>
-</div>
-
-</div>
-</div>
-
-
 
 <script>
-
 let universe=null;
 let sets=[];
 let members=[];
 let relations=[];
 let selectedNode=null;
+
 const kunciJawaban = {
     A: ["Husin", "Jaini", "Rahmah"],
     B: ["Fikri", "Nisa", "Ilham", "Aisyah", "Nabila"]
@@ -374,7 +721,6 @@ function resizeResponsive(){
 
 function draw(){
 
-    // Background gradient
     for(let i=0;i<height;i++){
         let inter=map(i,0,height,0,1);
         let c=lerpColor(color("#ffffff"),color("#ede9fe"),inter);
@@ -385,7 +731,6 @@ function draw(){
     if(universe) universe.draw();
     sets.forEach(s=>s.draw());
 
-    // Relasi
     relations.forEach(r=>{
         stroke("#444");
         strokeWeight(2);
@@ -402,7 +747,6 @@ function draw(){
         pop();
     });
 
-    // Members
     sets.forEach(s=>{
         let list = members.filter(m=>m.set===s);
         list.forEach((m,i)=> m.draw(i));
@@ -439,7 +783,7 @@ function buatLingkaran(){
 
     if(!universe) return;
 
-    if(sets.length >= 2) return; // hanya A & B
+    if(sets.length >= 2) return;
 
     let label = sets.length === 0 ? "A" : "B";
     let color = label==="A" ? "#ff006e" : "#3a86ff";
@@ -453,24 +797,20 @@ function hapusLingkaran(){
 
     if(sets.length === 0) return;
 
-    // ambil lingkaran terakhir
     let terakhir = sets.pop();
 
-    // hapus semua anggota di lingkaran tersebut
     members = members.filter(m => m.set !== terakhir);
 
-    // hapus relasi yang terkait
     relations = relations.filter(r =>
         r.from.set !== terakhir &&
         r.to.set !== terakhir
     );
 
-    // update dropdown (opsional, kalau masih dipakai)
     updateDropdown();
 
-    // atur ulang posisi lingkaran yang tersisa
     aturPosisiHimpunan();
 }
+
 function updateDropdown(){
 
     let select = document.getElementById("setSelect");
@@ -554,7 +894,6 @@ function periksaDiagram(){
     let lebihA = [];
     let lebihB = [];
 
-    // cek anggota A
     anggotaA.forEach(nama => {
         let n = normalizeText(nama);
 
@@ -568,7 +907,6 @@ function periksaDiagram(){
         }
     });
 
-    // cek anggota B
     anggotaB.forEach(nama => {
         let n = normalizeText(nama);
 
@@ -582,14 +920,12 @@ function periksaDiagram(){
         }
     });
 
-    // cek yang kurang di A
     kunciJawaban.A.forEach(nama => {
         if(!normalA.includes(normalizeText(nama))){
             kurangA.push(nama);
         }
     });
 
-    // cek yang kurang di B
     kunciJawaban.B.forEach(nama => {
         if(!normalB.includes(normalizeText(nama))){
             kurangB.push(nama);
@@ -623,7 +959,6 @@ function periksaDiagram(){
     let isiFeedback = `<div class="feedback-salah">`;
     isiFeedback += `<b class="teks-merah">Jawaban kamu masih perlu diperbaiki.</b><br><br>`;
 
-    // tampilkan hasil input siswa dulu
     isiFeedback += `<b>Hasil gambar kamu:</b><br>`;
     isiFeedback += `Himpunan A = { ${anggotaA.length ? anggotaA.join(", ") : "-"} }<br>`;
     isiFeedback += `Himpunan B = { ${anggotaB.length ? anggotaB.join(", ") : "-"} }<br><br>`;
@@ -751,73 +1086,54 @@ class Member{
         this.radius=4;
     }
 
-   updatePosition(index){
+    updatePosition(index){
 
-    let list = members.filter(m=>m.set===this.set);
-    let total = list.length;
+        let list = members.filter(m=>m.set===this.set);
+        let total = list.length;
 
-    let spacing = 35;
-    let startY = this.set.y - ((total - 1) * spacing) / 2;
-    this.y = startY + index * spacing;
+        let spacing = 35;
+        let startY = this.set.y - ((total - 1) * spacing) / 2;
+        this.y = startY + index * spacing;
 
-    // 🔥 MAJUKAN LAGI TITIKNYA
-    if(this.set.label==="A"){
-        this.x = this.set.x + 28;   // sebelumnya 16
-    }else{
-        this.x = this.set.x - 28;   // sebelumnya 16
+        if(this.set.label==="A"){
+            this.x = this.set.x + 28;
+        }else{
+            this.x = this.set.x - 28;
+        }
     }
-}
+
     draw(index){
 
-    this.updatePosition(index);
+        this.updatePosition(index);
 
-    textSize(18);
-    textAlign(CENTER, CENTER);
+        textSize(18);
+        textAlign(CENTER, CENTER);
 
-    fill(0);
-    ellipse(this.x, this.y, this.radius*2);
+        fill(0);
+        ellipse(this.x, this.y, this.radius*2);
 
-    let padding = 15; // jarak aman dari titik
+        let padding = 15;
 
-    if(this.set.label==="A"){
+        if(this.set.label==="A"){
 
-        // hitung lebar teks
-        let w = textWidth(this.nama);
+            let w = textWidth(this.nama);
 
-        // geser teks sejauh setengah lebar + padding
-        text(this.nama, this.x - (w/2 + this.radius + padding), this.y);
+            text(this.nama, this.x - (w/2 + this.radius + padding), this.y);
 
-    }else{
+        }else{
 
-        let w = textWidth(this.nama);
+            let w = textWidth(this.nama);
 
-        text(this.nama, this.x + (w/2 + this.radius + padding), this.y);
+            text(this.nama, this.x + (w/2 + this.radius + padding), this.y);
+        }
     }
-}
+
     isClicked(mx,my){
         return dist(mx,my,this.x,this.y) < this.radius + 4;
     }
 }
-
 </script>
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-<!-- ================= TOMBOL NAVIGASI ================= -->
-<div class="container-fluid mt-4">
-    <div class="row">
-        <div class="col-12 d-flex justify-content-between align-items-center">
 
-            <!-- Tombol Sebelumnya -->
-            <a href="/bab_1/lanjut_1" class="btn btn-success px-4">
-                ← Sebelumnya
-            </a>
-
-            <!-- Tombol Selanjutnya -->
-            <a href="/petunjuk/petunjuk_bab1" class="btn btn-success px-4">
-                Selanjutnya →
-            </a>
-
-        </div>
-    </div>
-</div>
 @endsection
-
