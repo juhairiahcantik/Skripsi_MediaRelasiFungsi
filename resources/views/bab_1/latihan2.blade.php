@@ -12,8 +12,8 @@ body{
 .content-wrapper{
     width:95%;
     max-width:1350px;
-    margin:auto;
-    padding:40px 0 0 0;
+    margin:0 auto;
+    padding:0;
 }
 
 .control-row{
@@ -73,30 +73,308 @@ canvas{
 
 
 .petunjuk-box{
+    width:100%;
+    max-width:100%;
     margin:10px auto 15px auto;
-    padding:25px 35px;
-    border:4px solid #7A4BC4;
-    border-radius:25px;
-    background:linear-gradient(135deg,#ffffff,#f4ecff);
-    box-shadow:0 12px 30px rgba(122,75,196,0.12);
+    padding:20px;
+    border:2px dashed #CFA7F3;
+    border-radius:18px;
+    background:#FBF7FF;
+    box-sizing:border-box;
 }
 
 .petunjuk-box h4{
     text-align:center;
-    font-weight:700;
+    font-weight:800;
     color:#6a0dad;
-    margin-bottom:20px;
+    margin:0 0 16px 0;
 }
 
 .petunjuk-box ol{
-    font-size:16px;
-    line-height:1.8;
-    padding-left:20px;
-    margin-bottom:0;
+    display:grid;
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    gap:12px 16px;
+    margin:0;
+    padding-left:0;
+    list-style-position:inside;
+    font-size:15px;
+    line-height:1.7;
 }
 
 .petunjuk-box li{
-    margin-bottom:14px;
+    min-width:0;
+    margin:0;
+    padding:12px 14px;
+    background:#FFFFFF;
+    border:1px solid #E9D5FF;
+    border-radius:14px;
+    box-sizing:border-box;
+}
+
+.petunjuk-box li::marker{
+    color:#5B2C6F;
+    font-weight:800;
+}
+
+@media (max-width:900px){
+    .petunjuk-box ol{
+        grid-template-columns:1fr;
+    }
+}
+
+@media (max-width:600px){
+    .petunjuk-box{
+        padding:14px;
+        border-radius:15px;
+    }
+
+    .petunjuk-box h4{
+        font-size:1rem;
+        margin-bottom:12px;
+    }
+
+    .petunjuk-box ol{
+        gap:10px;
+        font-size:0.93rem;
+    }
+
+    .petunjuk-box li{
+        padding:11px 12px;
+        border-radius:12px;
+    }
+}
+
+
+
+/* =========================================================
+   LAYOUT LATIHAN RELASI SERAGAM + PAGINATION 3 HALAMAN
+========================================================= */
+
+.relasi-latihan-page {
+    display: none;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+}
+
+.relasi-latihan-page.active {
+    display: block;
+}
+
+/* Card utama mengikuti gaya materi Relasi */
+.relasi-latihan-card {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin-top: 18px !important;
+    border: 1px solid #EADCF6 !important;
+    border-radius: 26px !important;
+    background: #FFFFFF !important;
+    box-shadow: 0 14px 32px rgba(91, 44, 111, 0.08) !important;
+    overflow: hidden !important;
+    box-sizing: border-box !important;
+}
+
+.relasi-latihan-header {
+    margin: 12px 22px 14px !important;
+    padding: 15px 18px !important;
+    background: linear-gradient(135deg, #8E44AD, #B57EDC) !important;
+    color: #FFFFFF !important;
+    border: none !important;
+    border-radius: 24px !important;
+    font-size: 1.18rem !important;
+    font-weight: 800 !important;
+    text-align: center !important;
+}
+
+.relasi-latihan-body {
+    background: #FFFFFF !important;
+    box-sizing: border-box !important;
+}
+
+/* Kotak petunjuk dibuat ringan, tidak tampak seperti tabel dalam tabel */
+.relasi-latihan-page .petunjuk-box,
+.relasi-soft-panel,
+.relasi-data-panel {
+    background: #FBF7FF !important;
+    border: 2px dashed #CFA7F3 !important;
+    border-radius: 18px !important;
+    padding: 18px !important;
+    box-shadow: none !important;
+    box-sizing: border-box !important;
+}
+
+/* Area interaktif tidak memakai card Bootstrap bertumpuk */
+.relasi-inner-panel {
+    width: 100%;
+    padding: 18px;
+    background: linear-gradient(180deg, #FFFFFF 0%, #FDFBFF 100%);
+    border: 1px solid #E9D5FF;
+    border-radius: 18px;
+    box-shadow: 0 8px 18px rgba(91, 44, 111, 0.06);
+    box-sizing: border-box;
+}
+
+.relasi-result-panel {
+    height: 100%;
+    padding: 16px;
+    background: #FBF7FF;
+    border: 1px solid #E9D5FF;
+    border-left: 5px solid #A855F7;
+    border-radius: 18px;
+    box-sizing: border-box;
+}
+
+/* Cara Dua */
+#canvas-wrapper,
+.hasil-box {
+    border: 1px solid #E9D5FF !important;
+    border-radius: 18px !important;
+    box-shadow: 0 8px 18px rgba(91, 44, 111, 0.06) !important;
+}
+
+.hasil-box {
+    border-left: 5px solid #A855F7 !important;
+    background: #FBF7FF !important;
+}
+
+/* Cara Ketiga */
+.relasi-latihan-page .latihan3-box {
+    padding: 22px !important;
+    background: #FFFFFF !important;
+    border: 1px solid #E9D5FF !important;
+    border-radius: 18px !important;
+    box-shadow: 0 8px 18px rgba(91, 44, 111, 0.06) !important;
+}
+
+.relasi-latihan-page .latihan3-box::before {
+    display: none !important;
+}
+
+.relasi-latihan-page .relasi-box {
+    background: #FBF7FF !important;
+    border: 2px dashed #CFA7F3 !important;
+    border-radius: 16px !important;
+    padding: 18px !important;
+}
+
+/* Pagination */
+.relasi-latihan-pagination-wrap {
+    width: 100%;
+    margin-top: 26px;
+    margin-bottom: 20px;
+}
+
+.relasi-latihan-pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.relasi-latihan-pagination button {
+    padding: 8px 12px;
+    border: 1px solid #E3C7F3;
+    border-radius: 11px;
+    background: #FFFFFF;
+    color: #6A2C70;
+    font-weight: 700;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.07);
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.relasi-latihan-pagination button:hover {
+    background: #F3E5FF;
+    color: #4B2673;
+}
+
+.relasi-latihan-pagination button.active {
+    background: #B57EDC;
+    border-color: #B57EDC;
+    color: #FFFFFF;
+}
+
+.relasi-latihan-pagination button:disabled {
+    background: #F3F3F3;
+    border-color: #EEEEEE;
+    color: #AAAAAA;
+    box-shadow: none;
+    cursor: default;
+}
+
+/* Responsif */
+@media (max-width: 992px) {
+    .content-wrapper {
+        width: calc(100% - 24px);
+        padding-top: 24px;
+    }
+
+    .relasi-latihan-page .equal-height {
+        display: block !important;
+    }
+
+    #canvas-wrapper,
+    .hasil-box {
+        min-height: 320px !important;
+    }
+}
+
+@media (max-width: 768px) {
+    .content-wrapper {
+        width: calc(100% - 18px);
+        padding-top: 18px;
+    }
+
+    .relasi-latihan-card {
+        border-radius: 18px !important;
+    }
+
+    .relasi-latihan-header {
+        margin: 10px 12px 12px !important;
+        padding: 13px 14px !important;
+        border-radius: 18px !important;
+        font-size: 1.05rem !important;
+    }
+
+    .relasi-soft-panel,
+    .relasi-data-panel,
+    .relasi-inner-panel,
+    .relasi-result-panel,
+    .relasi-latihan-page .petunjuk-box,
+    .relasi-latihan-page .latihan3-box {
+        padding: 14px !important;
+        border-radius: 15px !important;
+    }
+
+    #canvas-wrapper,
+    .hasil-box {
+        min-height: 260px !important;
+        padding: 14px !important;
+        border-radius: 15px !important;
+    }
+
+    .control-row {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .control-row .btn,
+    .control-row .form-control,
+    .control-row .form-select {
+        width: 100% !important;
+        max-width: 100% !important;
+    }
+}
+
+@media (max-width: 480px) {
+    .relasi-latihan-pagination button {
+        padding: 7px 9px;
+        font-size: 0.8rem;
+    }
 }
 
 </style>
@@ -109,89 +387,130 @@ canvas{
 
 <div class="content-wrapper">
 
+
+<!-- ====================== HALAMAN PAGINATION 1 ====================== -->
+<section class="relasi-latihan-page active" id="relasiLatihanPage1">
 <!-- ================= LATIHAN 2 ================= -->
-<div class="card shadow-lg mt-4"
-     style="border:3px solid #7b2cbf; border-radius:28px; overflow:hidden;">
+<div class="card shadow-lg mt-4 relasi-latihan-card">
 
   <!-- HEADER -->
-  <div class="card-header text-center"
-       style="background:linear-gradient(90deg,#9d4edd,#7b2cbf);
-              color:white;
-              font-size:1.45rem;
-              font-weight:700;
-              padding:12px;">
+  <div class="card-header text-center relasi-latihan-header">
     Latihan 2
   </div>
 
   <!-- BODY -->
-  <div class="card-body p-0" style="background:#ffffff;">
+  <div class="card-body p-0 relasi-latihan-body">
 
     <style>
       .latihan2-row{
           background:#ffffff;
+          padding:18px;
+      }
+
+      .latihan2-row .row{
+          display:grid;
+          grid-template-columns:minmax(0,1.55fr) minmax(310px,0.85fr);
+          gap:18px;
+          align-items:stretch;
+          margin:0;
+      }
+
+      .latihan2-row .col-md-8,
+      .latihan2-row .col-md-4{
+          width:100%;
+          max-width:none;
+          padding:0;
       }
 
       .latihan2-img-wrap{
-          padding:22px 18px 22px 22px;
+          min-height:100%;
+          padding:12px;
           display:flex;
           justify-content:center;
           align-items:center;
-          background:#ffffff;
+          background:linear-gradient(180deg,#ffffff 0%,#fbf7ff 100%);
+          border:1px solid #e9d5ff;
+          border-radius:18px;
+          box-shadow:0 8px 18px rgba(91,44,111,0.06);
+          overflow:hidden;
       }
 
       .latihan2-img{
           width:100%;
-          max-width:820px;
+          max-width:100%;
+          max-height:470px;
           height:auto;
           object-fit:contain;
           display:block;
-          border-radius:18px;
+          border-radius:14px;
       }
 
       .latihan2-side{
-          padding:42px 34px;
-          background:#f5f1fb;
+          min-height:100%;
+          padding:24px;
+          background:#fbf7ff;
+          border:1px solid #e9d5ff;
+          border-radius:18px;
+          box-shadow:0 8px 18px rgba(91,44,111,0.06);
           display:flex;
           flex-direction:column;
           justify-content:center;
-          height:100%;
+          box-sizing:border-box;
       }
 
       .latihan2-intro{
-          font-size:1.05rem;
-          font-weight:600;
-          line-height:1.8;
-          margin-bottom:18px;
+          font-size:1.04rem;
+          font-weight:700;
+          line-height:1.75;
+          margin-bottom:14px;
           color:#222;
       }
 
       .latihan2-text{
-          font-size:1rem;
-          line-height:1.9;
+          font-size:0.99rem;
+          line-height:1.8;
           color:#333;
       }
 
       .latihan2-text ul{
           padding-left:22px;
-          margin-bottom:16px;
+          margin:0 0 14px 0;
       }
 
       .latihan2-text li{
-          margin-bottom:10px;
+          margin-bottom:8px;
       }
 
       .latihan2-highlight{
-          font-weight:700;
+          font-weight:800;
           color:#6a0dad;
       }
 
-      @media (max-width: 992px){
-          .latihan2-img-wrap{
-              padding:18px;
+      @media (max-width: 1100px){
+          .latihan2-row .row{
+              grid-template-columns:1fr;
+              gap:14px;
+          }
+
+          .latihan2-img{
+              max-height:none;
           }
 
           .latihan2-side{
-              padding:24px 22px 28px;
+              min-height:0;
+              padding:20px;
+          }
+      }
+
+      @media (max-width: 768px){
+          .latihan2-row{
+              padding:12px;
+          }
+
+          .latihan2-img-wrap,
+          .latihan2-side{
+              padding:14px;
+              border-radius:15px;
           }
 
           .latihan2-intro{
@@ -199,7 +518,8 @@ canvas{
           }
 
           .latihan2-text{
-              font-size:0.97rem;
+              font-size:0.95rem;
+              line-height:1.72;
           }
       }
     </style>
@@ -249,27 +569,20 @@ canvas{
 <br>
 <!-- ================= END LATIHAN 2 ================= -->
 
-<div class="card shadow-lg mt-3"
-     style="border:3px solid #7f3ab7;border-radius:30px;overflow:hidden;">
+<div class="card shadow-lg mt-3 relasi-latihan-card">
 
     <!-- HEADER -->
-    <div class="card-header text-center"
-         style="background:linear-gradient(90deg,#9d4edd,#7b2cbf);
-                color:white;
-                font-size:1.4rem;
-                font-weight:700;
-                padding:10px;">
+    <div class="card-header text-center relasi-latihan-header">
        Cara Satu Diagram panah
     </div>
 
     <!-- BODY -->
-<div class="card-body p-3"
-     style="background:#f3e8ff;">
+<div class="card-body p-3 relasi-latihan-body">
 
     <!-- ===== PETUNJUK DALAM 1 KOTAK ===== -->
     <div class="petunjuk-box">
 
-        <h4>📘 PETUNJUK PENGGUNAAN</h4>
+        <h4> PETUNJUK PENGGUNAAN</h4>
 
         <ol>
             <li>
@@ -345,8 +658,7 @@ canvas{
 
 <!-- ===== AREA GAMBAR ===== -->
 
-<div class="card"
-style="border:3px solid #7f3ab7;border-radius:25px;">
+<div class="relasi-inner-panel">
 
 <div class="card-body">
 
@@ -374,8 +686,7 @@ style="border:3px solid #7f3ab7;border-radius:25px;">
 </div>
 
 <div class="col-md-4">
-<div class="p-3"
-style="background:white;border:3px solid #7f3ab7;border-radius:25px;height:100%;">
+<div class="relasi-result-panel">
 <b>HASIL PEMERIKSAAN:</b>
 <div id="hasilText" class="mt-3"></div>
 </div>
@@ -597,7 +908,7 @@ function periksaDiagram(){
         output += "<b>Domain</b> = {"+domain+"}<br>";
         output += "<b>Range</b> = {"+range+"}<br><br>";
 
-        output += "📝 <i>Kesimpulan: Hubungan antara siswa dan kerajinan pada cerita di atas disebut relasi, karena memasangkan anggota himpunan A dengan anggota himpunan B. Relasi ini bukan fungsi, karena ada anggota himpunan A yang memiliki lebih dari satu pasangan.</i>";
+        output += " <i>Kesimpulan: Hubungan antara siswa dan kerajinan pada cerita di atas disebut relasi, karena memasangkan anggota himpunan A dengan anggota himpunan B. Relasi ini bukan fungsi, karena ada anggota himpunan A yang memiliki lebih dari satu pasangan.</i>";
 
     }else{
 
@@ -785,30 +1096,27 @@ class Member{
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
+
+</section>
+
+<!-- ====================== HALAMAN PAGINATION 2 ====================== -->
+<section class="relasi-latihan-page" id="relasiLatihanPage2">
 <!-- ================= LATIHAN 2 ================= -->
-<div class="card shadow-lg mt-4" style="border:3px solid #7f3ab7;border-radius:30px;overflow:hidden;">
+<div class="card shadow-lg mt-4 relasi-latihan-card">
 
   <!-- HEADER -->
-  <div class="card-header text-center"
-       style="background:linear-gradient(90deg,#9d4edd,#7b2cbf);
-              color:white;
-              font-size:1.4rem;
-              font-weight:700;
-              padding:18px;">
+  <div class="card-header text-center relasi-latihan-header">
     Cara Dua Pemaparan Kordinat
   </div>
 
   <!-- BODY MATERI -->
   <div class="card-body p-4" style="background:#f3e8ff;">
 
-    <div class="p-4"
-         style="background:white;
-                border:3px solid #7f3ab7;
-                border-radius:25px;">
+    <div class="relasi-soft-panel">
 
       <h5 class="text-center mb-4"
           style="color:#7b2cbf;font-weight:700;">
-        📘 Pemaparan Koordinat
+         Pemaparan Koordinat
       </h5>
 
       <p style="font-size:16px; line-height:1.9;">
@@ -843,14 +1151,11 @@ class Member{
 
   <!-- PETUNJUK -->
   <div class="card-body p-4" style="background:#f3e8ff;">
-    <div class="p-4"
-         style="background:white;
-                border:3px solid #7f3ab7;
-                border-radius:25px;">
+    <div class="relasi-soft-panel">
 
       <h5 class="text-center mb-4"
           style="color:#7b2cbf;font-weight:700;">
-        📘 Petunjuk Penggunaan
+         Petunjuk Penggunaan
       </h5>
 
       <ol style="font-size:16px; line-height:1.9;">
@@ -861,7 +1166,7 @@ class Member{
   </li>
 
   <li>
-    Klik <span class="badge bg-primary">📊 Gambar Grafik</span> 
+    Klik <span class="badge bg-primary"> Gambar Grafik</span> 
     untuk menampilkan bidang koordinat.
   </li>
 
@@ -903,10 +1208,7 @@ class Member{
   </div>
   <div class="container mt-4">
 
-  <div class="card p-4"
-       style="background:#f8f3ff;
-              border:3px solid #7b2cbf;
-              border-radius:20px;">
+  <div class="relasi-soft-panel relasi-data-panel">
 
     <p>
       Diketahui data sebagai berikut:
@@ -956,7 +1258,7 @@ class Member{
                  font-size:24px;
                  margin-bottom:4px;
                  color:#7b2cbf;">
-        ✨ Pemaparan Koordinat
+        Pemaparan Koordinat
       </h2>
 
       <p style="font-size:13px;color:#666;margin:0;">
@@ -1019,7 +1321,7 @@ class Member{
 <div class="hasil-box w-100">
 
 <h5 style="color:#7b2cbf;font-weight:700;">
-📘 Hasil Pemeriksaan
+ Hasil Pemeriksaan
 </h5>
 
 <div id="feedback-area"></div>
@@ -1466,22 +1768,21 @@ b.mousePressed(fn);
 new p5(koordinatSketch);
 </script>
 </div>
+
+</section>
+
+<!-- ====================== HALAMAN PAGINATION 3 ====================== -->
+<section class="relasi-latihan-page" id="relasiLatihanPage3">
 <!-- ================= LATIHAN 3 ================= -->
-<div class="card shadow-lg mt-4"
-     style="border:4px solid #7b2cbf;border-radius:30px;overflow:hidden;">
+<div class="card shadow-lg mt-4 relasi-latihan-card">
 
   <!-- HEADER -->
-  <div class="card-header text-center"
-       style="background:linear-gradient(90deg,#9d4edd,#7b2cbf);
-              color:white;
-              font-size:1.4rem;
-              font-weight:700;
-              padding:20px;">
-    Cara Ketiga
+  <div class="card-header text-center relasi-latihan-header">
+    Cara Ketiga Himpunan pasangan berurutan
   </div>
 
   <!-- BODY -->
-  <div class="card-body p-5" style="background:#f8f6ff;">
+  <div class="card-body p-4 relasi-latihan-body">
 
     <style>
     .latihan3-box{
@@ -1506,14 +1807,35 @@ new p5(koordinatSketch);
         z-index:-1;
     }
 
-    .petunjuk-mini{
-        font-size:14px;
-        color:#555;
-        background:#f3efff;
-        padding:15px 20px;
-        border-radius:12px;
-        margin:15px 0 25px 0;
+  .petunjuk-singkat-pasangan {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 15px 0 25px 0;
+    padding: 14px 18px;
+    background: #F1ECFF;
+    border-radius: 14px;
+    color: #4B3A62;
+    font-size: 0.95rem;
+    line-height: 1.6;
+}
+
+.petunjuk-singkat-pasangan .petunjuk-icon {
+    flex-shrink: 0;
+    font-size: 1rem;
+}
+
+.petunjuk-singkat-pasangan strong {
+    color: #6A0DAD;
+}
+
+@media (max-width: 576px) {
+    .petunjuk-singkat-pasangan {
+        align-items: flex-start;
+        padding: 12px 14px;
+        font-size: 0.88rem;
     }
+}
 
     .btn-ungu{
         background:#7b2cbf;
@@ -1598,11 +1920,13 @@ new p5(koordinatSketch);
       </p>
 
       <p><b>Buatkan pasangan berurutnya:</b></p>
-
-      <div class="petunjuk-mini">
-        💡 Pilih nama terlebih dahulu, lalu kerajinan.  
+    <div>
+        <strong>Petunjuk:</strong>
+        Pilih <b>nama siswa</b> dan <b>kerajinan</b>, lalu klik
+        <b>Tambah</b>. Jika keliru, klik <b>Hapus</b>.
         Bentuk pasangan harus <b>(Nama, Kerajinan)</b>.
-      </div>
+    </div>
+</div>
 
       <!-- INPUT -->
       <div class="row g-3 align-items-center">
@@ -1739,23 +2063,107 @@ render3();
 document.getElementById("areaSkor3").style.display="none";
 }
 </script>
-<!-- ================= TOMBOL NAVIGASI ================= -->
-<div class="container-fluid mt-4">
-    <div class="row">
-        <div class="col-12 d-flex justify-content-between align-items-center">
 
-            <!-- Tombol Sebelumnya -->
-            <a href="/bab_1/lanjut_2" class="btn btn-success px-4">
-                ← Sebelumnya
-            </a>
+</section>
 
-            <!-- Tombol Selanjutnya -->
-            <a href="/petunjuk/petunjuk_bab2" class="btn btn-success px-4">
-                Selanjutnya →
-            </a>
+<!-- ====================== PAGINATION INTERNAL ====================== -->
+<div class="relasi-latihan-pagination-wrap">
+    <ul class="relasi-latihan-pagination">
+        <li>
+            <button type="button"
+                    id="relasiLatihanPrevBtn"
+                    onclick="changeRelasiLatihanPage(currentRelasiLatihanPage - 1)">
+                Sebelumnya
+            </button>
+        </li>
 
-        </div>
-    </div>
+        <li><button type="button" id="relasiLatihanPageBtn1" onclick="changeRelasiLatihanPage(1)">1</button></li>
+        <li><button type="button" id="relasiLatihanPageBtn2" onclick="changeRelasiLatihanPage(2)">2</button></li>
+        <li><button type="button" id="relasiLatihanPageBtn3" onclick="changeRelasiLatihanPage(3)">3</button></li>
+
+        <li>
+            <button type="button"
+                    id="relasiLatihanNextBtn"
+                    onclick="nextRelasiLatihanPage()">
+                Berikutnya
+            </button>
+        </li>
+    </ul>
 </div>
+
+<script>
+let currentRelasiLatihanPage = 1;
+const totalRelasiLatihanPage = 3;
+const relasiLatihanQuizUrl = "/petunjuk/petunjuk_bab2";
+
+function nextRelasiLatihanPage(){
+    if(currentRelasiLatihanPage < totalRelasiLatihanPage){
+        changeRelasiLatihanPage(currentRelasiLatihanPage + 1);
+        return;
+    }
+
+    window.location.href = relasiLatihanQuizUrl;
+}
+
+function changeRelasiLatihanPage(page){
+    if(page < 1 || page > totalRelasiLatihanPage){
+        return;
+    }
+
+    currentRelasiLatihanPage = page;
+
+    for(let i = 1; i <= totalRelasiLatihanPage; i++){
+        const pageElement =
+            document.getElementById("relasiLatihanPage" + i);
+
+        const pageButton =
+            document.getElementById("relasiLatihanPageBtn" + i);
+
+        if(pageElement){
+            pageElement.classList.toggle("active", i === page);
+        }
+
+        if(pageButton){
+            pageButton.classList.toggle("active", i === page);
+        }
+    }
+
+    const prevButton =
+        document.getElementById("relasiLatihanPrevBtn");
+
+    const nextButton =
+        document.getElementById("relasiLatihanNextBtn");
+
+    if(prevButton){
+        prevButton.disabled = page === 1;
+    }
+
+    if(nextButton){
+        nextButton.disabled = false;
+    }
+
+    const root = document.querySelector(".content-wrapper");
+
+    if(root){
+        root.scrollIntoView({
+            behavior: "smooth",
+            block: "start"
+        });
+    }
+
+    setTimeout(function(){
+        if(page === 1 && typeof resizeResponsive === "function"){
+            resizeResponsive();
+        }
+
+        window.dispatchEvent(new Event("resize"));
+    }, 100);
+}
+
+document.addEventListener("DOMContentLoaded", function(){
+    changeRelasiLatihanPage(1);
+});
+</script>
+
 @endsection
 

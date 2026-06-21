@@ -1,317 +1,871 @@
-<!DOCTYPE html>
-<html lang="id">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Materi: Fungsi</title>
-
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.0/font/bootstrap-icons.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
-
-    <style>
-        body, html {
-            margin: 0;
-            padding: 0;
-            height: 100%;
-            font-family: 'Poppins', sans-serif;
-            background-color: #f8f9fa;
-        }
-
-        .content-gap {
-            margin-left: 40px;
-            margin-right: 20px;
-        }
-        /* ===== RESPONSIVE CONTROL ===== */
-.control-row{
-    display:flex;
-    flex-wrap:wrap;
-    gap:10px;
-    justify-content:center;
-    margin-bottom:15px;
-}
-
-.control-row .btn{
-    min-width:140px;
-}
-
-.input-row{
-    display:flex;
-    flex-wrap:wrap;
-    gap:10px;
-    justify-content:center;
-    margin-bottom:20px;
-}
-
-.input-row input{
-    width:280px;
-}
-
-.input-row select{
-    width:200px;
-}
-
-.input-row button{
-    width:180px;
-}
-
-@media(max-width:768px){
-    .input-row input,
-    .input-row select,
-    .input-row button{
-        width:100%;
-    }
-
-    </style>
-</head>
-
-<body>
-
 @extends('layouts.main')
 
 @section('container')
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.0/p5.min.js"></script>
+
+<style>
+    .content-gap {
+        margin-left: 40px;
+        margin-right: 20px;
+        box-sizing: border-box;
+        max-width: 100%;
+        overflow-x: clip;
+        font-family: 'Poppins', sans-serif;
+    }
+
+    .fungsi-page {
+        display: none;
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
+        overflow-x: clip;
+    }
+
+    .fungsi-page.active {
+        display: block;
+    }
+
+    .fungsi-card {
+        background: #ffffff;
+        border: 1px solid #eadcf6;
+        border-radius: 26px;
+        padding: 24px;
+        margin-top: 20px;
+        box-shadow: 0 14px 32px rgba(91, 44, 111, 0.08);
+        box-sizing: border-box;
+    }
+
+    .fungsi-page-title,
+    .fungsi-section-title {
+        background: linear-gradient(135deg, #8E44AD, #B57EDC);
+        color: #ffffff;
+        text-align: center;
+        padding: 15px 22px;
+        border-radius: 20px;
+        font-weight: 800;
+        font-size: 1.25rem;
+        margin-bottom: 22px;
+        box-shadow: 0 10px 20px rgba(142, 68, 173, 0.16);
+    }
+
+    .fungsi-page-title {
+        font-size: 1.32rem;
+    }
+
+    .fungsi-section-title.soft {
+        background: linear-gradient(135deg, #A855F7, #C084FC);
+    }
+
+    .fungsi-info-box,
+    .fungsi-soft-box,
+    .fungsi-simple-box {
+        background: #ffffff;
+        border: 1px solid #E9D5FF;
+        border-radius: 18px;
+        padding: 18px;
+        margin-bottom: 16px;
+        color: #333;
+        line-height: 1.85;
+        box-sizing: border-box;
+    }
+
+    .fungsi-soft-box {
+        background: #FBF7FF;
+        border: 2px dashed #CFA7F3;
+        color: #4B2673;
+    }
+
+    .fungsi-simple-box {
+        background: linear-gradient(180deg, #ffffff 0%, #fdfbff 100%);
+        box-shadow: 0 8px 18px rgba(91, 44, 111, 0.05);
+    }
+
+    .fungsi-hero-layout {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 20px;
+        align-items: stretch;
+    }
+
+    .fungsi-image-box,
+    .fungsi-text-box {
+        background: #ffffff;
+        border: 1px solid #E9D5FF;
+        border-radius: 18px;
+        padding: 18px;
+        box-sizing: border-box;
+        min-width: 0;
+        box-shadow: 0 8px 18px rgba(91, 44, 111, 0.06);
+    }
+
+    .fungsi-image-box {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: linear-gradient(180deg, #ffffff 0%, #faf7ff 100%);
+    }
+
+    .fungsi-image-box img {
+        width: 100%;
+        max-height: 430px;
+        object-fit: contain;
+        display: block;
+    }
+
+    .fungsi-text-box {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        line-height: 1.85;
+    }
+
+    .fungsi-btn-row,
+    .control-row,
+    .input-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        justify-content: center;
+        align-items: center;
+        margin: 16px 0;
+    }
+
+    .control-row .btn,
+    .input-row button,
+    .fungsi-btn-row .btn {
+        min-width: 140px;
+        font-weight: 700;
+        border-radius: 12px;
+    }
+
+    .input-row input {
+        width: 280px;
+    }
+
+    .input-row select {
+        width: 200px;
+    }
+
+    #sketch-holder,
+    #koordinat-canvas {
+        width: 100%;
+        min-width: 0;
+    }
+
+    .fungsi-work-layout {
+        display: grid;
+        grid-template-columns: minmax(0, 1.55fr) minmax(280px, 0.75fr);
+        gap: 18px;
+        align-items: stretch;
+    }
+
+    .fungsi-result-box,
+    .hasil-box {
+        background: #ffffff;
+        border: 1px solid #E9D5FF;
+        border-radius: 18px;
+        padding: 18px;
+        box-shadow: 0 8px 18px rgba(91, 44, 111, 0.06);
+        min-height: 100%;
+        box-sizing: border-box;
+    }
+
+    .fungsi-formula {
+        font-family: 'Times New Roman', serif;
+        line-height: 2.1;
+        color: #222;
+    }
+
+    .fungsi-formula .form-select {
+        border: 2px solid #D8B4FE;
+        border-radius: 10px;
+        font-weight: 700;
+    }
+
+    .fungsi-input {
+        border: 2px solid #D8B4FE !important;
+        border-radius: 12px !important;
+        min-height: 44px;
+    }
+
+    .fungsi-input:focus {
+        border-color: #8B5CF6 !important;
+        box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.15) !important;
+    }
+
+    .fungsi-table {
+        border: 1px solid #E9D5FF !important;
+        border-radius: 14px;
+        overflow: hidden;
+    }
+
+    .fungsi-table th {
+        background: #F3E8FF !important;
+        color: #4B2673;
+        border-color: #E9D5FF !important;
+    }
+
+    .fungsi-table td {
+        border-color: #E9D5FF !important;
+    }
+
+    #canvas-wrapper {
+        background: #ffffff;
+        border: 1px solid #E9D5FF;
+        border-radius: 18px;
+        padding: 18px;
+        box-shadow: 0 8px 18px rgba(91, 44, 111, 0.06);
+        position: relative;
+        overflow: hidden;
+        height: 420px;
+    }
+
+    .hasil-box {
+        height: 420px;
+        overflow-y: auto;
+    }
+
+    #feedback-area {
+        margin-top: 15px;
+        font-weight: 600;
+    }
+
+    #koordinat-controls {
+        background: #FBF7FF;
+        border: 1px solid #E9D5FF;
+        border-radius: 18px;
+        padding: 16px;
+        margin-top: 18px;
+        text-align: center;
+    }
+
+    .fungsi-pagination {
+        width: 100%;
+        margin-top: 30px;
+        margin-bottom: 35px;
+        clear: both;
+    }
+
+    .fungsi-pagination .pagination {
+        gap: 5px;
+    }
+
+    .fungsi-pagination .page-link {
+        color: #6A2C70;
+        border: 1px solid #E3C7F3;
+        border-radius: 12px !important;
+        font-weight: 700;
+        background-color: #ffffff;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+    }
+
+    .fungsi-pagination .page-link:hover {
+        background-color: #F3E5FF;
+        color: #4B2673;
+    }
+
+    .fungsi-pagination .page-item.active .page-link {
+        background-color: #CDA4DE;
+        border-color: #CDA4DE;
+        color: #ffffff;
+    }
+
+    .fungsi-pagination .page-item.disabled .page-link {
+        color: #aaaaaa;
+        background-color: #f6f6f6;
+        border-color: #eeeeee;
+        box-shadow: none;
+        pointer-events: none;
+    }
+
+    @media (max-width: 992px) {
+        .fungsi-hero-layout,
+        .fungsi-work-layout {
+            grid-template-columns: 1fr;
+        }
+
+        .fungsi-image-box img {
+            max-height: 360px;
+        }
+    }
+
+    @media (max-width: 768px) {
+        .content-gap {
+            margin-left: 12px;
+            margin-right: 12px;
+        }
+
+        .fungsi-card {
+            padding: 16px;
+            border-radius: 20px;
+        }
+
+        .fungsi-page-title,
+        .fungsi-section-title {
+            font-size: 1.05rem;
+            padding: 14px 16px;
+            border-radius: 16px;
+        }
+
+        .input-row input,
+        .input-row select,
+        .input-row button,
+        .control-row .btn,
+        .fungsi-btn-row .btn {
+            width: 100%;
+        }
+
+        #canvas-wrapper,
+        .hasil-box {
+            height: 360px;
+        }
+
+        .fungsi-pagination .page-link {
+            font-size: 0.82rem;
+            padding: 7px 9px;
+        }
+    }
+
+/* =========================================================
+   FINAL: WARNA DISAMAKAN DAN KOTAK TIDAK TERLALU BANYAK
+========================================================= */
+.fungsi-section-title,
+.fungsi-section-title.soft {
+    background: linear-gradient(135deg, #8E44AD, #B57EDC) !important;
+    color: #ffffff !important;
+    border-radius: 20px !important;
+    margin: 10px 0 18px 0 !important;
+    box-shadow: 0 10px 20px rgba(142, 68, 173, 0.16) !important;
+}
+
+.fungsi-card {
+    border: 1px solid #eadcf6 !important;
+    box-shadow: 0 14px 32px rgba(91, 44, 111, 0.08) !important;
+}
+
+.fungsi-simple-box,
+.fungsi-soft-box,
+.fungsi-image-box,
+.fungsi-text-box,
+.fungsi-result-box,
+.hasil-box,
+#canvas-wrapper,
+#koordinat-controls {
+    border-color: #E9D5FF !important;
+}
+
+.fungsi-table th,
+.table thead th,
+.table th {
+    background: #F3E8FF !important;
+    color: #4B2673 !important;
+    border-color: #E9D5FF !important;
+}
+
+.fungsi-table td,
+.table td {
+    border-color: #E9D5FF !important;
+}
+
+/* Tombol dibuat beda dari judul ungu supaya tidak menyatu */
+.fungsi-card .btn-success,
+.fungsi-card button[onclick^="cek"],
+.fungsi-card button[style*="background:#7b2cbf"],
+.fungsi-card button[style*="background:#9d4edd"] {
+    background: linear-gradient(135deg, #15803D, #22C55E) !important;
+    border: 2px solid #15803D !important;
+    color: #ffffff !important;
+    box-shadow: 0 8px 16px rgba(21, 128, 61, 0.18) !important;
+}
+
+.fungsi-card .btn-danger {
+    background: linear-gradient(135deg, #B91C1C, #EF4444) !important;
+    border: 2px solid #B91C1C !important;
+    color: #ffffff !important;
+    box-shadow: 0 8px 16px rgba(185, 28, 28, 0.16) !important;
+}
+
+.fungsi-card .btn-primary,
+.fungsi-card .btn-info {
+    background: linear-gradient(135deg, #0369A1, #38BDF8) !important;
+    border: 2px solid #0369A1 !important;
+    color: #ffffff !important;
+    box-shadow: 0 8px 16px rgba(3, 105, 161, 0.16) !important;
+}
+
+.fungsi-card .btn-warning {
+    background: linear-gradient(135deg, #D97706, #FBBF24) !important;
+    border: 2px solid #D97706 !important;
+    color: #3B2500 !important;
+    box-shadow: 0 8px 16px rgba(217, 119, 6, 0.16) !important;
+}
+
+.fungsi-card .btn-secondary {
+    background: #ffffff !important;
+    color: #475569 !important;
+    border: 2px solid #94A3B8 !important;
+    box-shadow: 0 6px 12px rgba(71, 85, 105, 0.10) !important;
+}
+
+/* Khusus tombol pilihan Latihan 3 */
+.fungsi-card button[onclick="cekLatihanFungsiBenar()"] {
+    background: linear-gradient(135deg, #15803D, #22C55E) !important;
+    border-color: #15803D !important;
+}
+
+.fungsi-card button[onclick="cekLatihanFungsiSalah()"] {
+    background: linear-gradient(135deg, #B91C1C, #EF4444) !important;
+    border-color: #B91C1C !important;
+}
+
+</style>
+
 <div class="content-gap">
-<br>
-<!-- ======================== Latihan 3 ======================== -->
-<div class="card mt-4" style="width:100%; border:2px solid #7f3ab7;">
 
-    <div class="card-header text-center"
-     style="background:linear-gradient(90deg,#9d4edd,#7b2cbf);
-            color:white;
-            font-size:1.4rem;
-            font-weight:700;
-            padding:8px 0;">
-        Latihan 3
-    </div>
-
-    <div class="card-body p-0">
-
-        <div class="row g-0 align-items-stretch">
-
-            <!-- KOLOM GAMBAR -->
-           <div class="col-lg-6 col-md-6 col-12 d-flex">
-                <img src="{{ asset('images/latihan3.png') }}" 
-                    alt="Latihan 3"
-                    class="img-fluid w-100 h-100"
-                    style="object-fit: contain;">
+    <!-- ====================== HALAMAN 1 ====================== -->
+    <div class="fungsi-page active" id="fungsiPage1">
+        <div class="fungsi-card">
+            <div class="fungsi-section-title soft">
+                Latihan 3
             </div>
 
-            <!-- KOLOM TEKS -->
-            <div class="col-lg-6 col-md-6 col-12 d-flex align-items-center"
-                 style="background:#ffffff;">
+            <div class="fungsi-hero-layout">
+                <div class="fungsi-image-box">
+                    <img src="{{ asset('images/latihan3.png') }}" alt="Latihan 3">
+                </div>
 
-                <div class="p-4 p-md-5">
-
+                <div class="fungsi-text-box">
                     <h4 class="fw-bold">
                         Setelah kamu mengamati, sekarang mari berlatih.
                     </h4>
 
                     <p class="mt-3">
-                        Apakah jumlah loyang kue Amparan Tatak (x) dan 
+                        Apakah jumlah loyang kue Amparan Tatak (x) dan
                         total harga (f(x)) merupakan fungsi atau bukan?
                     </p>
 
-                   <div class="my-4">
-    <button class="btn btn-success px-4 me-2"
-        onclick="document.getElementById('feedback').innerHTML=
-        '<div class=\'alert alert-success mt-3\'>\
-        <strong>Benar! Ini merupakan Fungsi.</strong><br><br>\
-        Suatu relasi disebut <b>fungsi</b> jika <b>setiap nilai x</b> \
-        dipasangkan dengan <b>tepat satu nilai f(x)</b>.<br><br>\
-        Pada contoh ini:\
-        <ul>\
-            <li>1 loyang → Rp20.000</li>\
-            <li>2 loyang → Rp40.000</li>\
-            <li>3 loyang → Rp60.000</li>\
-        </ul>\
-        Setiap jumlah loyang hanya memiliki <b>satu</b> total harga. \
-        Tidak ada satu jumlah loyang yang memiliki dua harga berbeda. \
-        Karena itu, relasi ini disebut <b>fungsi</b>.\
-        </div>'">
-        Fungsi
-    </button>
+                    <div class="fungsi-btn-row">
+                        <button class="btn btn-success px-4" onclick="cekLatihanFungsiBenar()">
+                            Fungsi
+                        </button>
 
-    <button class="btn btn-danger px-4"
-        onclick="document.getElementById('feedback').innerHTML=
-        '<div class=\'alert alert-danger mt-3\'>\
-        <strong>Kurang Tepat.</strong><br><br>\
-        Relasi ini sebenarnya adalah <b>fungsi</b>, karena setiap jumlah loyang \
-        hanya memiliki satu total harga.\
-        <br><br>\
-        Suatu relasi disebut <b>bukan fungsi</b> jika ada satu nilai x \
-        yang memiliki lebih dari satu nilai f(x).\
-        </div>'">
-        Bukan Fungsi
-    </button>
-</div>
+                        <button class="btn btn-danger px-4" onclick="cekLatihanFungsiSalah()">
+                            Bukan Fungsi
+                        </button>
+
+                    </div>
 
                     <div id="feedback"></div>
 
-                    <p class="mt-3">
-                        Berdasarkan hasil penyelidikanmu tadi, sajikan relasimu 
+                    <p class="mt-3 mb-0">
+                        Berdasarkan hasil penyelidikanmu tadi, sajikan relasimu
                         dalam <strong>5 bentuk penyajian</strong>!
                     </p>
-
                 </div>
-
             </div>
 
-        </div>
+            <div class="fungsi-section-title">
+                Cara 1: Diagram Panah
+            </div>
 
+            <div class="fungsi-soft-box">
+                <strong>📘 Petunjuk Penggunaan</strong>
+                <ol class="mb-0 mt-2">
+                    <li><b>Buat Semesta</b><br>Klik tombol <span class="badge bg-primary">Buat Semesta</span> untuk menampilkan wilayah himpunan semesta.</li>
+                    <li><b>Buat Himpunan</b><br>Klik tombol <span class="badge bg-primary">Buat Himpunan</span> untuk membuat lingkaran himpunan (A dan B).</li>
+                    <li><b>Isi Nama Anggota</b><br>Ketik nama anggota pada kolom input, lalu pilih himpunan tujuan.</li>
+                    <li><b>Tambah Anggota</b><br>Klik <span class="badge bg-primary">Tambah Anggota</span> untuk memasukkan anggota ke dalam himpunan.</li>
+                    <li><b>Membuat Panah (Relasi)</b><br>Klik <b>lingkaran hitam</b> pada satu anggota himpunan, lalu klik <b>lingkaran hitam</b> pada anggota himpunan lainnya. Panah relasi akan muncul otomatis.</li>
+                    <li><b>Hapus Panah (Relasi)</b><br>Klik <span class="badge bg-warning text-dark">Hapus Panah</span> untuk mengaktifkan mode hapus. Panah akan berubah warna menjadi <b>merah</b>. Klik panah yang ingin dihapus. Setelah selesai, klik kembali tombol <span class="badge bg-warning text-dark">Hapus Panah</span> untuk kembali ke mode normal.</li>
+                    <li><b>Hapus Himpunan</b><br>Pilih huruf himpunan, lalu klik <span class="badge bg-danger">Hapus Himpunan</span> untuk menghapus himpunan beserta anggotanya.</li>
+                    <li><b>Periksa & Reset</b><br>Klik <span class="badge bg-success">Periksa</span> untuk melihat isi himpunan. Klik <span class="badge bg-secondary">Reset Semua</span> untuk menghapus semua dan kembali ke tampilan awal.</li>
+                </ol>
+            </div>
+
+            <h4 class="text-center fw-bold mb-3" style="color:#7b2cbf;">
+                ✏️ Ayo Menggambar
+            </h4>
+
+            <div class="fungsi-simple-box">
+                <div class="control-row">
+                    <button class="btn btn-primary" onclick="buatSemesta()">Buat Semesta</button>
+                    <button class="btn btn-primary" onclick="buatLingkaran()">Buat Himpunan</button>
+                    <button class="btn btn-danger" onclick="hapusLingkaran()">Hapus Himpunan</button>
+                    <button class="btn btn-warning text-dark" onclick="toggleDeleteMode()">Hapus Panah</button>
+                    <button class="btn btn-success" onclick="periksaDiagram()">Periksa</button>
+                    <button class="btn btn-secondary" onclick="resetSemua()">Reset Semua</button>
+                </div>
+
+                <div class="input-row">
+                    <input id="namaInput" class="form-control" placeholder="Nama anggota...">
+                    <select id="setSelect" class="form-select">
+                        <option>Pilih Himpunan</option>
+                    </select>
+                    <button class="btn btn-primary" onclick="tambahAnggota()">Tambah Anggota</button>
+                </div>
+
+                <div class="fungsi-work-layout">
+                    <div>
+                        <div id="sketch-holder"></div>
+                    </div>
+
+                    <div class="fungsi-result-box">
+                        <b>HASIL PEMERIKSAAN:</b>
+                        <div id="hasilText" class="mt-3"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
+    <!-- ====================== HALAMAN 2 ====================== -->
+    <div class="fungsi-page" id="fungsiPage2">
+        <div class="fungsi-card">
+            <div class="fungsi-section-title">
+                Cara 2: Himpunan Pasangan Berurutan
+            </div>
+
+            <div class="fungsi-simple-box text-center">
+                <p>Susun relasi dalam bentuk himpunan pasangan berurutan:</p>
+
+                <h4 class="fungsi-formula">
+                    f = {
+                    (
+                    <select id="x1" class="form-select d-inline-block w-auto">
+                        <option value="">x</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                    </select>
+                    ,
+                    <select id="y1" class="form-select d-inline-block w-auto">
+                        <option value="">y</option>
+                        <option value="20000">20.000</option>
+                        <option value="40000">40.000</option>
+                        <option value="60000">60.000</option>
+                    </select>
+                    ),
+                    (
+                    <select id="x2" class="form-select d-inline-block w-auto">
+                        <option value="">x</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                    </select>
+                    ,
+                    <select id="y2" class="form-select d-inline-block w-auto">
+                        <option value="">y</option>
+                        <option value="20000">20.000</option>
+                        <option value="40000">40.000</option>
+                        <option value="60000">60.000</option>
+                    </select>
+                    ),
+                    (
+                    <select id="x3" class="form-select d-inline-block w-auto">
+                        <option value="">x</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                    </select>
+                    ,
+                    <select id="y3" class="form-select d-inline-block w-auto">
+                        <option value="">y</option>
+                        <option value="20000">20.000</option>
+                        <option value="40000">40.000</option>
+                        <option value="60000">60.000</option>
+                    </select>
+                    )
+                    }
+                </h4>
+
+                <div class="fungsi-btn-row">
+                    <button class="btn btn-success px-4" onclick="cekPasangan()">Periksa Jawaban</button>
+                    <button class="btn btn-secondary px-4" onclick="resetPasangan()">Reset</button>
+                </div>
+
+                <div id="hasilPasangan" class="mt-4"></div>
+            </div>
+
+            <div class="fungsi-section-title">
+                Cara 3: Persamaan Fungsi
+            </div>
+
+            <div class="fungsi-simple-box text-center">
+                <p>
+                    Tentukan persamaan fungsi dari jumlah Perpotong (<b>x</b>) ke total harga <b>f(x)</b>.
+                </p>
+
+                <h4 class="fungsi-formula">
+                    f(x) =
+                    <input type="text" id="persamaanInput"
+                           class="form-control d-inline-block text-center fungsi-input"
+                           style="max-width:250px;"
+                           placeholder="Contoh: 80000x">
+                </h4>
+
+                <div class="fungsi-btn-row">
+                    <button class="btn px-4" style="background:#7b2cbf;color:white;" onclick="cekPersamaan()">Periksa Jawaban</button>
+                    <button class="btn btn-secondary px-4" onclick="resetPersamaan()">Reset</button>
+                </div>
+
+                <div id="hasilPersamaan" class="mt-4"></div>
+
+                <hr class="mt-5">
+
+                <h5 style="color:#7b2cbf;font-weight:600;">
+                    Uji Nilai Fungsi
+                </h5>
+
+                <p>Hitung nilai berikut menggunakan persamaan yang benar:</p>
+
+                <div class="row justify-content-center g-3">
+                    <div class="col-md-3">
+                        f(1) =
+                        <input type="text" id="f1" class="form-control text-center fungsi-input">
+                    </div>
+
+                    <div class="col-md-3">
+                        f(2) =
+                        <input type="text" id="f2" class="form-control text-center fungsi-input">
+                    </div>
+
+                    <div class="col-md-3">
+                        f(3) =
+                        <input type="text" id="f3" class="form-control text-center fungsi-input">
+                    </div>
+                </div>
+
+                <div class="fungsi-btn-row">
+                    <button class="btn px-4" style="background:#9d4edd;color:white;" onclick="cekNilai()">Cek Nilai</button>
+                </div>
+
+                <div id="hasilNilai" class="mt-4"></div>
+            </div>
+
+            <div class="fungsi-section-title soft mt-4">
+                Cara 4: Dengan Tabel
+            </div>
+
+            <div class="fungsi-simple-box">
+                <p>
+                    Lengkapi tabel berikut menggunakan rumus <b>f(x) = 20000x</b>
+                </p>
+
+                <div class="table-responsive">
+                    <table class="table table-bordered text-center align-middle fungsi-table">
+                        <thead>
+                            <tr>
+                                <th style="width:50%">x (Jumlah Perpotong)</th>
+                                <th>f(x) (Total Harga)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>4</td>
+                                <td><input type="text" id="t4" class="form-control text-center fungsi-input"></td>
+                            </tr>
+                            <tr>
+                                <td>6</td>
+                                <td><input type="text" id="t6" class="form-control text-center fungsi-input"></td>
+                            </tr>
+                            <tr>
+                                <td>9</td>
+                                <td><input type="text" id="t9" class="form-control text-center fungsi-input"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="fungsi-btn-row">
+                    <button class="btn px-4" style="background:#9d4edd;color:white;" onclick="cekTabelBaru()">Periksa Tabel</button>
+                    <button class="btn btn-secondary px-4" onclick="resetTabelBaru()">Reset</button>
+                </div>
+
+                <div id="hasilTabelBaru" class="mt-4"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ====================== HALAMAN 3 ====================== -->
+    <div class="fungsi-page" id="fungsiPage3">
+        <div class="fungsi-card">
+            <div class="fungsi-section-title">
+                Cara 5: Dengan Grafik
+            </div>
+
+            <div class="fungsi-simple-box">
+                <p style="font-size:16px; line-height:1.9;">
+                    Pada grafik fungsi, setiap nilai x dipasangkan dengan tepat satu nilai y.
+                    Setiap pasangan berurutan (x, y) dinyatakan sebagai satu titik
+                    pada bidang Kartesius.
+                </p>
+
+                <p style="font-size:16px; line-height:1.9; margin-bottom:0;">
+                    Kumpulan titik-titik tersebut membentuk grafik fungsi
+                    yang menunjukkan hubungan antara variabel x dan variabel y.
+                </p>
+            </div>
+
+            <div class="fungsi-soft-box">
+                <strong>📘 Petunjuk Penggunaan</strong>
+                <ol style="font-size:16px; line-height:1.9; margin-bottom:0; margin-top:10px;">
+                    <li>Masukkan jumlah nilai pada <b>sumbu X</b> dan <b>sumbu Y</b>.</li>
+                    <li>Klik <span class="badge bg-primary">📊 Gambar Grafik</span> untuk menampilkan bidang koordinat.</li>
+                    <li>Klik <span class="badge bg-info text-dark">🔢 Isi Sumbu X</span>, lalu masukkan nilai x (1, 2, dan 3).</li>
+                    <li>Klik <span class="badge bg-info text-dark">🔢 Isi Sumbu Y</span>, lalu masukkan nilai f(x) sesuai rumus <b>f(x) = 20.000x</b>.</li>
+                    <li>Pilih <span class="badge bg-success">🔵 Tambah Titik</span>, kemudian klik titik yang sesuai dengan pasangan berurut (x, f(x)).</li>
+                    <li>Jika salah memilih titik, klik <span class="badge bg-warning text-dark">❌ Hapus Titik</span> lalu klik titik yang ingin dihapus.</li>
+                    <li>Setelah selesai, klik <span class="badge bg-success">✅ Periksa Jawaban</span> untuk melihat apakah grafik sudah sesuai dengan fungsi.</li>
+                    <li>Jika ingin mengulang dari awal, klik <span class="badge bg-danger">🗑 Reset</span>.</li>
+                </ol>
+            </div>
+
+            <div class="fungsi-simple-box">
+                <p>Diketahui data sebagai berikut:</p>
+
+                <ul>
+                    <li>Harga 1 loyang Amparan Tatak Rp20.000.</li>
+                    <li>Seorang pembeli membeli 3 loyang.</li>
+                    <li>Hubungan antara jumlah loyang (x) dan total harga dinyatakan dengan fungsi f(x) = 20.000x.</li>
+                </ul>
+
+                <p class="mb-0">
+                    Gambarkan grafik fungsi tersebut untuk nilai x = 1, 2, dan 3 dibawah ini .
+                </p>
+            </div>
+
+            <h4 class="text-center fw-bold mb-3" style="color:#7b2cbf;">
+                ✨ Menggambar Grafik
+            </h4>
+
+            <div class="row g-4">
+                <div class="col-lg-7 d-flex">
+                    <div id="canvas-wrapper" class="w-100">
+                        <div id="koordinat-canvas"></div>
+                    </div>
+                </div>
+
+                <div class="col-lg-5 d-flex">
+                    <div class="hasil-box w-100">
+                        <h5 style="color:#7b2cbf;font-weight:700;">
+                            📘 Hasil Pemeriksaan
+                        </h5>
+
+                        <div id="feedback-area"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="koordinat-controls"></div>
+        </div>
+    </div>
+
+    <!-- ====================== PAGINATION ====================== -->
+    <div class="fungsi-pagination">
+        <nav aria-label="Pagination Materi Fungsi">
+            <ul class="pagination justify-content-center flex-wrap">
+                <li class="page-item disabled" id="fungsiPrevItem">
+                    <button type="button" class="page-link" onclick="changeFungsiPage(currentFungsiPage - 1)">Sebelumnya</button>
+                </li>
+
+                <li class="page-item active" id="fungsiPageItem1"><button type="button" class="page-link" onclick="changeFungsiPage(1)">1</button></li>
+                <li class="page-item" id="fungsiPageItem2"><button type="button" class="page-link" onclick="changeFungsiPage(2)">2</button></li>
+                <li class="page-item" id="fungsiPageItem3"><button type="button" class="page-link" onclick="changeFungsiPage(3)">3</button></li>
+
+                <li class="page-item" id="fungsiNextItem">
+                    <button type="button" class="page-link" onclick="nextFungsiPage()">Berikutnya</button>
+                </li>
+            </ul>
+        </nav>
+    </div>
 </div>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.0/p5.min.js"></script>
-
-<div class="card mt-4" style="width:100%; border:2px solid #7f3ab7;">
-    
-
-<div class="card-header text-center"
-     style="background:linear-gradient(90deg,#9d4edd,#7b2cbf);
-            color:white;
-            font-size:1.4rem;
-            font-weight:700;
-            padding:8px;">
-   Cara 1: Diagram Panah
-</div>
-
-
-<!-- ================= PETUNJUK ================= -->
-<div class="px-4 pt-4">
-
-<div class="p-4 mb-4 mx-auto"
-     style="background:white;
-            border:3px solid #7f3ab7;
-            border-radius:25px;
-            max-width:95%;">
-📘 Petunjuk Penggunaan
-</h5>
-
-<ol>
-            <li>
-                <b>Buat Semesta</b><br>
-                Klik tombol 
-                <span class="badge bg-primary">Buat Semesta</span> 
-                untuk menampilkan wilayah himpunan semesta.
-            </li>
-
-            <li>
-                <b>Buat Himpunan</b><br>
-                Klik tombol 
-                <span class="badge bg-primary">Buat Himpunan</span> 
-                untuk membuat lingkaran himpunan (A dan B).
-            </li>
-
-            <li>
-                <b>Isi Nama Anggota</b><br>
-                Ketik nama anggota pada kolom input, lalu pilih himpunan tujuan.
-            </li>
-
-            <li>
-                <b>Tambah Anggota</b><br>
-                Klik 
-                <span class="badge bg-primary">Tambah Anggota</span> 
-                untuk memasukkan anggota ke dalam himpunan.
-            </li>
-
-            <li>
-                <b>Membuat Panah (Relasi)</b><br>
-                Klik <b>lingkaran hitam</b> pada satu anggota himpunan,<br>
-                lalu klik <b>lingkaran hitam</b> pada anggota himpunan lainnya.<br>
-                Panah relasi akan muncul otomatis.
-            </li>
-
-            <li>
-                <b>Hapus Panah (Relasi)</b><br>
-                Klik 
-                <span class="badge bg-warning text-dark">Hapus Panah</span> 
-                untuk mengaktifkan mode hapus.<br>
-                Panah akan berubah warna menjadi <b>merah</b>.<br>
-                Klik panah yang ingin dihapus.<br>
-                Setelah selesai, klik kembali tombol 
-                <span class="badge bg-warning text-dark">Hapus Panah</span> 
-                untuk kembali ke mode normal.
-            </li>
-
-            <li>
-                <b>Hapus Himpunan</b><br>
-                Pilih huruf himpunan, lalu klik 
-                <span class="badge bg-danger">Hapus Himpunan</span> 
-                untuk menghapus himpunan beserta anggotanya.
-            </li>
-
-            <li>
-                <b>Periksa & Reset</b><br>
-                Klik 
-                <span class="badge bg-success">Periksa</span> 
-                untuk melihat isi himpunan.<br>
-                Klik 
-                <span class="badge bg-secondary">Reset Semua</span> 
-                untuk menghapus semua dan kembali ke tampilan awal.
-            </li>
-
-        </ol>
-
-</div>
-<!-- ===== JUDUL ANIMASI ===== -->
-<h4 class="text-center ayo-title mb-4">
-✏️ Ayo Menggambar
-</h4>
-
-<!-- ===== AREA GAMBAR ===== -->
-
-<div class="card"
-style="border:3px solid #7f3ab7;border-radius:25px;">
-
-<div class="card-body">
-
-<div class="control-row">
-<button class="btn btn-primary" onclick="buatSemesta()">Buat Semesta</button>
-<button class="btn btn-primary" onclick="buatLingkaran()">Buat Himpunan</button>
-<button class="btn btn-danger" onclick="hapusLingkaran()">Hapus Himpunan</button>
-<button class="btn btn-warning text-dark" onclick="toggleDeleteMode()">Hapus Panah</button>
-<button class="btn btn-success" onclick="periksaDiagram()">Periksa</button>
-<button class="btn btn-secondary" onclick="resetSemua()">Reset Semua</button>
-</div>
-
-<div class="input-row">
-<input id="namaInput" class="form-control" placeholder="Nama anggota...">
-<select id="setSelect" class="form-select">
-<option>Pilih Himpunan</option>
-</select>
-<button class="btn btn-primary" onclick="tambahAnggota()">Tambah Anggota</button>
-</div>
-
-<div class="row mt-4">
-
-<div class="col-md-8">
-<div id="sketch-holder"></div>
-</div>
-
-<div class="col-md-4">
-<div class="p-3"
-style="background:white;border:3px solid #7f3ab7;border-radius:25px;height:100%;">
-<b>HASIL PEMERIKSAAN:</b>
-<div id="hasilText" class="mt-3"></div>
-</div>
-</div>
-
-</div>
-</div>
-</div>
-
-</div>
-<br>
-</div>
-
-
 
 <script>
 
+    let percobaanLatihanFungsiAwalSalah = 0;
+
+    function cekLatihanFungsiBenar() {
+        const feedback = document.getElementById('feedback');
+        if (!feedback) return;
+
+        percobaanLatihanFungsiAwalSalah = 0;
+
+        feedback.innerHTML = `
+            <div class="alert alert-success mt-3">
+                <strong>Benar! Ini merupakan Fungsi.</strong><br><br>
+                Setiap jumlah loyang memiliki tepat satu total harga, sehingga hubungan tersebut termasuk fungsi.
+            </div>
+        `;
+    }
+
+    function cekLatihanFungsiSalah() {
+        const feedback = document.getElementById('feedback');
+        if (!feedback) return;
+
+        percobaanLatihanFungsiAwalSalah++;
+
+        if (percobaanLatihanFungsiAwalSalah < 3) {
+            feedback.innerHTML = `
+                <div class="alert alert-warning mt-3">
+                    <strong>Kurang tepat.</strong><br>
+                    Coba perhatikan kembali hubungan antara jumlah loyang dan total harga, lalu pilih ulang.
+                </div>
+            `;
+            return;
+        }
+
+        feedback.innerHTML = `
+            <div class="alert alert-danger mt-3">
+                <strong>Jawaban masih belum tepat.</strong><br><br>
+                Jawaban yang benar adalah <b>Fungsi</b>, karena setiap jumlah loyang
+                hanya memiliki satu total harga.<br><br>
+                Suatu relasi disebut <b>bukan fungsi</b> jika ada satu nilai x
+                yang memiliki lebih dari satu nilai f(x).
+            </div>
+        `;
+    }
+
+    let currentFungsiPage = 1;
+    const totalFungsiPage = 3;
+
+    function changeFungsiPage(page) {
+        if (page < 1 || page > totalFungsiPage) return;
+
+        currentFungsiPage = page;
+
+        for (let i = 1; i <= totalFungsiPage; i++) {
+            const pageElement = document.getElementById("fungsiPage" + i);
+            const pageItem = document.getElementById("fungsiPageItem" + i);
+
+            if (pageElement) pageElement.classList.toggle("active", i === page);
+            if (pageItem) pageItem.classList.toggle("active", i === page);
+        }
+
+        const prevItem = document.getElementById("fungsiPrevItem");
+        if (prevItem) prevItem.classList.toggle("disabled", page === 1);
+
+        const target = document.querySelector(".content-gap");
+        if (target) {
+            target.scrollIntoView({ behavior: "smooth", block: "start" });
+        }
+
+        setTimeout(function () {
+            if (typeof resizeResponsive === "function") resizeResponsive();
+            window.dispatchEvent(new Event("resize"));
+        }, 80);
+    }
+
+    function nextFungsiPage() {
+        if (currentFungsiPage < totalFungsiPage) {
+            changeFungsiPage(currentFungsiPage + 1);
+        } else {
+            window.location.href = "/petunjuk/petunjuk_bab3";
+        }
+    }
+</script>
+
+<script>
 let universe=null;
 let sets=[];
 let members=[];
@@ -330,8 +884,9 @@ function windowResized(){
 }
 function resizeResponsive(){
     let container=document.getElementById("sketch-holder");
-    let w=container.offsetWidth;
-    resizeCanvas(w,w*0.6);
+    let w = container.offsetWidth || container.parentElement.offsetWidth || 900;
+    let h = Math.max(360, w * 0.58);
+    resizeCanvas(w, h);
 }
 
 function draw(){
@@ -689,105 +1244,9 @@ class Member{
         return dist(mx,my,this.x,this.y) < this.radius + 4;
     }
 }
-
 </script>
-<!-- ================= CARA 2 DROPDOWN LENGKAP ================= -->
-<div class="card mt-5"
-     style="
-        border:1px solid #7f3ab7;
-        border-radius:15px;
-        overflow:hidden;
-        background:#ffffff;
-        box-shadow:none;
-     ">
-
-    <div class="card-header text-center"
-         style="
-            background:linear-gradient(90deg,#9d4edd,#7b2cbf);
-            color:white;
-            font-size:1.4rem;
-            font-weight:700;
-            border-bottom:2px solid #7f3ab7;
-            border-radius:0;
-            margin:0;
-            padding:8px 5px;
-         ">
-        Cara 2: Himpunan Pasangan Berurutan
-    </div>
-
-    <div class="card-body p-4 text-center">
-
-<div class="card-body p-4 text-center">
-
-<p>Susun relasi dalam bentuk himpunan pasangan berurutan:</p>
-
-<h4 style="font-family:'Times New Roman', serif;">
-f = {
-(
-<select id="x1" class="form-select d-inline-block w-auto">
-<option value="">x</option>
-<option value="1">1</option>
-<option value="2">2</option>
-<option value="3">3</option>
-</select>
-,
-<select id="y1" class="form-select d-inline-block w-auto">
-<option value="">y</option>
-<option value="20000">20.000</option>
-<option value="40000">40.000</option>
-<option value="60000">60.000</option>
-</select>
-),
-(
-<select id="x2" class="form-select d-inline-block w-auto">
-<option value="">x</option>
-<option value="1">1</option>
-<option value="2">2</option>
-<option value="3">3</option>
-</select>
-,
-<select id="y2" class="form-select d-inline-block w-auto">
-<option value="">y</option>
-<option value="20000">20.000</option>
-<option value="40000">40.000</option>
-<option value="60000">60.000</option>
-</select>
-),
-(
-<select id="x3" class="form-select d-inline-block w-auto">
-<option value="">x</option>
-<option value="1">1</option>
-<option value="2">2</option>
-<option value="3">3</option>
-</select>
-,
-<select id="y3" class="form-select d-inline-block w-auto">
-<option value="">y</option>
-<option value="20000">20.000</option>
-<option value="40000">40.000</option>
-<option value="60000">60.000</option>
-</select>
-)
-}
-</h4>
-
-<br>
-
-<button class="btn btn-success px-4 me-2" onclick="cekPasangan()">
-Periksa Jawaban
-</button>
-
-<button class="btn btn-secondary px-4" onclick="resetPasangan()">
-Reset
-</button>
-
-<div id="hasilPasangan" class="mt-4"></div>
-
-</div>
-</div>
 
 <script>
-
 function cekPasangan(){
 
     const kunci = {
@@ -836,111 +1295,10 @@ function resetPasangan(){
     document.querySelectorAll("select").forEach(s=>s.value="");
     document.getElementById("hasilPasangan").innerHTML="";
 }
-
 </script>
-</div>
-<!-- ================= CARA 3 ================= -->
-<div class="card mt-5"
-     style="
-        border:1px solid #7f3ab7;
-        border-radius:20px;
-        overflow:hidden;
-        background:#ffffff;
-        box-shadow:none;
-     ">
-
-    <div class="card-header text-center"
-         style="
-            background:linear-gradient(90deg,#9d4edd,#7b2cbf);
-            color:white;
-            font-size:1.4rem;
-            font-weight:700;
-            border-bottom:1px solid #7f3ab7;
-            border-radius:0;
-            margin:0;
-            padding:8px 20px;
-         ">
-        Cara 3: Persamaan Fungsi
-    </div>
-
-    <div class="card-body p-4 text-center">
-
-<p>
-Tentukan persamaan fungsi dari jumlah Perpotong (<b>x</b>) ke total harga <b>f(x)</b>.
-</p>
-
-<h4 style="font-family:'Times New Roman', serif;">
-f(x) =
-<input type="text" id="persamaanInput"
-       class="form-control d-inline-block text-center"
-       style="max-width:250px;border:2px solid #9d4edd;"
-       placeholder="Contoh: 80000x">
-</h4>
-
-<br>
-
-<button class="btn px-4 me-2"
-        style="background:#7b2cbf;color:white;"
-        onclick="cekPersamaan()">
-Periksa Jawaban
-</button>
-
-<button class="btn btn-secondary px-4"
-        onclick="resetPersamaan()">
-Reset
-</button>
-
-<div id="hasilPersamaan" class="mt-4"></div>
-
-<hr class="mt-5">
-
-<h5 style="color:#7b2cbf;font-weight:600;">
-Uji Nilai Fungsi
-</h5>
-
-<p>Hitung nilai berikut menggunakan persamaan yang benar:</p>
-
-<div class="row justify-content-center">
-
-<div class="col-md-3">
-f(1) =
-<input type="text" id="f1"
-       class="form-control text-center"
-       style="border:2px solid #9d4edd;">
-</div>
-
-<div class="col-md-3">
-f(2) =
-<input type="text" id="f2"
-       class="form-control text-center"
-       style="border:2px solid #9d4edd;">
-</div>
-
-<div class="col-md-3">
-f(3) =
-<input type="text" id="f3"
-       class="form-control text-center"
-       style="border:2px solid #9d4edd;">
-</div>
-
-</div>
-
-<br>
-
-<button class="btn px-4"
-        style="background:#9d4edd;color:white;"
-        onclick="cekNilai()">
-Cek Nilai
-</button>
-
-<div id="hasilNilai" class="mt-4"></div>
-
-</div>
-</div>
 
 <script>
-
-/* ================= CEK PERSAMAAN ================= */
+================= */
 function cekPersamaan(){
 
     let input = document.getElementById("persamaanInput").value;
@@ -1042,98 +1400,10 @@ function resetPersamaan(){
     document.getElementById("f3").value="";
     document.getElementById("hasilNilai").innerHTML="";
 }
-
 </script>
-<!-- ================= CARA 4 ================= -->
-<div class="card mt-5"
-     style="
-        width:100%;
-        border:1px solid #7f3ab7;
-        border-radius:20px;
-        overflow:hidden;
-        background:#ffffff;
-        box-shadow:none;
-     ">
-
-    <div class="card-header text-center"
-         style="
-            background:linear-gradient(90deg,#9d4edd,#7b2cbf);
-            color:white;
-            font-size:1.4rem;
-            font-weight:700;
-            border-bottom:1px solid #7f3ab7;
-            border-radius:0;
-            margin:0;
-            padding:12px 20px;
-         ">
-        Cara 4: Dengan Tabel
-    </div>
-
-    <div class="card-body p-4">
-
-<p>
-Lengkapi tabel berikut menggunakan rumus <b>f(x) = 20000x</b>
-</p>
-
-<div class="table-responsive">
-<table class="table table-bordered text-center align-middle"
-       style="border:2px solid #7b2cbf;">
-<thead style="background:#ede9fe;">
-<tr>
-<th style="width:50%">x (Jumlah Perpotong)</th>
-<th>f(x) (Total Harga)</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>4</td>
-<td>
-<input type="text" id="t4"
-       class="form-control text-center"
-       style="border:2px solid #9d4edd;">
-</td>
-</tr>
-<tr>
-<td>6</td>
-<td>
-<input type="text" id="t6"
-       class="form-control text-center"
-       style="border:2px solid #9d4edd;">
-</td>
-</tr>
-<tr>
-<td>9</td>
-<td>
-<input type="text" id="t9"
-       class="form-control text-center"
-       style="border:2px solid #9d4edd;">
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-
-<br>
-
-<button class="btn px-4"
-        style="background:#9d4edd;color:white;"
-        onclick="cekTabelBaru()">
-Periksa Tabel
-</button>
-
-<button class="btn btn-secondary px-4"
-        onclick="resetTabelBaru()">
-Reset
-</button>
-
-<div id="hasilTabelBaru" class="mt-4"></div>
-
-</div>
-</div>
 
 <script>
-
-/* ================= CEK TABEL BARU ================= */
+================= */
 function cekTabelBaru(){
 
     function bersih(val){
@@ -1203,227 +1473,10 @@ function resetTabelBaru(){
     document.getElementById("t6").style.border="2px solid #9d4edd";
     document.getElementById("t9").style.border="2px solid #9d4edd";
 }
-
 </script>
-<!-- ================= LATIHAN 2 ================= -->
-<div class="card shadow-lg mt-4" style="border:3px solid #7f3ab7;border-radius:30px;overflow:hidden;">
-
-  <!-- HEADER -->
-  <div class="card-header text-center"
-       style="background:linear-gradient(90deg,#9d4edd,#7b2cbf);
-              color:white;
-              font-size:1.4rem;
-              font-weight:700;
-              padding:8px;">
-    Cara 5: Dengan Grafik
-  </div>
-
-  <!-- BODY MATERI -->
-  <div class="card-body p-4" style="background:#f3e8ff;">
-
-  <div class="p-4"
-       style="background:white;
-              border:3px solid #7f3ab7;
-              border-radius:25px;">
-
-
-
-
-    <p style="font-size:16px; line-height:1.9;">
-      Pada grafik fungsi, setiap nilai x dipasangkan dengan tepat satu nilai y.
-      Setiap pasangan berurutan (x, y) dinyatakan sebagai satu titik
-      pada bidang Kartesius.
-    </p>
-
-    <p style="font-size:16px; line-height:1.9;">
-      Kumpulan titik-titik tersebut membentuk grafik fungsi
-      yang menunjukkan hubungan antara variabel x dan variabel y.
-    </p>
-
-  
-
-  </div>
-
-</div>
-  <!-- PETUNJUK -->
-<div class="card-body p-4" style="background:#f3e8ff;">
-  <div class="p-4"
-       style="background:white;
-              border:3px solid #7f3ab7;
-              border-radius:25px;">
-
-    <h5 class="text-center mb-4"
-        style="color:#7b2cbf;font-weight:700;">
-      📘 Petunjuk Penggunaan
-    </h5>
-
-    <ol style="font-size:16px; line-height:1.9;">
-
-      <li>
-        Masukkan jumlah nilai pada <b>sumbu X</b> dan <b>sumbu Y</b>.
-      </li>
-
-      <li>
-        Klik <span class="badge bg-primary">📊 Gambar Grafik</span> 
-        untuk menampilkan bidang koordinat.
-      </li>
-
-      <li>
-        Klik <span class="badge bg-info text-dark">🔢 Isi Sumbu X</span>, 
-        lalu masukkan nilai x (1, 2, dan 3).
-      </li>
-
-      <li>
-        Klik <span class="badge bg-info text-dark">🔢 Isi Sumbu Y</span>, 
-        lalu masukkan nilai f(x) sesuai rumus <b>f(x) = 20.000x</b>.
-      </li>
-
-      <li>
-        Pilih <span class="badge bg-success">🔵 Tambah Titik</span>, 
-        kemudian klik titik yang sesuai dengan pasangan berurut (x, f(x)).
-      </li>
-
-      <li>
-        Jika salah memilih titik, klik 
-        <span class="badge bg-warning text-dark">❌ Hapus Titik</span> 
-        lalu klik titik yang ingin dihapus.
-      </li>
-
-      <li>
-        Setelah selesai, klik 
-        <span class="badge bg-success">✅ Periksa Jawaban</span> 
-        untuk melihat apakah grafik sudah sesuai dengan fungsi.
-      </li>
-
-      <li>
-        Jika ingin mengulang dari awal, klik 
-        <span class="badge bg-danger">🗑 Reset</span>.
-      </li>
-
-    </ol>
-
-  </div>
-</div>
-
-  <div class="container mt-4">
-
-  <div class="card p-4"
-       style="background:#f8f3ff;
-              border:3px solid #7b2cbf;
-              border-radius:20px;">
-
-    <p>
-      Diketahui data sebagai berikut:
-    </p>
-
-    <ul>
-      <li>Harga 1 loyang Amparan Tatak Rp20.000.</li>
-      <li>Seorang pembeli membeli 3 loyang.</li>
-      <li>Hubungan antara jumlah loyang (x) dan total harga dinyatakan dengan fungsi f(x) = 20.000x.</li>
-    </ul>
-
-    <p>
-      Gambarkan grafik fungsi tersebut untuk nilai x = 1, 2, dan 3 dibawah ini .
-    </p>
-
-  </div>
-
-</div>
-
-  <!-- ================= HEADER INTERAKTIF ================= -->
-  <div class="mb-3"
-       style="width:100%;
-              max-width:1300px;
-              margin:20px auto 5px auto;">
-
-    <div style="background:rgba(255,255,255,0.9);
-                border-radius:18px;
-                padding:15px 30px;
-                box-shadow:0 8px 25px rgba(123,44,191,0.12);
-                text-align:center;">
-
-      <h2 style="font-weight:700;
-                 font-size:24px;
-                 margin-bottom:4px;
-                 color:#7b2cbf;">
-        ✨ Menggambar Grafik
-      </h2>
-
-    
-
-      <div style="width:100px;height:3px;margin:10px auto 0;
-                  border-radius:10px;
-                  background:linear-gradient(90deg,#7b2cbf,#c77dff);">
-      </div>
-
-    </div>
-  </div>
-
-<!-- ================= AREA GRAFIK ================= -->
-<div class="container-fluid mt-0">
-
-<style>
-.equal-height{
-    display:flex;
-    align-items:stretch;
-}
-
-#canvas-wrapper{
-    background:white;
-    border:3px solid #7b2cbf;
-    border-radius:20px;
-    padding:20px;
-    box-shadow:0 10px 30px rgba(123,44,191,0.15);
-    position:relative;
-    overflow:hidden;
-    height:420px;          /* 🔥 Tetap */
-}
-
-.hasil-box{
-    background:white;
-    border:3px solid #7b2cbf;
-    border-radius:20px;
-    padding:25px;
-    box-shadow:0 10px 30px rgba(123,44,191,0.15);
-    position:relative;
-    height:420px;          /* 🔥 Tinggi tetap */
-    overflow-y:auto;       /* 🔥 Bisa scroll */
-}
-
-#feedback-area{
-    margin-top:15px;
-    font-weight:600;
-}
-</style>
-
-<div class="row g-4 equal-height">
-
-<div class="col-lg-7 d-flex">
-<div id="canvas-wrapper" class="w-100">
-<div id="koordinat-canvas"></div>
-</div>
-</div>
-
-<div class="col-lg-5 d-flex">
-<div class="hasil-box w-100">
-
-<h5 style="color:#7b2cbf;font-weight:700;">
-📘 Hasil Pemeriksaan
-</h5>
-
-<div id="feedback-area"></div>
-
-</div>
-</div>
-
-</div>
-
-<div id="koordinat-controls" class="mt-4 text-center"></div>
-</div>
 
 <script>
-
-let koordinatSketch = function(p){
+let koordinatSketch= function(p){
 
 let mode = "none";
 let nCols = 0, nRows = 0;
@@ -1451,8 +1504,8 @@ let columnColors = [
 /* ===== SETUP ===== */
 p.setup = function(){
 let wrapper = document.getElementById("canvas-wrapper");
-let w = wrapper.offsetWidth;
-let h = wrapper.offsetHeight;
+let w = wrapper.offsetWidth || 900;
+let h = wrapper.offsetHeight || 420;
 let canvas = p.createCanvas(w, h);
 canvas.parent("koordinat-canvas");
 p.textFont("Arial");
@@ -1461,7 +1514,7 @@ createUI();
 
 window.addEventListener("resize", function(){
 let wrapper = document.getElementById("canvas-wrapper");
-p.resizeCanvas(wrapper.offsetWidth, wrapper.offsetHeight);
+p.resizeCanvas(wrapper.offsetWidth || 900, wrapper.offsetHeight || 420);
 if(axisDrawn) hitungUlangGrid(wrapper.offsetWidth, wrapper.offsetHeight);
 });
 
@@ -1931,33 +1984,5 @@ b.mousePressed(fn);
 
 new p5(koordinatSketch);
 </script>
-</div>
 
-<!-- ================= TOMBOL NAVIGASI ================= -->
-<div class="container-fluid mt-4">
-    <div class="row">
-        <div class="col-12 d-flex justify-content-between align-items-center">
-
-            <!-- Tombol Sebelumnya -->
-            <a href="/bab_1/lanjut_3_1" class="btn btn-success px-4">
-                ← Sebelumnya
-            </a>
-
-            <!-- Tombol Selanjutnya -->
-            <a href="/petunjuk/petunjuk_bab3" class="btn btn-success px-4">
-                Selanjutnya →
-            </a>
-
-        </div>
-    </div>
-</div>
-
-</div>
-</div>
 @endsection
-
-
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-
-</body>
-</html>

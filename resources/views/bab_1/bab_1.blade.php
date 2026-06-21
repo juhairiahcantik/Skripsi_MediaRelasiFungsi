@@ -75,7 +75,7 @@
     .solution-header {
         background: linear-gradient(135deg, #8e44ad, #d2b4de);
         color: white;
-        font-size: 1.4rem;
+        font-size: 1.2rem;
         font-weight: 700;
         padding: 12px;
         border-radius: 12px;
@@ -763,56 +763,93 @@
 .semesta-petunjuk-full div {
     color: #5b2c6f !important;
 }
-
+/* ===== RAPIKAN S = { } AGAR RESPONSIVE ===== */
 .semesta-wrap-full {
     width: 100%;
-    display: grid;
-    grid-template-columns: auto 1fr auto;
+    margin: 18px auto 0;
+    display: flex;
     align-items: center;
-    gap: 12px;
-    margin-top: 14px;
+    justify-content: center;
+    gap: 14px;
+    box-sizing: border-box;
+    overflow: hidden;
 }
 
 .kurung-kiri,
 .kurung-kanan {
-    font-size: 2rem;
+    flex: 0 0 auto;
+    font-size: 2.8rem;
     font-weight: 800;
-    color: #5b2c6f;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    color: #5b2b83;
+    line-height: 1;
+    white-space: nowrap;
 }
 
 .semesta-grid-full {
-    width: 100%;
+    flex: 1 1 auto;
+    min-width: 0;
+    max-width: 780px;
     display: grid;
-    grid-template-columns: repeat(7, minmax(90px, 1fr));
-    gap: 12px;
+    grid-template-columns: repeat(auto-fit, minmax(95px, 1fr));
+    gap: 16px;
+    align-items: center;
+    justify-items: center;
 }
 
 .semesta-grid-full input {
     width: 100%;
-    min-height: 50px;
-    padding: 10px 12px;
-    border: 2px solid #ddd;
+    max-width: 110px;
+    height: 58px;
+    border: 2px solid #dddddd;
     border-radius: 14px;
     text-align: center;
+    font-size: 1rem;
+    font-weight: 600;
+    color: #333;
     outline: none;
-    font-weight: 700;
-    color: #4b2673;
-    background: #ffffff;
     box-sizing: border-box;
-    transition: all 0.2s ease;
-}
-
-.semesta-grid-full input:focus {
-    border-color: #9b59b6;
-    box-shadow: 0 0 0 4px rgba(155, 89, 182, 0.12);
 }
 
 .semesta-grid-full input::placeholder {
     color: #777;
     font-weight: 600;
+}
+
+.semesta-grid-full input:focus {
+    border-color: #8b5cf6;
+    box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.15);
+}
+
+/* Supaya tombol tetap rapi di tengah */
+.semesta-btns-full {
+    margin-top: 26px;
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+    flex-wrap: wrap;
+}
+
+/* Layar kecil */
+@media (max-width: 768px) {
+    .semesta-wrap-full {
+        gap: 8px;
+    }
+
+    .kurung-kiri,
+    .kurung-kanan {
+        font-size: 2.1rem;
+    }
+
+    .semesta-grid-full {
+        grid-template-columns: repeat(auto-fit, minmax(85px, 1fr));
+        gap: 12px;
+    }
+
+    .semesta-grid-full input {
+        height: 52px;
+        max-width: 100px;
+        font-size: 0.9rem;
+    }
 }
 
 /* TOMBOL DITENGAH */
@@ -1517,6 +1554,816 @@
         line-height: 1.85;
     }
 }
+
+
+/* ====================== TAMBAHAN: GAMBAR SILSILAH TETAP TERLIHAT ====================== */
+/* Tambahan ini hanya digunakan pada card silsilah di halaman pertama. */
+.silsilah-card {
+    overflow: visible !important;
+}
+
+.silsilah-layout {
+    display: grid;
+    grid-template-columns: minmax(300px, 0.9fr) minmax(0, 1.35fr);
+    gap: 24px;
+    align-items: start;
+}
+
+.silsilah-sticky {
+    position: sticky;
+    top: 18px;
+    z-index: 5;
+    background: linear-gradient(180deg, #ffffff 0%, #faf7ff 100%);
+    border: 1px solid #eadcf6;
+    border-radius: 20px;
+    padding: 16px;
+    box-shadow: 0 10px 24px rgba(91, 44, 111, 0.10);
+}
+
+.silsilah-sticky img {
+    width: 100% !important;
+    max-width: 100% !important;
+    max-height: calc(100vh - 130px);
+    object-fit: contain;
+    margin: 0 auto;
+    display: block;
+}
+
+.silsilah-sticky p {
+    margin-bottom: 0;
+}
+
+.silsilah-content {
+    min-width: 0;
+}
+
+/* Agar position: sticky tetap bekerja pada browser modern. */
+.content-gap,
+.materi-page {
+    overflow-x: clip;
+}
+
+@media (max-width: 992px) {
+    .silsilah-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .silsilah-sticky {
+        top: 8px;
+        padding: 10px;
+        border-radius: 16px;
+    }
+
+    .silsilah-sticky img {
+        max-height: 230px;
+    }
+
+    .silsilah-sticky p {
+        margin-top: 6px !important;
+        font-size: 0.82rem !important;
+    }
+}
+
+@media (max-width: 480px) {
+    .silsilah-sticky img {
+        max-height: 180px;
+    }
+}
+
+
+/* ====================== TAMBAHAN: TOMBOL MATERI WARNA HIJAU ====================== */
+/*
+   Hanya tombol yang berada di dalam materi yang diubah.
+   Tombol pagination Sebelumnya, nomor halaman, dan Berikutnya tetap menggunakan gaya ungu sebelumnya.
+*/
+
+/* TOMBOL UTAMA: PERIKSA DAN PILIHAN JAWABAN */
+.btn-cek,
+.quiz-opsi-btn,
+.btn-semesta-periksa-full,
+.kard-btn-check {
+    background: linear-gradient(135deg, #16A34A, #15803D) !important;
+    color: #FFFFFF !important;
+    border: 2px solid #15803D !important;
+    box-shadow: 0 8px 16px rgba(22, 163, 74, 0.24) !important;
+    cursor: pointer !important;
+    font-weight: 800 !important;
+    transition: all 0.2s ease !important;
+}
+
+.btn-cek:hover,
+.quiz-opsi-btn:hover,
+.btn-semesta-periksa-full:hover,
+.kard-btn-check:hover {
+    background: linear-gradient(135deg, #15803D, #166534) !important;
+    border-color: #166534 !important;
+    transform: translateY(-2px) !important;
+    box-shadow: 0 12px 20px rgba(22, 163, 74, 0.30) !important;
+}
+
+.btn-cek:active,
+.quiz-opsi-btn:active,
+.btn-semesta-periksa-full:active,
+.kard-btn-check:active {
+    transform: translateY(0) !important;
+    box-shadow: 0 5px 10px rgba(22, 163, 74, 0.22) !important;
+}
+
+/* TOMBOL ULANGI / RESET: MASIH HIJAU, TETAPI DIBEDAKAN DENGAN MODEL OUTLINE */
+.btn-ulang,
+.btn-semesta-ulang-full,
+.kard-btn-reset {
+    background: #FFFFFF !important;
+    color: #15803D !important;
+    border: 2px solid #16A34A !important;
+    box-shadow: 0 6px 12px rgba(22, 163, 74, 0.14) !important;
+    cursor: pointer !important;
+    font-weight: 800 !important;
+    transition: all 0.2s ease !important;
+}
+
+.btn-ulang:hover,
+.btn-semesta-ulang-full:hover,
+.kard-btn-reset:hover {
+    background: #F0FDF4 !important;
+    color: #166534 !important;
+    border-color: #15803D !important;
+    transform: translateY(-2px) !important;
+    box-shadow: 0 10px 16px rgba(22, 163, 74, 0.20) !important;
+}
+
+.btn-ulang:active,
+.btn-semesta-ulang-full:active,
+.kard-btn-reset:active {
+    transform: translateY(0) !important;
+    box-shadow: 0 4px 8px rgba(22, 163, 74, 0.14) !important;
+}
+
+/* FOKUS KEYBOARD AGAR TOMBOL TETAP MUDAH DIKENALI */
+.btn-cek:focus-visible,
+.btn-ulang:focus-visible,
+.quiz-opsi-btn:focus-visible,
+.btn-semesta-periksa-full:focus-visible,
+.btn-semesta-ulang-full:focus-visible,
+.kard-btn-check:focus-visible,
+.kard-btn-reset:focus-visible {
+    outline: 4px solid #FACC15 !important;
+    outline-offset: 3px !important;
+}
+
+
+
+/* =========================================================
+   TAMBAHAN: PETUNJUK AKTIVITAS AGAR MUDAH DIPAHAMI SISWA SMP
+   Hanya mengatur tampilan kotak petunjuk.
+========================================================= */
+
+.activity-guide {
+    background: #F0FDF4;
+    border: 2px dashed #86EFAC;
+    border-left: 5px solid #16A34A;
+    border-radius: 16px;
+    padding: 15px 18px;
+    margin: 16px 0 18px 0;
+    color: #14532D;
+    line-height: 1.8;
+    box-sizing: border-box;
+}
+
+.activity-guide strong {
+    color: #166534;
+}
+
+.activity-guide ol {
+    margin: 8px 0 0 20px;
+    padding: 0;
+}
+
+.activity-guide li {
+    margin-bottom: 6px;
+}
+
+.quiz-right-panel .quiz-instruction {
+    background: #F0FDF4;
+    border-left: 4px solid #16A34A;
+    border-radius: 12px;
+    padding: 10px 12px;
+    color: #166534;
+    font-weight: 700;
+    line-height: 1.7;
+    margin: 0 0 14px 0;
+    text-align: left;
+}
+
+@media (max-width: 768px) {
+    .activity-guide {
+        padding: 13px 14px;
+        border-radius: 14px;
+        font-size: 0.95rem;
+    }
+
+    .quiz-right-panel .quiz-instruction {
+        font-size: 0.94rem;
+    }
+}
+
+
+
+/* =========================================================
+   TAMBAHAN: GAMBAR SILSILAH PADA AKTIVITAS HIMPUNAN SEMESTA
+========================================================= */
+
+.semesta-silsilah-box {
+    max-width: 720px;
+    margin: 18px auto 22px auto;
+    padding: 14px;
+    background: linear-gradient(180deg, #ffffff 0%, #faf7ff 100%);
+    border: 1px solid #eadcf6;
+    border-radius: 18px;
+    box-shadow: 0 8px 20px rgba(91, 44, 111, 0.08);
+    text-align: center;
+    box-sizing: border-box;
+}
+
+.semesta-silsilah-box img {
+    width: 100%;
+    max-height: 520px;
+    object-fit: contain;
+    display: block;
+    margin: 0 auto;
+}
+
+.semesta-silsilah-caption {
+    margin: 10px 0 0 0;
+    font-size: 0.92rem;
+    color: #555;
+    line-height: 1.6;
+}
+
+@media (max-width: 768px) {
+    .semesta-silsilah-box {
+        padding: 10px;
+        border-radius: 14px;
+        margin-top: 14px;
+        margin-bottom: 18px;
+    }
+
+    .semesta-silsilah-box img {
+        max-height: none;
+    }
+
+    .semesta-silsilah-caption {
+        font-size: 0.82rem;
+    }
+}
+
+
+
+/* =========================================================
+   TAMBAHAN: FOTO SILSILAH DI SAMPING FORM HIMPUNAN SEMESTA
+========================================================= */
+
+.semesta-activity-layout {
+    display: grid;
+    grid-template-columns: minmax(300px, 0.85fr) minmax(0, 1.45fr);
+    gap: 22px;
+    align-items: start;
+}
+
+.semesta-form-panel {
+    min-width: 0;
+}
+
+.semesta-activity-layout .semesta-silsilah-box {
+    position: sticky;
+    top: 18px;
+    max-width: none;
+    margin: 0;
+}
+
+.semesta-activity-layout .semesta-silsilah-box img {
+    width: 100%;
+    max-height: calc(100vh - 135px);
+    object-fit: contain;
+}
+
+/* Tablet dan HP: gambar kembali berada di atas form agar tetap terbaca */
+@media (max-width: 992px) {
+    .semesta-activity-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .semesta-activity-layout .semesta-silsilah-box {
+        position: static;
+        top: auto;
+    }
+
+    .semesta-activity-layout .semesta-silsilah-box img {
+        max-height: none;
+    }
+}
+
+
+
+/* =========================================================
+   FINAL: BAGIAN ATAS HIMPUNAN DISAMAKAN DENGAN RELASI
+   Hanya mengubah tampilan halaman pertama.
+   Isi materi, HTML, ID, tombol, dan JavaScript tetap sama.
+========================================================= */
+
+/* Judul HIMPUNAN lama disembunyikan karena diganti pill di dalam card */
+.content-gap > h2 {
+    display: none !important;
+}
+
+/* Satu kotak besar seperti tampilan Relasi */
+#materiPage1 {
+    position: relative;
+    background: #ffffff;
+    border: 1px solid #EADCF6;
+    border-radius: 26px;
+    padding: 26px;
+    box-shadow: 0 14px 32px rgba(91, 44, 111, 0.08);
+    overflow: hidden;
+}
+
+/* Judul pill Himpunan seperti pill Relasi */
+#materiPage1::before {
+    content: "Himpunan";
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+    background: linear-gradient(135deg, #8E44AD, #B57EDC);
+    color: #ffffff;
+    text-align: center;
+    padding: 16px 22px;
+    border-radius: 20px;
+    font-size: 1.25rem;
+    font-weight: 800;
+    margin-bottom: 22px;
+    box-shadow: 0 10px 20px rgba(142, 68, 173, 0.16);
+}
+
+/* Card tujuan pembelajaran dibuat seperti Relasi:
+   putih, border ungu muda, judul hitam di dalam kotak */
+#materiPage1 > .card.mt-3 {
+    margin-top: 0 !important;
+    background: #ffffff !important;
+    border: 1px solid #E9D5FF !important;
+    border-radius: 20px !important;
+    box-shadow: none !important;
+    overflow: hidden !important;
+}
+
+#materiPage1 > .card.mt-3 > .card-header {
+    background: #ffffff !important;
+    color: #222222 !important;
+    border: none !important;
+    padding: 20px 20px 0 20px !important;
+    font-size: 1.05rem !important;
+    font-weight: 800 !important;
+    box-shadow: none !important;
+}
+
+#materiPage1 > .card.mt-3 > .card-body {
+    padding: 12px 22px 18px 22px !important;
+}
+
+/* Card silsilah tidak lagi menjadi kotak terpisah besar.
+   Kotaknya menyatu dengan panel halaman seperti Relasi */
+#materiPage1 > .silsilah-card {
+    margin-top: 18px !important;
+    background: transparent !important;
+    border: none !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    overflow: visible !important;
+}
+
+/* Judul bagian dibuat pill seperti "Perhatikan Gambar dan Cerita Berikut" pada Relasi */
+#materiPage1 > .silsilah-card > .card-header {
+    background: linear-gradient(135deg, #8E44AD, #B57EDC) !important;
+    color: #ffffff !important;
+    text-align: center !important;
+    padding: 15px 18px !important;
+    border: none !important;
+    border-radius: 20px !important;
+    box-shadow: 0 10px 20px rgba(142, 68, 173, 0.16) !important;
+}
+
+/* Isi gambar dan penyelesaian tetap sama, hanya jaraknya dirapikan */
+#materiPage1 > .silsilah-card > .card-body {
+    padding: 20px 0 0 0 !important;
+}
+
+/* Responsif HP */
+@media (max-width: 768px) {
+    #materiPage1 {
+        padding: 18px;
+        border-radius: 20px;
+    }
+
+    #materiPage1::before {
+        padding: 14px 16px;
+        border-radius: 16px;
+        font-size: 1.1rem;
+        margin-bottom: 18px;
+    }
+
+    #materiPage1 > .card.mt-3 {
+        border-radius: 16px !important;
+    }
+
+    #materiPage1 > .card.mt-3 > .card-header {
+        padding: 16px 16px 0 16px !important;
+        font-size: 1rem !important;
+    }
+
+    #materiPage1 > .card.mt-3 > .card-body {
+        padding: 10px 16px 15px 16px !important;
+    }
+
+    #materiPage1 > .silsilah-card > .card-header {
+        padding: 14px 16px !important;
+        border-radius: 16px !important;
+        font-size: 1.05rem !important;
+    }
+
+    #materiPage1 > .silsilah-card > .card-body {
+        padding-top: 16px !important;
+    }
+}
+
+
+
+/* =========================================================
+   FINAL: GAMBAR SILSILAH DAN PENYELESAIAN DUA KOLOM STICKY
+   Hanya mengubah tampilan.
+   Isi materi, HTML, ID, tombol, dan JavaScript tetap sama.
+========================================================= */
+
+/* Card bagian silsilah tetap menyatu dengan gaya halaman Relasi */
+#materiPage1 > .silsilah-card {
+    overflow: visible !important;
+}
+
+/* Desktop: gambar di kiri, penyelesaian di kanan */
+#materiPage1 .silsilah-layout {
+    display: grid !important;
+    grid-template-columns: minmax(320px, 0.88fr) minmax(0, 1.32fr) !important;
+    gap: 24px !important;
+    align-items: start !important;
+}
+
+/* Gambar tetap terlihat saat siswa scroll mengisi jawaban */
+#materiPage1 .silsilah-sticky {
+    position: sticky !important;
+    top: 16px !important;
+    align-self: start !important;
+    height: fit-content !important;
+    z-index: 5 !important;
+    padding: 16px !important;
+    background: linear-gradient(180deg, #ffffff 0%, #FCF9FF 100%) !important;
+    border: 1px solid #EADCF6 !important;
+    border-radius: 20px !important;
+    box-shadow: 0 10px 24px rgba(91, 44, 111, 0.08) !important;
+}
+
+/* Ukuran gambar proporsional dan tidak memenuhi layar */
+#materiPage1 .silsilah-sticky img {
+    width: 100% !important;
+    max-width: 100% !important;
+    max-height: calc(100vh - 140px) !important;
+    object-fit: contain !important;
+    display: block !important;
+    margin: 0 auto !important;
+}
+
+/* Caption lebih rapi */
+#materiPage1 .silsilah-sticky p {
+    margin: 10px 0 0 0 !important;
+    text-align: center !important;
+    font-size: 0.92rem !important;
+    line-height: 1.6 !important;
+    color: #555555 !important;
+}
+
+/* Area kanan tidak meluber */
+#materiPage1 .silsilah-content {
+    min-width: 0 !important;
+}
+
+/* Masalah langsung terlihat tanpa jarak berlebih */
+#materiPage1 .silsilah-content > div:first-child {
+    margin-top: 0 !important;
+}
+
+/* Kotak masalah dan penyelesaian tetap rapi */
+#materiPage1 .question-box {
+    margin-top: 0 !important;
+    box-sizing: border-box !important;
+}
+
+#materiPage1 .solution-card {
+    margin-top: 18px !important;
+    box-sizing: border-box !important;
+}
+
+/* Input pada Himpunan A, B, dan C tetap responsif */
+#materiPage1 .solution-text {
+    overflow-wrap: anywhere !important;
+}
+
+#materiPage1 .solution-text input {
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+}
+
+/* Tablet landscape: dua kolom tetap dipertahankan tetapi lebih seimbang */
+@media (max-width: 1180px) {
+    #materiPage1 .silsilah-layout {
+        grid-template-columns: minmax(270px, 0.78fr) minmax(0, 1.22fr) !important;
+        gap: 18px !important;
+    }
+
+    #materiPage1 .silsilah-sticky {
+        padding: 12px !important;
+    }
+
+    #materiPage1 .silsilah-sticky img {
+        max-height: calc(100vh - 125px) !important;
+    }
+
+    #materiPage1 .solution-card {
+        padding: 20px 22px !important;
+    }
+
+    #materiPage1 .set-box {
+        padding: 16px 18px !important;
+    }
+
+    #materiPage1 .set-content {
+        padding-left: 10px !important;
+    }
+}
+
+/* Tablet portrait dan HP: gambar kembali ke atas agar tidak sempit */
+@media (max-width: 900px) {
+    #materiPage1 .silsilah-layout {
+        grid-template-columns: 1fr !important;
+        gap: 16px !important;
+    }
+
+    #materiPage1 .silsilah-sticky {
+        position: static !important;
+        top: auto !important;
+        padding: 10px !important;
+        border-radius: 16px !important;
+    }
+
+    #materiPage1 .silsilah-sticky img {
+        max-height: 260px !important;
+    }
+
+    #materiPage1 .silsilah-sticky p {
+        margin-top: 6px !important;
+        font-size: 0.82rem !important;
+    }
+
+    #materiPage1 .solution-card {
+        margin-top: 14px !important;
+    }
+}
+
+/* HP */
+@media (max-width: 600px) {
+    #materiPage1 .silsilah-sticky img {
+        max-height: 210px !important;
+    }
+
+    #materiPage1 .solution-card {
+        padding: 16px !important;
+        border-radius: 18px !important;
+    }
+
+    #materiPage1 .solution-header {
+        padding: 12px 14px !important;
+        font-size: 1.05rem !important;
+        border-radius: 14px !important;
+    }
+
+    #materiPage1 .solution-intro {
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+        font-size: 0.95rem !important;
+    }
+
+    #materiPage1 .set-box {
+        padding: 14px !important;
+        border-radius: 16px !important;
+    }
+
+    #materiPage1 .set-content {
+        padding-left: 0 !important;
+    }
+
+    #materiPage1 .solution-text {
+        font-size: 0.95rem !important;
+        line-height: 1.8 !important;
+    }
+
+    #materiPage1 .solution-text input {
+        width: 82px !important;
+        padding: 9px 8px !important;
+        margin: 5px 3px !important;
+        border-radius: 12px !important;
+    }
+
+    #materiPage1 .btn-actions {
+        gap: 10px !important;
+    }
+
+    #materiPage1 .btn-cek,
+    #materiPage1 .btn-ulang {
+        width: 100% !important;
+    }
+}
+
+/* HP kecil */
+@media (max-width: 420px) {
+    #materiPage1 .silsilah-sticky img {
+        max-height: 180px !important;
+    }
+
+    #materiPage1 .solution-text input {
+        width: 72px !important;
+        font-size: 0.9rem !important;
+    }
+}
+
+
+
+/* =========================================================
+   FINAL: GAMBAR SILSILAH TETAP DIAM, PENYELESAIAN YANG SCROLL
+   Hanya mengubah tampilan.
+   Isi materi, HTML, ID, tombol, dan JavaScript tetap sama.
+========================================================= */
+
+/* Desktop dan laptop:
+   tinggi area dibatasi agar gambar tidak ikut bergerak.
+   Scroll hanya terjadi pada bagian penyelesaian di sebelah kanan. */
+@media (min-width: 901px) {
+
+    #materiPage1 .silsilah-layout {
+        display: grid !important;
+        grid-template-columns: minmax(320px, 0.88fr) minmax(0, 1.32fr) !important;
+        gap: 24px !important;
+        align-items: stretch !important;
+
+        height: min(760px, calc(100vh - 145px)) !important;
+        min-height: 540px !important;
+
+        overflow: hidden !important;
+    }
+
+    /* Gambar benar-benar diam, tidak sticky dan tidak ikut scroll */
+    #materiPage1 .silsilah-sticky {
+        position: static !important;
+        top: auto !important;
+        align-self: stretch !important;
+
+        height: 100% !important;
+        min-height: 0 !important;
+
+        display: flex !important;
+        flex-direction: column !important;
+        justify-content: center !important;
+
+        overflow: hidden !important;
+        padding: 16px !important;
+    }
+
+    #materiPage1 .silsilah-sticky img {
+        width: 100% !important;
+        max-width: 100% !important;
+        max-height: calc(100% - 44px) !important;
+
+        object-fit: contain !important;
+        display: block !important;
+        margin: 0 auto !important;
+    }
+
+    #materiPage1 .silsilah-sticky p {
+        flex-shrink: 0 !important;
+        margin: 10px 0 0 0 !important;
+    }
+
+    /* Hanya panel kanan yang dapat digulir */
+    #materiPage1 .silsilah-content {
+        height: 100% !important;
+        min-height: 0 !important;
+        overflow-y: auto !important;
+        overflow-x: hidden !important;
+
+        padding-right: 8px !important;
+        box-sizing: border-box !important;
+
+        scrollbar-width: thin;
+        scrollbar-color: #B57EDC #F3E8FF;
+    }
+
+    #materiPage1 .silsilah-content::-webkit-scrollbar {
+        width: 8px;
+    }
+
+    #materiPage1 .silsilah-content::-webkit-scrollbar-track {
+        background: #F3E8FF;
+        border-radius: 999px;
+    }
+
+    #materiPage1 .silsilah-content::-webkit-scrollbar-thumb {
+        background: linear-gradient(180deg, #8E44AD, #B57EDC);
+        border-radius: 999px;
+    }
+
+    /* Memberi ruang agar isi paling bawah tidak menempel */
+    #materiPage1 .silsilah-content::after {
+        content: "";
+        display: block;
+        height: 8px;
+    }
+}
+
+/* Laptop dengan tinggi layar pendek */
+@media (min-width: 901px) and (max-height: 720px) {
+    #materiPage1 .silsilah-layout {
+        height: calc(100vh - 115px) !important;
+        min-height: 470px !important;
+    }
+
+    #materiPage1 .silsilah-sticky {
+        padding: 12px !important;
+    }
+
+    #materiPage1 .silsilah-sticky p {
+        font-size: 0.82rem !important;
+        margin-top: 6px !important;
+    }
+}
+
+/* Tablet portrait dan HP:
+   kembali satu kolom supaya tidak sempit dan tetap rapi. */
+@media (max-width: 900px) {
+
+    #materiPage1 .silsilah-layout {
+        display: grid !important;
+        grid-template-columns: 1fr !important;
+        height: auto !important;
+        min-height: 0 !important;
+        overflow: visible !important;
+        gap: 16px !important;
+    }
+
+    #materiPage1 .silsilah-sticky {
+        position: static !important;
+        top: auto !important;
+        height: auto !important;
+        min-height: 0 !important;
+        overflow: visible !important;
+
+        display: block !important;
+        padding: 10px !important;
+        border-radius: 16px !important;
+    }
+
+    #materiPage1 .silsilah-sticky img {
+        width: 100% !important;
+        max-height: 250px !important;
+        object-fit: contain !important;
+    }
+
+    #materiPage1 .silsilah-content {
+        height: auto !important;
+        min-height: 0 !important;
+        overflow: visible !important;
+        padding-right: 0 !important;
+    }
+}
+
+/* HP */
+@media (max-width: 600px) {
+    #materiPage1 .silsilah-sticky img {
+        max-height: 205px !important;
+    }
+}
+
+/* HP kecil */
+@media (max-width: 420px) {
+    #materiPage1 .silsilah-sticky img {
+        max-height: 175px !important;
+    }
+}
+
 </style>
 
 <div class="content-gap">
@@ -1541,13 +2388,18 @@
         </div>
 
         <!-- KOTAK BESAR -->
-        <div class="card mt-4" style="width: 100%;">
+        <div class="card mt-4 silsilah-card" style="width: 100%;">
 
             <div class="card-header" style="text-align:center; font-size:1.3rem;">
                 Perhatikan gambar silsilah keluarga di bawah ini!
             </div>
 
             <div class="card-body" style="padding: 25px;">
+
+                <!-- TAMBAHAN: LAYOUT DUA KOLOM AGAR GAMBAR TETAP TERLIHAT -->
+                <div class="silsilah-layout">
+
+                    <aside class="silsilah-sticky">
 
                 <!-- GAMBAR TENGAH -->
                 <div style="text-align:center;">
@@ -1558,6 +2410,10 @@
                         Gambar 1.1 Silsilah Keluarga Bapak Andi
                     </p>
                 </div>
+
+                    </aside>
+
+                    <div class="silsilah-content">
 
                 <!-- MASALAH -->
                 <div style="margin-top:25px; text-align:left;">
@@ -1580,6 +2436,11 @@
                         <p>
                             Dari silsilah keluarga Bapak Andi, kita dapat membuat:
                         </p>
+                    </div>
+
+                    <div class="activity-guide">
+                        <strong>Petunjuk:</strong>
+                        Perhatikan silsilah, isi satu nama pada setiap kotak, lalu tekan tombol <strong>Periksa</strong>.
                     </div>
 
                     <!-- ================= A ================= -->
@@ -1705,6 +2566,10 @@
 
                 </div>
 
+                    </div>
+                </div>
+                <!-- AKHIR TAMBAHAN: LAYOUT DUA KOLOM -->
+
             </div>
         </div>
 
@@ -1788,9 +2653,10 @@
                 A = {Iful, Hendra, Ardi, Ica}
             </div>
 
-            <p class="mt-3">
-                <strong>Pilihlah jawaban yang paling tepat dengan memberi tanda centang (✓).</strong>
-            </p>
+            <div class="activity-guide">
+                <strong>Petunjuk:</strong>
+                Centang semua pernyataan yang sesuai, lalu tekan tombol <strong>Periksa</strong>.
+            </div>
 
             <p>Kumpulan tersebut merupakan .....</p>
 
@@ -1821,7 +2687,10 @@
                 </label>
             </div>
 
-            <button type="button" class="btn-cek" onclick="cekA()">Periksa</button>
+            <div class="btn-actions">
+                <button type="button" class="btn-cek" onclick="cekA()">Periksa</button>
+                <button type="button" class="btn-ulang" onclick="resetContohA()">Ulangi</button>
+            </div>
 
             <div id="hasilContohA" class="hasil-box"></div>
         </div>
@@ -1833,9 +2702,10 @@
 
         <div class="contoh-body">
 
-            <p>
-                <strong>Pilihlah jawaban yang paling tepat dengan memberi tanda centang (✓).</strong>
-            </p>
+            <div class="activity-guide">
+                <strong>Petunjuk:</strong>
+                Centang semua pernyataan yang sesuai, lalu tekan tombol <strong>Periksa</strong>.
+            </div>
 
             <div class="contoh-set">
                 B = {Lala, Nabil, Alfi, Bella, Rehan}
@@ -1870,7 +2740,10 @@
                 </label>
             </div>
 
-            <button type="button" class="btn-cek" onclick="cekB()">Periksa</button>
+            <div class="btn-actions">
+                <button type="button" class="btn-cek" onclick="cekB()">Periksa</button>
+                <button type="button" class="btn-ulang" onclick="resetContohB()">Ulangi</button>
+            </div>
 
             <div id="hasilContohB" class="hasil-box"></div>
         </div>
@@ -1901,14 +2774,16 @@
                 Menurutmu, apakah kumpulan tersebut dapat disebut <strong>himpunan</strong>?
             </p>
 
-            <p class="quiz-instruction">
-                Klik salah satu tombol jawaban yang menurutmu benar.
-            </p>
+
         </div>
 
         <!-- KANAN -->
         <div class="quiz-right-panel">
             <div class="quiz-side-title">Pilih Jawaban</div>
+
+            <p class="quiz-instruction">
+                Baca pernyataannya terlebih dahulu. Setelah itu, klik salah satu tombol jawaban yang menurutmu benar.
+            </p>
 
             <div class="quiz-opsi-wrap">
                 <button type="button" class="quiz-opsi-btn" onclick="cekJawabanUnik('ya')">
@@ -1957,53 +2832,68 @@
                 Ayo Tentukan Himpunan Semesta
             </div>
 
-            <p class="semesta-desc-full">Perhatikan kembali silsilah keluarga Bapak Andi.</p>
+            <div class="semesta-activity-layout">
 
-            <div class="semesta-petunjuk-full">
-                <strong>Petunjuk:</strong><br>
-                Tuliskan semua nama yang ada pada silsilah keluarga Bapak Andi ke dalam himpunan semesta (S).
+                <!-- KIRI: GAMBAR SILSILAH TETAP TERLIHAT -->
+                <div class="semesta-silsilah-box">
+                    <img src="/images/bab1.png" alt="Silsilah Keluarga Bapak Andi">
 
-                <p style="margin-top:8px; font-size:0.95rem; color:#555;">
-                    Setelah kamu menekan tombol <strong>Periksa</strong>, kotak jawaban akan berubah warna:
-                </p>
-
-                <div style="font-size:0.95rem; color:#555;">
-                    <span style="margin-right:12px;">🟢 Benar</span>
-                    <span style="margin-right:12px;">🔴 Salah</span>
-                    <span>🟡 Belum dijawab</span>
-                </div>
-            </div>
-
-            <p class="semesta-desc-full">Tuliskan himpunan semestanya.</p>
-
-            <div class="semesta-wrap-full">
-                <div class="kurung-kiri">S = {</div>
-
-                <div class="semesta-grid-full">
-                    <input id="sem1" placeholder="nama">
-                    <input id="sem2" placeholder="nama">
-                    <input id="sem3" placeholder="nama">
-                    <input id="sem4" placeholder="nama">
-                    <input id="sem5" placeholder="nama">
-                    <input id="sem6" placeholder="nama">
-                    <input id="sem7" placeholder="nama">
-                    <input id="sem8" placeholder="nama">
-                    <input id="sem9" placeholder="nama">
-                    <input id="sem10" placeholder="nama">
-                    <input id="sem11" placeholder="nama">
-                    <input id="sem12" placeholder="nama">
-                    <input id="sem13" placeholder="nama">
+                    <p class="semesta-silsilah-caption">
+                        Gambar 1.1 Silsilah Keluarga Bapak Andi
+                    </p>
                 </div>
 
-                <div class="kurung-kanan">}</div>
-            </div>
+                <!-- KANAN: PETUNJUK DAN FORM JAWABAN -->
+                <div class="semesta-form-panel">
 
-            <div class="semesta-btns-full">
-                <button type="button" class="btn-semesta-periksa-full" onclick="cekSemestaFull()">Periksa</button>
-                <button type="button" class="btn-semesta-ulang-full" onclick="resetSemestaFull()">Ulangi</button>
-            </div>
+                   <div class="semesta-petunjuk-full">
+    <strong>Petunjuk:</strong><br>
+    Perhatikan silsilah keluarga Bapak Andi. Tentukan anggota yang termasuk dalam
+    himpunan semesta (S), lalu tuliskan satu nama pada setiap kotak.
+    Setelah selesai, tekan tombol <strong>Periksa</strong>.
 
-            <div id="hasilSemestaFull" class="semesta-feedback-full"></div>
+   
+
+                        <div style="margin-top:10px; font-size:0.95rem; color:#555;">
+                            <span style="margin-right:12px;">🟢 Benar</span>
+                            <span style="margin-right:12px;">🔴 Salah</span>
+                            <span>🟡 Belum diisi</span>
+                        </div>
+                    </div>
+
+                    <p class="semesta-desc-full">Tuliskan himpunan semestanya.</p>
+
+                    <div class="semesta-wrap-full">
+                        <div class="kurung-kiri">S = {</div>
+
+                        <div class="semesta-grid-full">
+                            <input id="sem1" placeholder="nama">
+                            <input id="sem2" placeholder="nama">
+                            <input id="sem3" placeholder="nama">
+                            <input id="sem4" placeholder="nama">
+                            <input id="sem5" placeholder="nama">
+                            <input id="sem6" placeholder="nama">
+                            <input id="sem7" placeholder="nama">
+                            <input id="sem8" placeholder="nama">
+                            <input id="sem9" placeholder="nama">
+                            <input id="sem10" placeholder="nama">
+                            <input id="sem11" placeholder="nama">
+                            <input id="sem12" placeholder="nama">
+                            <input id="sem13" placeholder="nama">
+                        </div>
+
+                        <div class="kurung-kanan">}</div>
+                    </div>
+
+                    <div class="semesta-btns-full">
+                        <button type="button" class="btn-semesta-periksa-full" onclick="cekSemestaFull()">Periksa</button>
+                        <button type="button" class="btn-semesta-ulang-full" onclick="resetSemestaFull()">Ulangi</button>
+                    </div>
+
+                    <div id="hasilSemestaFull" class="semesta-feedback-full"></div>
+
+                </div>
+            </div>
         </div>
 
     </div>
@@ -2040,6 +2930,11 @@
             <p class="kard-premium-desc">
                 Perhatikan himpunan berikut, lalu tentukan banyak anggota pada setiap himpunan.
             </p>
+
+            <div class="activity-guide">
+                <strong>Petunjuk:</strong>
+                Hitung banyak anggota setiap himpunan, isi kotaknya, lalu tekan tombol <strong>Periksa</strong>.
+            </div>
 
             <div class="kard-grid-premium">
 
@@ -2300,67 +3195,120 @@
         }
     }
 
+    window.percobaanContohASalah = 0;
+    window.percobaanContohBSalah = 0;
+    window.percobaanSemestaSalah = 0;
+    window.percobaanKardinalitasSalah = 0;
+
     function cekA() {
-    const hasil = document.getElementById("hasilContohA");
+        const hasil = document.getElementById("hasilContohA");
 
-    const ca1 = document.getElementById("ca1").checked;
-    const ca2 = document.getElementById("ca2").checked;
-    const ca3 = document.getElementById("ca3").checked;
-    const ca4 = document.getElementById("ca4").checked;
-    const ca5 = document.getElementById("ca5").checked;
+        const ca1 = document.getElementById("ca1").checked;
+        const ca2 = document.getElementById("ca2").checked;
+        const ca3 = document.getElementById("ca3").checked;
+        const ca4 = document.getElementById("ca4").checked;
+        const ca5 = document.getElementById("ca5").checked;
 
-    hasil.style.display = "block";
-    hasil.className = "hasil-box";
+        hasil.style.display = "block";
+        hasil.className = "hasil-box";
 
-    if (!ca1 && !ca2 && !ca3 && !ca4 && !ca5) {
-        hasil.innerHTML = "Silakan pilih jawaban terlebih dahulu.";
-        hasil.classList.add("hasil-peringatan");
-        return;
-    }
+        if (!ca1 && !ca2 && !ca3 && !ca4 && !ca5) {
+            hasil.innerHTML = "Silakan pilih jawaban terlebih dahulu.";
+            hasil.classList.add("hasil-peringatan");
+            return;
+        }
 
-    if (ca1 && !ca2 && !ca3 && ca4 && !ca5) {
-        hasil.innerHTML =
-            "✅ Jawaban benar. A = {Iful, Hendra, Ardi, Ica} merupakan <strong>kumpulan anak-anak dari Bapak Andi</strong> dan juga dapat disebut <strong>kumpulan anggota keluarga Bapak Andi yang terdiri atas Iful, Hendra, Ardi, dan Ica</strong>.";
-        hasil.classList.add("hasil-benar");
-    } else {
-        hasil.innerHTML =
-            "❌ Jawaban belum tepat. Jawaban yang benar adalah:<br>" +
-            "✓ <strong>kumpulan anak-anak dari Bapak Andi</strong><br>" +
-            "✓ <strong>kumpulan anggota keluarga Bapak Andi yang terdiri atas Iful, Hendra, Ardi, dan Ica</strong>";
+        if (ca1 && !ca2 && !ca3 && ca4 && !ca5) {
+            window.percobaanContohASalah = 0;
+
+            hasil.innerHTML =
+                "✅ Jawaban benar. A = {Iful, Hendra, Ardi, Ica} merupakan <strong>kumpulan anak-anak dari Bapak Andi</strong> dan juga dapat disebut <strong>kumpulan anggota keluarga Bapak Andi yang terdiri atas Iful, Hendra, Ardi, dan Ica</strong>.";
+            hasil.classList.add("hasil-benar");
+            return;
+        }
+
+        window.percobaanContohASalah++;
+
+        if (window.percobaanContohASalah < 3) {
+            hasil.innerHTML =
+                "❌ Jawaban belum tepat. Coba periksa kembali pilihanmu, lalu tekan tombol <strong>Ulangi</strong> untuk mencoba lagi.";
+        } else {
+            hasil.innerHTML =
+                "❌ Jawaban masih belum tepat. Perhatikan jawaban yang benar berikut:<br>" +
+                "✓ <strong>kumpulan anak-anak dari Bapak Andi</strong><br>" +
+                "✓ <strong>kumpulan anggota keluarga Bapak Andi yang terdiri atas Iful, Hendra, Ardi, dan Ica</strong>";
+        }
+
         hasil.classList.add("hasil-salah");
     }
-}
 
-function cekB() {
-    const hasil = document.getElementById("hasilContohB");
+    function resetContohA() {
+        ["ca1", "ca2", "ca3", "ca4", "ca5"].forEach(function (id) {
+            document.getElementById(id).checked = false;
+        });
 
-    const cb1 = document.getElementById("cb1").checked;
-    const cb2 = document.getElementById("cb2").checked;
-    const cb3 = document.getElementById("cb3").checked;
-    const cb4 = document.getElementById("cb4").checked;
-    const cb5 = document.getElementById("cb5").checked;
+        const hasil = document.getElementById("hasilContohA");
+        hasil.innerHTML = "";
+        hasil.className = "hasil-box";
+        hasil.style.display = "none";
 
-    hasil.style.display = "block";
-    hasil.className = "hasil-box";
-
-    if (!cb1 && !cb2 && !cb3 && !cb4 && !cb5) {
-        hasil.innerHTML = "Silakan pilih jawaban terlebih dahulu.";
-        hasil.classList.add("hasil-peringatan");
-        return;
+        simpanJawabanHimpunan();
     }
 
-    if (!cb1 && !cb2 && cb3 && cb4 && !cb5) {
-        hasil.innerHTML =
-            "✅ Jawaban benar. B = {Lala, Nabil, Alfi, Bella, Rehan} merupakan <strong>kumpulan anggota keluarga Bapak Andi yang terdiri atas Lala, Nabil, Alfi, Bella, dan Rehan</strong> dan juga <strong>kumpulan cucu-cucu dari Bapak Andi</strong>.";
-        hasil.classList.add("hasil-benar");
-    } else {
-        hasil.innerHTML =
-            "❌ Jawaban belum tepat. Jawaban yang benar adalah:<br>" +
-            "✓ <strong>kumpulan anggota keluarga Bapak Andi yang terdiri atas Lala, Nabil, Alfi, Bella, dan Rehan</strong><br>" +
-            "✓ <strong>kumpulan cucu-cucu dari Bapak Andi</strong>";
+    function cekB() {
+        const hasil = document.getElementById("hasilContohB");
+
+        const cb1 = document.getElementById("cb1").checked;
+        const cb2 = document.getElementById("cb2").checked;
+        const cb3 = document.getElementById("cb3").checked;
+        const cb4 = document.getElementById("cb4").checked;
+        const cb5 = document.getElementById("cb5").checked;
+
+        hasil.style.display = "block";
+        hasil.className = "hasil-box";
+
+        if (!cb1 && !cb2 && !cb3 && !cb4 && !cb5) {
+            hasil.innerHTML = "Silakan pilih jawaban terlebih dahulu.";
+            hasil.classList.add("hasil-peringatan");
+            return;
+        }
+
+        if (!cb1 && !cb2 && cb3 && cb4 && !cb5) {
+            window.percobaanContohBSalah = 0;
+
+            hasil.innerHTML =
+                "✅ Jawaban benar. B = {Lala, Nabil, Alfi, Bella, Rehan} merupakan <strong>kumpulan anggota keluarga Bapak Andi yang terdiri atas Lala, Nabil, Alfi, Bella, dan Rehan</strong> dan juga <strong>kumpulan cucu-cucu dari Bapak Andi</strong>.";
+            hasil.classList.add("hasil-benar");
+            return;
+        }
+
+        window.percobaanContohBSalah++;
+
+        if (window.percobaanContohBSalah < 3) {
+            hasil.innerHTML =
+                "❌ Jawaban belum tepat. Coba periksa kembali pilihanmu, lalu tekan tombol <strong>Ulangi</strong> untuk mencoba lagi.";
+        } else {
+            hasil.innerHTML =
+                "❌ Jawaban masih belum tepat. Perhatikan jawaban yang benar berikut:<br>" +
+                "✓ <strong>kumpulan anggota keluarga Bapak Andi yang terdiri atas Lala, Nabil, Alfi, Bella, dan Rehan</strong><br>" +
+                "✓ <strong>kumpulan cucu-cucu dari Bapak Andi</strong>";
+        }
+
         hasil.classList.add("hasil-salah");
     }
-}
+
+    function resetContohB() {
+        ["cb1", "cb2", "cb3", "cb4", "cb5"].forEach(function (id) {
+            document.getElementById(id).checked = false;
+        });
+
+        const hasil = document.getElementById("hasilContohB");
+        hasil.innerHTML = "";
+        hasil.className = "hasil-box";
+        hasil.style.display = "none";
+
+        simpanJawabanHimpunan();
+    }
 
     function cekJawabanUnik(pilihan) {
         const box = document.getElementById("feedbackUnik");
@@ -2434,13 +3382,11 @@ function cekB() {
 
         hasil.style.display = "block";
 
-        if (isi.length === 0) {
+        if (isi.length === 0 || adaKosong) {
             hasil.innerHTML =
-                "<strong>Ayo mulai dulu ya 😊</strong><br>" +
-                "Isi terlebih dahulu nama-nama yang ada pada silsilah keluarga.<br>" +
-                "Ingat, himpunan semesta berisi semua anggota yang sedang dibicarakan.<br><br>" +
-                "<strong>Bentuk himpunan semesta yang benar adalah:</strong><br>" +
-                jawabanTampil;
+                "<strong>Yuk, lengkapi dulu ya 😊</strong><br>" +
+                "Masih ada kotak yang belum diisi.<br>" +
+                "Tuliskan semua nama yang ada pada silsilah keluarga, lalu tekan kembali tombol <strong>Periksa</strong>.";
 
             hasil.style.background = "#fff3cd";
             hasil.style.color = "#664d03";
@@ -2448,7 +3394,9 @@ function cekB() {
             return;
         }
 
-        if (semuaBenar && jumlahPas && tidakAdaDuplikat && !adaKosong) {
+        if (semuaBenar && jumlahPas && tidakAdaDuplikat) {
+            window.percobaanSemestaSalah = 0;
+
             hasil.innerHTML =
                 "<strong>Bagus sekali!</strong><br>" +
                 "Kamu sudah berhasil menuliskan semua anggota himpunan semesta dengan lengkap dan tepat.<br>" +
@@ -2462,25 +3410,31 @@ function cekB() {
             return;
         }
 
-        if (!tidakAdaDuplikat) {
-            hasil.innerHTML =
-                "<strong>Hampir benar 😊</strong><br>" +
-                "Masih ada nama yang ditulis lebih dari satu kali.<br>" +
-                "Setiap anggota himpunan cukup dituliskan satu kali saja.<br><br>" +
-                "<strong>Bentuk himpunan semesta yang benar adalah:</strong><br>" +
-                jawabanTampil;
+        window.percobaanSemestaSalah++;
 
-            hasil.style.background = "#fff3cd";
-            hasil.style.color = "#664d03";
-            hasil.style.borderLeft = "4px solid #ffc107";
+        if (window.percobaanSemestaSalah < 3) {
+            if (!tidakAdaDuplikat) {
+                hasil.innerHTML =
+                    "<strong>Hampir benar 😊</strong><br>" +
+                    "Masih ada nama yang ditulis lebih dari satu kali.<br>" +
+                    "Setiap anggota himpunan cukup dituliskan satu kali saja. Tekan tombol <strong>Ulangi</strong>, lalu coba kembali.";
+            } else {
+                hasil.innerHTML =
+                    "<strong>Yuk, periksa lagi ya 😊</strong><br>" +
+                    "Masih ada nama yang belum tepat.<br>" +
+                    "Ingat, himpunan semesta harus memuat semua anggota yang ada pada silsilah tersebut. Tekan tombol <strong>Ulangi</strong>, lalu coba kembali.";
+            }
+
+            hasil.style.background = "#f8d7da";
+            hasil.style.color = "#842029";
+            hasil.style.borderLeft = "4px solid #dc3545";
             return;
         }
 
         hasil.innerHTML =
-            "<strong>Yuk, periksa lagi ya 😊</strong><br>" +
-            "Masih ada nama yang belum tepat atau belum lengkap.<br>" +
-            "Ingat, himpunan semesta harus memuat semua anggota yang ada pada silsilah tersebut.<br><br>" +
-            "<strong>Bentuk himpunan semesta yang benar adalah:</strong><br>" +
+            "<strong>Jawaban masih belum tepat.</strong><br>" +
+            "Perhatikan bentuk himpunan semesta yang benar berikut agar kamu semakin paham.<br><br>" +
+            "<strong>Jawaban yang benar adalah:</strong><br>" +
             jawabanTampil;
 
         hasil.style.background = "#f8d7da";
@@ -2546,37 +3500,57 @@ function cekB() {
 
         hasil.style.display = "block";
 
+        if (adaKosong) {
+            hasil.innerHTML =
+                "<strong>Yuk, lengkapi dulu ya 😊</strong><br>" +
+                "Masih ada kotak yang belum diisi.<br>" +
+                "Coba hitung kembali banyak anggota pada setiap himpunan, lalu tekan kembali tombol <strong>Periksa</strong>.";
+
+            hasil.style.background = "#fff3cd";
+            hasil.style.color = "#664d03";
+            hasil.style.borderLeft = "4px solid #ffc107";
+            return;
+        }
+
         if (jumlahBenar === 3) {
+            window.percobaanKardinalitasSalah = 0;
+
             hasil.innerHTML =
                 "🎉 <strong>Bagus sekali!</strong><br>" +
                 "Kamu sudah menentukan kardinalitas setiap himpunan dengan tepat.<br>" +
                 "Ingat, kardinalitas adalah banyaknya anggota dalam suatu himpunan.<br><br>" +
                 "<strong>Jadi:</strong><br>" +
                 "n(A) = 4, n(B) = 5, dan n(C) = 2.";
+
             hasil.style.background = "#d1e7dd";
             hasil.style.color = "#0f5132";
             hasil.style.borderLeft = "4px solid #198754";
-        } else if (adaKosong) {
-            hasil.innerHTML =
-                "<strong>Yuk, lengkapi dulu ya 😊</strong><br>" +
-                "Masih ada kotak yang belum diisi.<br>" +
-                "Coba hitung kembali banyak anggota pada setiap himpunan.<br><br>" +
-                "<strong>Jawaban yang benar adalah:</strong><br>" +
-                "n(A) = 4, n(B) = 5, dan n(C) = 2.";
-            hasil.style.background = "#fff3cd";
-            hasil.style.color = "#664d03";
-            hasil.style.borderLeft = "4px solid #ffc107";
-        } else {
+            return;
+        }
+
+        window.percobaanKardinalitasSalah++;
+
+        if (window.percobaanKardinalitasSalah < 3) {
             hasil.innerHTML =
                 "<strong>Hampir benar 😊</strong><br>" +
                 "Masih ada jawaban yang belum tepat.<br>" +
-                "Perhatikan lagi banyak anggota pada setiap himpunan ya.<br><br>" +
-                "<strong>Jawaban yang benar adalah:</strong><br>" +
-                "n(A) = 4, n(B) = 5, dan n(C) = 2.";
+                "Perhatikan lagi banyak anggota pada setiap himpunan. Tekan tombol <strong>Ulangi</strong>, lalu coba kembali.";
+
             hasil.style.background = "#f8d7da";
             hasil.style.color = "#842029";
             hasil.style.borderLeft = "4px solid #dc3545";
+            return;
         }
+
+        hasil.innerHTML =
+            "<strong>Jawaban masih belum tepat.</strong><br>" +
+            "Perhatikan jawaban yang benar berikut agar kamu semakin paham.<br><br>" +
+            "<strong>Jawaban yang benar adalah:</strong><br>" +
+            "n(A) = 4, n(B) = 5, dan n(C) = 2.";
+
+        hasil.style.background = "#f8d7da";
+        hasil.style.color = "#842029";
+        hasil.style.borderLeft = "4px solid #dc3545";
     }
 
     function resetKardPremium() {
@@ -2597,6 +3571,158 @@ function cekB() {
         hasil.innerHTML = "";
         hasil.style.display = "none";
     }
+
+
+/* =========================================================
+   TAMBAHAN: SIMPAN JAWABAN SISWA AGAR TIDAK HILANG
+   Penyimpanan menggunakan localStorage browser.
+   Kode lama tidak diubah; blok ini hanya ditambahkan.
+========================================================= */
+
+const kunciPenyimpananHimpunan =
+    "jawaban_himpunan_" + window.location.pathname;
+
+const idElemenTampilanHimpunan = [
+    "bacaA", "bacaB", "bacaC",
+    "hasilA", "hasilB", "hasilC",
+    "hasilContohA", "hasilContohB",
+    "feedbackUnik",
+    "hasilSemestaFull",
+    "ikonA", "ikonB", "ikonC",
+    "hasilKardPremium"
+];
+
+function simpanJawabanHimpunan() {
+    try {
+        const data = {
+            halamanAktif: currentMateriPage,
+            percobaanContohA: window.percobaanContohASalah || 0,
+            percobaanContohB: window.percobaanContohBSalah || 0,
+            percobaanSemesta: window.percobaanSemestaSalah || 0,
+            percobaanKardinalitas: window.percobaanKardinalitasSalah || 0,
+            kontrol: {},
+            tampilan: {}
+        };
+
+        document
+            .querySelectorAll(".content-gap input, .content-gap select, .content-gap textarea")
+            .forEach(function (elemen) {
+                if (!elemen.id) return;
+
+                data.kontrol[elemen.id] = {
+                    value: elemen.value,
+                    checked: elemen.checked,
+                    className: elemen.className,
+                    style: elemen.getAttribute("style") || ""
+                };
+            });
+
+        idElemenTampilanHimpunan.forEach(function (id) {
+            const elemen = document.getElementById(id);
+
+            if (!elemen) return;
+
+            data.tampilan[id] = {
+                innerHTML: elemen.innerHTML,
+                className: elemen.className,
+                style: elemen.getAttribute("style") || ""
+            };
+        });
+
+        localStorage.setItem(
+            kunciPenyimpananHimpunan,
+            JSON.stringify(data)
+        );
+    } catch (error) {
+        console.warn("Jawaban belum dapat disimpan:", error);
+    }
+}
+
+function pulihkanJawabanHimpunan() {
+    try {
+        const tersimpan = localStorage.getItem(kunciPenyimpananHimpunan);
+
+        if (!tersimpan) return;
+
+        const data = JSON.parse(tersimpan);
+
+        window.percobaanContohASalah = Number(data.percobaanContohA) || 0;
+        window.percobaanContohBSalah = Number(data.percobaanContohB) || 0;
+        window.percobaanSemestaSalah = Number(data.percobaanSemesta) || 0;
+        window.percobaanKardinalitasSalah = Number(data.percobaanKardinalitas) || 0;
+
+        Object.keys(data.kontrol || {}).forEach(function (id) {
+            const elemen = document.getElementById(id);
+            const kondisi = data.kontrol[id];
+
+            if (!elemen) return;
+
+            elemen.value = kondisi.value ?? "";
+
+            if (elemen.type === "checkbox" || elemen.type === "radio") {
+                elemen.checked = Boolean(kondisi.checked);
+            }
+
+            if (typeof kondisi.className === "string") {
+                elemen.className = kondisi.className;
+            }
+
+            if (kondisi.style) {
+                elemen.setAttribute("style", kondisi.style);
+            } else {
+                elemen.removeAttribute("style");
+            }
+        });
+
+        Object.keys(data.tampilan || {}).forEach(function (id) {
+            const elemen = document.getElementById(id);
+            const kondisi = data.tampilan[id];
+
+            if (!elemen) return;
+
+            elemen.innerHTML = kondisi.innerHTML ?? "";
+
+            if (typeof kondisi.className === "string") {
+                elemen.className = kondisi.className;
+            }
+
+            if (kondisi.style) {
+                elemen.setAttribute("style", kondisi.style);
+            } else {
+                elemen.removeAttribute("style");
+            }
+        });
+
+        if (
+            Number.isInteger(data.halamanAktif) &&
+            data.halamanAktif >= 1 &&
+            data.halamanAktif <= totalMateriPage
+        ) {
+            changeMateriPage(data.halamanAktif);
+        }
+    } catch (error) {
+        console.warn("Jawaban tersimpan belum dapat dipulihkan:", error);
+    }
+}
+
+document.addEventListener("DOMContentLoaded", function () {
+    pulihkanJawabanHimpunan();
+
+    document
+        .querySelectorAll(".content-gap input, .content-gap select, .content-gap textarea")
+        .forEach(function (elemen) {
+            elemen.addEventListener("input", simpanJawabanHimpunan);
+            elemen.addEventListener("change", simpanJawabanHimpunan);
+        });
+});
+
+document.addEventListener("click", function () {
+    setTimeout(simpanJawabanHimpunan, 0);
+});
+
+window.addEventListener("pagehide", simpanJawabanHimpunan);
+window.addEventListener("beforeunload", simpanJawabanHimpunan);
+
 </script>
 
 @endsection

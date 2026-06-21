@@ -1832,6 +1832,65 @@
 }
 
 
+
+/* ====================== WARNA TOMBOL HIJAU - HANYA TAMPILAN ====================== */
+/* Tombol utama aktivitas */
+.btn-ungu,
+.notasi-ungu-btn-main {
+    background: linear-gradient(135deg, #15803D, #22C55E) !important;
+    color: #ffffff !important;
+    border: none !important;
+    box-shadow: 0 10px 18px rgba(21, 128, 61, 0.22) !important;
+}
+
+/* Tombol ulangi */
+.btn-putih,
+.notasi-ungu-btn-reset {
+    background: #ffffff !important;
+    color: #15803D !important;
+    border: 2px solid #15803D !important;
+}
+
+/* Pilihan jawaban yang sedang dipilih */
+.pilihan:hover,
+.pilihan.active {
+    background: linear-gradient(135deg, #15803D, #22C55E) !important;
+    color: #ffffff !important;
+    border-color: #15803D !important;
+}
+
+/* Tab langkah tutorial yang aktif */
+.tutorial-step-tab-button:hover {
+    background: #DCFCE7 !important;
+    color: #166534 !important;
+}
+
+.tutorial-step-tab-button.active {
+    background: linear-gradient(135deg, #15803D, #22C55E) !important;
+    color: #ffffff !important;
+    box-shadow: 0 8px 18px rgba(21, 128, 61, 0.22) !important;
+}
+
+
+
+/* ====================== PETUNJUK SERAGAM ====================== */
+.activity-instruction,
+.notasi-ungu-instruction {
+    background: #FBF7FF !important;
+    border: 2px dashed #CFA7F3 !important;
+    border-radius: 18px !important;
+    padding: 16px 18px !important;
+    margin-bottom: 16px !important;
+    color: #4B2673 !important;
+    line-height: 1.85 !important;
+    box-sizing: border-box !important;
+}
+
+.activity-instruction strong,
+.notasi-ungu-instruction b {
+    color: #4B2673 !important;
+}
+
 </style>
 
 <div class="content-gap">
@@ -1894,7 +1953,7 @@
         </div>
 
         <div class="activity-instruction">
-            <strong>Tugasmu:</strong><br>
+            <strong>Petunjuk:</strong><br>
             1. Klik salah satu pilihan deskripsi di bawah.<br>
             2. Lalu klik kotak kosong di samping Himpunan A, B, C, atau S yang sesuai.<br>
             3. Ulangi sampai semua kotak terisi.
@@ -1984,9 +2043,10 @@
         </div>
 
         <div class="activity-box">
-            <div class="activity-subtitle">Tugasmu:</div>
-
-            <p>Pilih nama yang tepat untuk melengkapi setiap himpunan berikut.</p>
+            <div class="activity-instruction">
+                <strong>Petunjuk:</strong><br>
+                Pilih nama yang tepat untuk melengkapi setiap himpunan berikut.
+            </div>
 
             <div class="select-line">
                 Himpunan A = {Iful,
@@ -2092,7 +2152,7 @@
                 <div class="notasi-ungu-subtitle">Perhatikan pernyataan berikut.</div>
 
                 <div class="notasi-ungu-instruction">
-                    <b>Tugasmu:</b><br>
+                    <b>Petunjuk:</b><br>
                     Pilih kata yang tepat untuk melengkapi notasi pembentuk himpunan berikut.<br>
                     Jawaban yang dipilih adalah <b>jenis anggota</b>, bukan nama orang.
                 </div>
@@ -3129,6 +3189,265 @@ function changeTutorialStep(step) {
 document.addEventListener("DOMContentLoaded", function () {
     changeTutorialStep(1);
 });
+
+
+/* =========================================================
+   TAMBAHAN: SIMPAN JAWABAN SISWA AGAR TIDAK HILANG
+   Jawaban dan jumlah percobaan disimpan di browser.
+========================================================= */
+
+const kunciPenyimpananPenyajian =
+    "jawaban_penyajian_himpunan_" + window.location.pathname;
+
+const opsiDeskripsiPenyajian = {
+    opt1: "anak-anak Andi dan Lina",
+    opt2: "cucu-cucu Andi dan Lina",
+    opt3: "kakek dan nenek",
+    opt4: "semua anggota keluarga"
+};
+
+function ambilTutorialStepAktif() {
+    const tombol = Array.from(
+        document.querySelectorAll(".tutorial-step-tab-button")
+    );
+
+    const index = tombol.findIndex(function (item) {
+        return item.classList.contains("active");
+    });
+
+    return index >= 0 ? index + 1 : 1;
+}
+
+function buatUlangPilihanDeskripsi() {
+    const daftarPilihan = document.getElementById("daftarPilihan");
+
+    if (!daftarPilihan) return;
+
+    daftarPilihan.innerHTML = "";
+
+    const idTerpakai = Object.values(window.jawaban || {});
+
+    Object.keys(opsiDeskripsiPenyajian).forEach(function (id) {
+        if (idTerpakai.includes(id)) return;
+
+        const pilihan = document.createElement("div");
+        pilihan.className = "pilihan";
+        pilihan.innerText = opsiDeskripsiPenyajian[id];
+        pilihan.setAttribute("onclick", "pilihJawaban(this,'" + id + "')");
+
+        daftarPilihan.appendChild(pilihan);
+    });
+}
+
+function simpanJawabanPenyajian() {
+    try {
+        const data = {
+            halamanAktif: currentPenyajianPage,
+            tutorialStepAktif: ambilTutorialStepAktif(),
+
+            percobaanDeskripsi:
+                Number(window.percobaanDeskripsiSalah) || 0,
+
+            percobaanEnumerasi:
+                Number(window.percobaanEnumerasiSalah) || 0,
+
+            percobaanNotasi:
+                Number(window.percobaanNotasiSalah) || 0,
+
+            jawabanDeskripsi: window.jawaban || {},
+
+            kotakDeskripsi: Array.from(
+                document.querySelectorAll(".kotak-jawaban")
+            ).map(function (kotak) {
+                return {
+                    innerHTML: kotak.innerHTML,
+                    className: kotak.className
+                };
+            }),
+
+            kontrol: {},
+
+            tampilan: {}
+        };
+
+        document
+            .querySelectorAll(
+                ".content-gap input, .content-gap select, .content-gap textarea"
+            )
+            .forEach(function (elemen) {
+                if (!elemen.id) return;
+
+                data.kontrol[elemen.id] = {
+                    value: elemen.value,
+                    checked: elemen.checked,
+                    className: elemen.className,
+                    style: elemen.getAttribute("style") || ""
+                };
+            });
+
+        [
+            "hasil",
+            "feedback",
+            "notasiUngu-feedback"
+        ].forEach(function (id) {
+            const elemen = document.getElementById(id);
+
+            if (!elemen) return;
+
+            data.tampilan[id] = {
+                innerHTML: elemen.innerHTML,
+                className: elemen.className,
+                style: elemen.getAttribute("style") || ""
+            };
+        });
+
+        localStorage.setItem(
+            kunciPenyimpananPenyajian,
+            JSON.stringify(data)
+        );
+    } catch (error) {
+        console.warn("Jawaban belum dapat disimpan:", error);
+    }
+}
+
+function pulihkanJawabanPenyajian() {
+    try {
+        const tersimpan =
+            localStorage.getItem(kunciPenyimpananPenyajian);
+
+        if (!tersimpan) return;
+
+        const data = JSON.parse(tersimpan);
+
+        window.percobaanDeskripsiSalah =
+            Number(data.percobaanDeskripsi) || 0;
+
+        window.percobaanEnumerasiSalah =
+            Number(data.percobaanEnumerasi) || 0;
+
+        window.percobaanNotasiSalah =
+            Number(data.percobaanNotasi) || 0;
+
+        window.jawaban = data.jawabanDeskripsi || {};
+        window.pilihanAktif = null;
+
+        const kotakDeskripsi =
+            document.querySelectorAll(".kotak-jawaban");
+
+        (data.kotakDeskripsi || []).forEach(function (kondisi, index) {
+            const kotak = kotakDeskripsi[index];
+
+            if (!kotak) return;
+
+            kotak.innerHTML = kondisi.innerHTML || "";
+            kotak.className =
+                kondisi.className || "kotak-jawaban";
+        });
+
+        buatUlangPilihanDeskripsi();
+
+        Object.keys(data.kontrol || {}).forEach(function (id) {
+            const elemen = document.getElementById(id);
+            const kondisi = data.kontrol[id];
+
+            if (!elemen) return;
+
+            elemen.value = kondisi.value ?? "";
+
+            if (
+                elemen.type === "checkbox" ||
+                elemen.type === "radio"
+            ) {
+                elemen.checked = Boolean(kondisi.checked);
+            }
+
+            if (typeof kondisi.className === "string") {
+                elemen.className = kondisi.className;
+            }
+
+            if (kondisi.style) {
+                elemen.setAttribute("style", kondisi.style);
+            } else {
+                elemen.removeAttribute("style");
+            }
+        });
+
+        Object.keys(data.tampilan || {}).forEach(function (id) {
+            const elemen = document.getElementById(id);
+            const kondisi = data.tampilan[id];
+
+            if (!elemen) return;
+
+            elemen.innerHTML = kondisi.innerHTML || "";
+
+            if (typeof kondisi.className === "string") {
+                elemen.className = kondisi.className;
+            }
+
+            if (kondisi.style) {
+                elemen.setAttribute("style", kondisi.style);
+            } else {
+                elemen.removeAttribute("style");
+            }
+        });
+
+        if (
+            Number.isInteger(data.halamanAktif) &&
+            data.halamanAktif >= 1 &&
+            data.halamanAktif <= totalPenyajianPage
+        ) {
+            changePenyajianPage(data.halamanAktif);
+        }
+
+        if (
+            Number.isInteger(data.tutorialStepAktif) &&
+            data.tutorialStepAktif >= 1 &&
+            data.tutorialStepAktif <= 6
+        ) {
+            changeTutorialStep(data.tutorialStepAktif);
+        }
+    } catch (error) {
+        console.warn(
+            "Jawaban tersimpan belum dapat dipulihkan:",
+            error
+        );
+    }
+}
+
+document.addEventListener("DOMContentLoaded", function () {
+    pulihkanJawabanPenyajian();
+
+    document
+        .querySelectorAll(
+            ".content-gap input, .content-gap select, .content-gap textarea"
+        )
+        .forEach(function (elemen) {
+            elemen.addEventListener(
+                "input",
+                simpanJawabanPenyajian
+            );
+
+            elemen.addEventListener(
+                "change",
+                simpanJawabanPenyajian
+            );
+        });
+});
+
+document.addEventListener("click", function () {
+    setTimeout(simpanJawabanPenyajian, 0);
+});
+
+window.addEventListener(
+    "pagehide",
+    simpanJawabanPenyajian
+);
+
+window.addEventListener(
+    "beforeunload",
+    simpanJawabanPenyajian
+);
+
 </script>
 
 @endsection

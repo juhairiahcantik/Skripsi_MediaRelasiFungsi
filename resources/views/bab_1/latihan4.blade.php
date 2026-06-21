@@ -1,333 +1,644 @@
-<!DOCTYPE html>
-<html lang="id">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Materi: Fungsi</title>
-
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.0/font/bootstrap-icons.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
-
-    <style>
-        body, html {
-            margin: 0;
-            padding: 0;
-            height: 100%;
-            font-family: 'Poppins', sans-serif;
-            background-color: #f8f9fa;
-        }
-
-        .content-gap {
-            margin-left: 40px;
-            margin-right: 20px;
-        }
-        /* ===== RESPONSIVE CONTROL ===== */
-.control-row{
-    display:flex;
-    flex-wrap:wrap;
-    gap:10px;
-    justify-content:center;
-    margin-bottom:15px;
-}
-
-.control-row .btn{
-    min-width:140px;
-}
-
-.input-row{
-    display:flex;
-    flex-wrap:wrap;
-    gap:10px;
-    justify-content:center;
-    margin-bottom:20px;
-}
-
-.input-row input{
-    width:280px;
-}
-
-.input-row select{
-    width:200px;
-}
-
-.input-row button{
-    width:180px;
-}
-
-@media(max-width:768px){
-    .input-row input,
-    .input-row select,
-    .input-row button{
-        width:100%;
-    }
-}
-    </style>
-</head>
-
-<body>
-
 @extends('layouts.main')
 
 @section('container')
 
-<div class="content-gap">
-<br>
-<!-- ======================== Latihan 4 ======================== -->
-<div class="card mt-4" style="width:100%; border:2px solid #7f3ab7;">
+<style>
+    /* =========================================================
+       LATIHAN 4 KORESPONDENSI - LAYOUT SEPERTI RELASI
+    ========================================================= */
 
-    <!-- HEADER -->
-    <div class="card-header text-center"
-         style="background-color:#7f3ab7; color:white; font-size:1.3rem; font-weight:700;">
-        Latihan 4
+    .content-gap {
+        margin-left: 40px;
+        margin-right: 20px;
+        box-sizing: border-box;
+        max-width: 100%;
+        overflow-x: clip;
+        font-family: 'Poppins', sans-serif;
+    }
+
+    .latihan4-page {
+        display: none;
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
+        overflow-x: clip;
+    }
+
+    .latihan4-page.active {
+        display: block;
+    }
+
+    .latihan4-card {
+        background: #ffffff;
+        border: 1px solid #eadcf6;
+        border-radius: 26px;
+        padding: 24px;
+        margin-top: 20px;
+        box-shadow: 0 14px 32px rgba(91, 44, 111, 0.08);
+        box-sizing: border-box;
+        overflow: hidden;
+    }
+
+    .latihan4-page-title {
+        background: linear-gradient(135deg, #8E44AD, #B57EDC);
+        color: #ffffff;
+        text-align: center;
+        padding: 16px 22px;
+        border-radius: 20px;
+        font-weight: 800;
+        font-size: 1.25rem;
+        margin-bottom: 22px;
+        box-shadow: 0 10px 20px rgba(142, 68, 173, 0.16);
+    }
+
+    .latihan4-sub-title {
+        width: fit-content;
+        max-width: 100%;
+        margin: 0 auto 18px;
+        background: linear-gradient(135deg, #8E44AD, #B57EDC);
+        color: #ffffff;
+        padding: 12px 20px;
+        border-radius: 16px;
+        font-size: 1.05rem;
+        font-weight: 800;
+        text-align: center;
+        box-shadow: 0 8px 16px rgba(142, 68, 173, 0.14);
+    }
+
+    .latihan4-body {
+        background: #ffffff;
+        color: #333;
+        line-height: 1.8;
+        box-sizing: border-box;
+    }
+
+    .latihan4-image-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 18px;
+        margin-bottom: 22px;
+    }
+
+    .latihan4-image-box {
+        background: linear-gradient(180deg, #ffffff 0%, #faf7ff 100%);
+        border: 1px solid #E9D5FF;
+        border-radius: 18px;
+        padding: 14px;
+        box-shadow: 0 8px 20px rgba(91, 44, 111, 0.08);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-sizing: border-box;
+        min-height: 260px;
+    }
+
+    .latihan4-image-box img {
+        width: 100%;
+        max-height: 430px;
+        object-fit: contain;
+        display: block;
+    }
+
+    .latihan4-soft-box {
+        background: #FBF7FF;
+        border: 2px dashed #CFA7F3;
+        border-radius: 18px;
+        padding: 16px 18px;
+        margin-bottom: 18px;
+        color: #4B2673;
+        line-height: 1.85;
+        box-sizing: border-box;
+    }
+
+    .latihan4-question-box {
+        background: #ffffff;
+        border: 1px solid #E9D5FF;
+        border-radius: 18px;
+        padding: 20px;
+        box-shadow: 0 8px 18px rgba(91, 44, 111, 0.06);
+        box-sizing: border-box;
+    }
+
+    .latihan4-question-box h4,
+    .latihan4-question-box h5 {
+        color: #4B2673;
+    }
+
+    .latihan4-question-box input.form-control {
+        min-width: 130px;
+        border: 2px solid #E9D5FF;
+        border-radius: 12px;
+        box-shadow: none;
+    }
+
+    .latihan4-question-box input.form-control:focus {
+        border-color: #8B5CF6;
+        box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.15);
+    }
+
+    .latihan4-divider {
+        border: 0;
+        border-top: 2px dashed #CFA7F3;
+        opacity: 1;
+        margin: 22px 0;
+    }
+
+    .latihan4-diagram-layout {
+        display: grid;
+        grid-template-columns: minmax(0, 2fr) minmax(260px, 0.8fr);
+        gap: 18px;
+        align-items: stretch;
+    }
+
+    .latihan4-canvas-box,
+    .latihan4-result-box {
+        background: #ffffff;
+        border: 1px solid #E9D5FF;
+        border-radius: 18px;
+        padding: 16px;
+        box-shadow: 0 8px 18px rgba(91, 44, 111, 0.06);
+        box-sizing: border-box;
+        min-width: 0;
+    }
+
+    .latihan4-result-box {
+        color: #4B2673;
+    }
+
+    .control-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        justify-content: center;
+        margin-bottom: 15px;
+    }
+
+    .control-row .btn {
+        min-width: 140px;
+        border-radius: 12px;
+        font-weight: 700;
+    }
+
+    .input-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        justify-content: center;
+        margin-bottom: 20px;
+    }
+
+    .input-row input {
+        width: 280px;
+    }
+
+    .input-row select {
+        width: 200px;
+    }
+
+    .input-row button {
+        width: 180px;
+        border-radius: 12px;
+        font-weight: 700;
+    }
+
+    #sketch-holder {
+        width: 100%;
+        min-height: 280px;
+        overflow: hidden;
+    }
+
+    #sketch-holder canvas {
+        max-width: 100% !important;
+        border-radius: 16px;
+        display: block;
+    }
+
+
+
+    .latihan4-isian-btn-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        align-items: center;
+        margin-top: 16px;
+    }
+
+    .latihan4-isian-btn-row .btn {
+        min-width: 150px;
+        border-radius: 12px;
+        font-weight: 700;
+    }
+
+    .latihan4-nomor-title {
+        color: #4B2673;
+        font-weight: 800;
+        margin: 0 0 16px 0;
+        line-height: 1.6;
+    }
+
+    /* =========================================================
+       PAGINATION SEPERTI RELASI
+    ========================================================= */
+
+    .latihan4-pagination {
+        width: 100%;
+        margin-top: 30px;
+        margin-bottom: 35px;
+        clear: both;
+    }
+
+    .latihan4-pagination .pagination {
+        gap: 5px;
+    }
+
+    .latihan4-pagination .page-link {
+        color: #6A2C70;
+        border: 1px solid #E3C7F3;
+        border-radius: 12px !important;
+        font-weight: 700;
+        background-color: #ffffff;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+    }
+
+    .latihan4-pagination .page-link:hover {
+        background-color: #F3E5FF;
+        color: #4B2673;
+    }
+
+    .latihan4-pagination .page-item.active .page-link {
+        background-color: #CDA4DE;
+        border-color: #CDA4DE;
+        color: #ffffff;
+    }
+
+    .latihan4-pagination .page-item.disabled .page-link {
+        color: #aaaaaa;
+        background-color: #f6f6f6;
+        border-color: #eeeeee;
+        box-shadow: none;
+        pointer-events: none;
+    }
+
+    @media (max-width: 992px) {
+        .latihan4-image-grid,
+        .latihan4-diagram-layout {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    @media (max-width: 768px) {
+        .content-gap {
+            margin-left: 12px;
+            margin-right: 12px;
+        }
+
+        .latihan4-card {
+            padding: 16px;
+            border-radius: 20px;
+        }
+
+        .latihan4-page-title {
+            font-size: 1.05rem;
+            padding: 14px 16px;
+            border-radius: 16px;
+        }
+
+        .latihan4-sub-title {
+            font-size: 0.98rem;
+            padding: 11px 14px;
+            border-radius: 14px;
+        }
+
+        .latihan4-question-box input.form-control {
+            width: 100% !important;
+            display: block !important;
+            margin: 8px 0 !important;
+        }
+
+        .input-row input,
+        .input-row select,
+        .input-row button {
+            width: 100%;
+        }
+
+        .control-row .btn {
+            width: 100%;
+        }
+
+        .latihan4-pagination .page-link {
+            font-size: 0.82rem;
+            padding: 7px 9px;
+        }
+    }
+</style>
+
+<div class="content-gap">
+
+    <!-- ====================== HALAMAN 1 ====================== -->
+    <div class="latihan4-page active" id="latihan4Page1">
+        <div class="latihan4-card">
+            <div class="latihan4-page-title">
+                Latihan 4
+            </div>
+
+            <div class="latihan4-body">
+                <div class="latihan4-image-grid">
+                    <div class="latihan4-image-box">
+                        <img src="{{ asset('images/latihan41.png') }}" 
+                             alt="Latihan 4 Kiri">
+                    </div>
+
+                    <div class="latihan4-image-box">
+                        <img src="{{ asset('images/latihan42.png') }}" 
+                             alt="Latihan 4 Kanan">
+                    </div>
+                </div>
+
+                <div class="latihan4-question-box">
+                    <h4 class="fw-bold text-center">
+                        Setelah kamu mengamati, sekarang mari berlatih.
+                    </h4>
+
+                    <hr class="latihan4-divider">
+
+                    <h5 class="fw-bold">
+                        1. Lengkapilah kesimpulan berikut berdasarkan pengamatanmu.
+                    </h5>
+
+                    <p class="mt-3">
+                        Hubungan antara alat musik tradisional dan daerah asalnya 
+                        disebut <b>korespondensi satu-satu</b> karena setiap alat musik 
+                        berasal dari 
+                        <input type="text" id="jawab1" 
+                               class="form-control d-inline w-25 mx-2 text-center"> 
+                        daerah dan setiap daerah memiliki 
+                        <input type="text" id="jawab2" 
+                               class="form-control d-inline w-25 mx-2 text-center"> 
+                        alat musik khas.
+                    </p>
+
+                    <div class="latihan4-isian-btn-row">
+                        <button class="btn btn-success" onclick="periksaIsian()">
+                            Periksa Jawaban
+                        </button>
+
+                        <button class="btn btn-outline-success" onclick="resetIsian()">
+                            Ulangi
+                        </button>
+                    </div>
+
+                    <div id="feedback1" class="mt-4"></div>
+                </div>
+            </div>
+        </div>
     </div>
 
-    <div class="card-body p-0">
-
-        <div class="row g-0 align-items-stretch">
-
-            <!-- KOLOM GAMBAR KIRI -->
-            <div class="col-lg-6 col-md-6 col-12 d-flex">
-                <img src="{{ asset('images/latihan41.png') }}" 
-                    alt="Latihan 4 Kiri"
-                    class="img-fluid w-100 h-100"
-                    style="object-fit: contain;">
-            </div>
-
-            <!-- KOLOM GAMBAR KANAN -->
-            <div class="col-lg-6 col-md-6 col-12 d-flex">
-                <img src="{{ asset('images/latihan42.png') }}" 
-                    alt="Latihan 4 Kanan"
-                    class="img-fluid w-100 h-100"
-                    style="object-fit: contain;">
-            </div>
- <!-- ===== TEKS DAN SOAL ===== -->
-        <div class="p-4 p-md-5">
-
-            <h4 class="fw-bold text-center">
-                Setelah kamu mengamati, sekarang mari berlatih.
-            </h4>
-
-            <hr class="my-4">
-
-            <!-- ================= SOAL 1 ================= -->
-
-            <h5 class="fw-bold">
-                1. Lengkapilah kesimpulan berikut berdasarkan pengamatanmu.
-            </h5>
-
-            <p class="mt-3">
-                Hubungan antara alat musik tradisional dan daerah asalnya 
-                disebut <b>korespondensi satu-satu</b> karena setiap alat musik 
-                berasal dari 
-                <input type="text" id="jawab1" 
-                       class="form-control d-inline w-25 mx-2 text-center"> 
-                daerah dan setiap daerah memiliki 
-                <input type="text" id="jawab2" 
-                       class="form-control d-inline w-25 mx-2 text-center"> 
-                alat musik khas.
-            </p>
-
-            <button class="btn btn-success mt-3" onclick="periksaIsian()">
-                Periksa Jawaban
-            </button>
-
-            <div id="feedback1" class="mt-4"></div>
-
-            <hr class="my-4">
-
-            <h5 class="fw-bold">
+    <!-- ====================== HALAMAN 2 ====================== -->
+    <div class="latihan4-page" id="latihan4Page2">
+        <div class="latihan4-card">
+            <h5 class="latihan4-nomor-title">
                 2. Sajikan hubungan tersebut dalam bentuk diagram panah!
             </h5>
 
+            <div class="latihan4-page-title">
+                Menyajikan hubungan dengan bentuk diagram Panah
+            </div>
+
+            <div class="latihan4-soft-box">
+                <div class="latihan4-sub-title">
+                    📘 Petunjuk Penggunaan
+                </div>
+
+                <ol>
+                    <li>
+                        <b>Buat Semesta</b><br>
+                        Klik tombol 
+                        <span class="badge bg-primary">Buat Semesta</span> 
+                        untuk menampilkan wilayah himpunan semesta.
+                    </li>
+
+                    <li>
+                        <b>Buat Himpunan</b><br>
+                        Klik tombol 
+                        <span class="badge bg-primary">Buat Himpunan</span> 
+                        untuk membuat lingkaran himpunan (A dan B).
+                    </li>
+
+                    <li>
+                        <b>Isi Nama Anggota</b><br>
+                        Ketik nama anggota pada kolom input, lalu pilih himpunan tujuan.
+                    </li>
+
+                    <li>
+                        <b>Tambah Anggota</b><br>
+                        Klik 
+                        <span class="badge bg-primary">Tambah Anggota</span> 
+                        untuk memasukkan anggota ke dalam himpunan.
+                    </li>
+
+                    <li>
+                        <b>Membuat Panah (Relasi)</b><br>
+                        Klik <b>lingkaran hitam</b> pada satu anggota himpunan,<br>
+                        lalu klik <b>lingkaran hitam</b> pada anggota himpunan lainnya.<br>
+                        Panah relasi akan muncul otomatis.
+                    </li>
+
+                    <li>
+                        <b>Hapus Panah (Relasi)</b><br>
+                        Klik 
+                        <span class="badge bg-warning text-dark">Hapus Panah</span> 
+                        untuk mengaktifkan mode hapus.<br>
+                        Panah akan berubah warna menjadi <b>merah</b>.<br>
+                        Klik panah yang ingin dihapus.<br>
+                        Setelah selesai, klik kembali tombol 
+                        <span class="badge bg-warning text-dark">Hapus Panah</span> 
+                        untuk kembali ke mode normal.
+                    </li>
+
+                    <li>
+                        <b>Hapus Himpunan</b><br>
+                        Pilih huruf himpunan, lalu klik 
+                        <span class="badge bg-danger">Hapus Himpunan</span> 
+                        untuk menghapus himpunan beserta anggotanya.
+                    </li>
+
+                    <li>
+                        <b>Periksa & Reset</b><br>
+                        Klik 
+                        <span class="badge bg-success">Periksa</span> 
+                        untuk melihat isi himpunan.<br>
+                        Klik 
+                        <span class="badge bg-secondary">Reset Semua</span> 
+                        untuk menghapus semua dan kembali ke tampilan awal.
+                    </li>
+                </ol>
+            </div>
+
+            <div class="latihan4-question-box">
+                <div class="latihan4-sub-title">
+                    ✏️ Ayo Kita Sajikan Korespondensi Satu-satu
+                </div>
+
+                <div class="control-row">
+                    <button class="btn btn-primary" onclick="buatSemesta()">Buat Semesta</button>
+                    <button class="btn btn-primary" onclick="buatLingkaran()">Buat Himpunan</button>
+                    <button class="btn btn-danger" onclick="hapusLingkaran()">Hapus Himpunan</button>
+                    <button class="btn btn-warning text-dark" onclick="toggleDeleteMode()">Hapus Panah</button>
+                    <button class="btn btn-success" onclick="periksaDiagram()">Periksa</button>
+                    <button class="btn btn-secondary" onclick="resetSemua()">Reset Semua</button>
+                </div>
+
+                <div class="input-row">
+                    <input id="namaInput" class="form-control" placeholder="Nama anggota...">
+                    <select id="setSelect" class="form-select">
+                        <option>Pilih Himpunan</option>
+                    </select>
+                    <button class="btn btn-primary" onclick="tambahAnggota()">Tambah Anggota</button>
+                </div>
+
+                <div class="latihan4-diagram-layout">
+                    <div class="latihan4-canvas-box">
+                        <div id="sketch-holder"></div>
+                    </div>
+
+                    <div class="latihan4-result-box">
+                        <b>HASIL PEMERIKSAAN:</b>
+                        <div id="hasilText" class="mt-3"></div>
+                    </div>
+                </div>
+            </div>
         </div>
+    </div>
+
+    <!-- ====================== PAGINATION ====================== -->
+    <div class="latihan4-pagination">
+        <nav aria-label="Pagination Latihan 4 Korespondensi Satu-satu">
+            <ul class="pagination justify-content-center flex-wrap">
+
+                <li class="page-item disabled" id="latihan4PrevItem">
+                    <button type="button"
+                            class="page-link"
+                            onclick="changeLatihan4Page(currentLatihan4Page - 1)">
+                        Sebelumnya
+                    </button>
+                </li>
+
+                <li class="page-item active" id="latihan4PageItem1">
+                    <button type="button" class="page-link" onclick="changeLatihan4Page(1)">1</button>
+                </li>
+
+                <li class="page-item" id="latihan4PageItem2">
+                    <button type="button" class="page-link" onclick="changeLatihan4Page(2)">2</button>
+                </li>
+
+                <li class="page-item" id="latihan4NextItem">
+                    <button type="button"
+                            class="page-link"
+                            onclick="nextLatihan4Page()">
+                        Berikutnya
+                    </button>
+                </li>
+
+            </ul>
+        </nav>
+    </div>
+
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.0/p5.min.js"></script>
+
 <script>
 function normalisasi(teks){
     return teks.toLowerCase().trim();
 }
 
+let percobaanIsianLatihan4 = 0;
+
+function bersihkanWarnaIsian(){
+    ["jawab1", "jawab2"].forEach(function(id){
+        const element = document.getElementById(id);
+        if(!element) return;
+        element.classList.remove("is-valid", "is-invalid");
+    });
+}
+
 function periksaIsian(){
 
-    let j1 = normalisasi(document.getElementById("jawab1").value);
-    let j2 = normalisasi(document.getElementById("jawab2").value);
+    bersihkanWarnaIsian();
+
+    const input1 = document.getElementById("jawab1");
+    const input2 = document.getElementById("jawab2");
+    const feedback = document.getElementById("feedback1");
+
+    let j1 = normalisasi(input1.value);
+    let j2 = normalisasi(input2.value);
+
+    if(j1 === "" && j2 === ""){
+        feedback.innerHTML = `
+        <div class="alert alert-warning">
+        <strong>Jawaban belum diisi.</strong><br><br>
+        Silakan isi kedua kotak jawaban terlebih dahulu.
+        </div>`;
+        return;
+    }
 
     let benar1 = (j1 === "satu");
     let benar2 = (j2 === "satu");
 
-    let output = "";
+    if(benar1){
+        input1.classList.add("is-valid");
+    } else if(j1 !== ""){
+        input1.classList.add("is-invalid");
+    }
+
+    if(benar2){
+        input2.classList.add("is-valid");
+    } else if(j2 !== ""){
+        input2.classList.add("is-invalid");
+    }
 
     if(benar1 && benar2){
-        output = `
+        percobaanIsianLatihan4 = 0;
+        feedback.innerHTML = `
         <div class="alert alert-success">
         <strong>Benar! 🎉</strong><br><br>
         Setiap alat musik dipasangkan dengan tepat satu daerah,
         dan setiap daerah memiliki tepat satu alat musik khas.
         Oleh karena itu, hubungan ini disebut <b>korespondensi satu-satu</b>.
         </div>`;
-    } else {
-        output = `
+        return;
+    }
+
+    percobaanIsianLatihan4++;
+
+    if(percobaanIsianLatihan4 < 3){
+        feedback.innerHTML = `
         <div class="alert alert-danger">
         <strong>Belum Tepat.</strong><br><br>
         Perhatikan kembali arti korespondensi satu-satu.
-        Berapa banyak pasangan yang dimiliki setiap anggota?
+        Berapa banyak pasangan yang dimiliki setiap anggota?<br><br>
+        Tekan tombol <b>Ulangi</b>, lalu coba kembali.
+        </div>`;
+    } else {
+        feedback.innerHTML = `
+        <div class="alert alert-danger">
+        <strong>Belum Tepat.</strong><br><br>
+        Perhatikan jawaban benar berikut agar kamu semakin paham.<br><br>
+        <strong>Jawaban benar:</strong><br>
+        Hubungan antara alat musik tradisional dan daerah asalnya disebut
+        <b>korespondensi satu-satu</b> karena setiap alat musik berasal dari
+        <b>satu</b> daerah dan setiap daerah memiliki <b>satu</b> alat musik khas.
         </div>`;
     }
+}
 
-    document.getElementById("feedback1").innerHTML = output;
+function resetIsian(){
+    document.getElementById("jawab1").value = "";
+    document.getElementById("jawab2").value = "";
+    document.getElementById("feedback1").innerHTML = "";
+    bersihkanWarnaIsian();
 }
 </script>
-    </div>
-</div>
-        </div>
-
-   
-
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.0/p5.min.js"></script>
-
-<div class="card mt-4" style="width:100%; border:2px solid #7f3ab7;">
-    
-
-<div class="card-header text-center"
-     style="background:linear-gradient(90deg,#9d4edd,#7b2cbf);
-            color:white;
-            font-size:1.4rem;
-            font-weight:700;
-            padding:18px;">
-   Menyajikan hubungan dengan bentuk diagram Panah
-</div>
-
-
-<!-- ================= PETUNJUK ================= -->
-<div class="px-4 pt-4">
-
-<div class="p-4 mb-4 mx-auto"
-     style="background:white;
-            border:3px solid #7f3ab7;
-            border-radius:25px;
-            max-width:95%;">
-📘 Petunjuk Penggunaan
-</h5>
-
-<ol>
-            <li>
-                <b>Buat Semesta</b><br>
-                Klik tombol 
-                <span class="badge bg-primary">Buat Semesta</span> 
-                untuk menampilkan wilayah himpunan semesta.
-            </li>
-
-            <li>
-                <b>Buat Himpunan</b><br>
-                Klik tombol 
-                <span class="badge bg-primary">Buat Himpunan</span> 
-                untuk membuat lingkaran himpunan (A dan B).
-            </li>
-
-            <li>
-                <b>Isi Nama Anggota</b><br>
-                Ketik nama anggota pada kolom input, lalu pilih himpunan tujuan.
-            </li>
-
-            <li>
-                <b>Tambah Anggota</b><br>
-                Klik 
-                <span class="badge bg-primary">Tambah Anggota</span> 
-                untuk memasukkan anggota ke dalam himpunan.
-            </li>
-
-            <li>
-                <b>Membuat Panah (Relasi)</b><br>
-                Klik <b>lingkaran hitam</b> pada satu anggota himpunan,<br>
-                lalu klik <b>lingkaran hitam</b> pada anggota himpunan lainnya.<br>
-                Panah relasi akan muncul otomatis.
-            </li>
-
-            <li>
-                <b>Hapus Panah (Relasi)</b><br>
-                Klik 
-                <span class="badge bg-warning text-dark">Hapus Panah</span> 
-                untuk mengaktifkan mode hapus.<br>
-                Panah akan berubah warna menjadi <b>merah</b>.<br>
-                Klik panah yang ingin dihapus.<br>
-                Setelah selesai, klik kembali tombol 
-                <span class="badge bg-warning text-dark">Hapus Panah</span> 
-                untuk kembali ke mode normal.
-            </li>
-
-            <li>
-                <b>Hapus Himpunan</b><br>
-                Pilih huruf himpunan, lalu klik 
-                <span class="badge bg-danger">Hapus Himpunan</span> 
-                untuk menghapus himpunan beserta anggotanya.
-            </li>
-
-            <li>
-                <b>Periksa & Reset</b><br>
-                Klik 
-                <span class="badge bg-success">Periksa</span> 
-                untuk melihat isi himpunan.<br>
-                Klik 
-                <span class="badge bg-secondary">Reset Semua</span> 
-                untuk menghapus semua dan kembali ke tampilan awal.
-            </li>
-
-        </ol>
-
-</div>
-<!-- ===== JUDUL ANIMASI ===== -->
-<h4 class="text-center ayo-title mb-4">
-✏️ Ayo Kita Sajikan Korespondensi Satu-satu
-</h4>
-
-<!-- ===== AREA GAMBAR ===== -->
-
-<div class="card"
-style="border:3px solid #7f3ab7;border-radius:25px;">
-
-<div class="card-body">
-
-<div class="control-row">
-<button class="btn btn-primary" onclick="buatSemesta()">Buat Semesta</button>
-<button class="btn btn-primary" onclick="buatLingkaran()">Buat Himpunan</button>
-<button class="btn btn-danger" onclick="hapusLingkaran()">Hapus Himpunan</button>
-<button class="btn btn-warning text-dark" onclick="toggleDeleteMode()">Hapus Panah</button>
-<button class="btn btn-success" onclick="periksaDiagram()">Periksa</button>
-<button class="btn btn-secondary" onclick="resetSemua()">Reset Semua</button>
-</div>
-
-<div class="input-row">
-<input id="namaInput" class="form-control" placeholder="Nama anggota...">
-<select id="setSelect" class="form-select">
-<option>Pilih Himpunan</option>
-</select>
-<button class="btn btn-primary" onclick="tambahAnggota()">Tambah Anggota</button>
-</div>
-
-<div class="row mt-4">
-
-<div class="col-md-8">
-<div id="sketch-holder"></div>
-</div>
-
-<div class="col-md-4">
-<div class="p-3"
-style="background:white;border:3px solid #7f3ab7;border-radius:25px;height:100%;">
-<b>HASIL PEMERIKSAAN:</b>
-<div id="hasilText" class="mt-3"></div>
-</div>
-</div>
-
-</div>
-</div>
-</div>
-
-</div>
-</div>
-
-
 
 <script>
 
@@ -349,7 +660,9 @@ function windowResized(){
 }
 function resizeResponsive(){
     let container=document.getElementById("sketch-holder");
+    if(!container) return;
     let w=container.offsetWidth;
+    if(!w || w < 50) return;
     resizeCanvas(w,w*0.6);
 }
 
@@ -715,36 +1028,70 @@ class Member{
 }
 
 </script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
+<script>
+    /* =========================================================
+       PAGINATION LATIHAN 4
+    ========================================================= */
 
+    let currentLatihan4Page = 1;
+    const totalLatihan4Page = 2;
 
-<div class="container-fluid mt-4">
-    <div class="row">
-        <div class="col-12 d-flex justify-content-between align-items-center">
+    function changeLatihan4Page(page) {
+        if (page < 1 || page > totalLatihan4Page) {
+            return;
+        }
 
-            <!-- Tombol Sebelumnya (Hijau) -->
-            <a href="/bab_1/lanjut_4" class="btn btn-success px-4">
-                ← Sebelumnya
-            </a>
+        currentLatihan4Page = page;
 
-            <!-- Tombol Selanjutnya -->
-            <a href="/petunjuk/petunjuk_bab4" class="btn btn-success px-4">
-                Selanjutnya →
-            </a>
+        for (let i = 1; i <= totalLatihan4Page; i++) {
+            const pageElement = document.getElementById("latihan4Page" + i);
+            const pageItem = document.getElementById("latihan4PageItem" + i);
 
-        </div>
-    </div>
-</div>
+            if (pageElement) {
+                pageElement.classList.toggle("active", i === page);
+            }
 
+            if (pageItem) {
+                pageItem.classList.toggle("active", i === page);
+            }
+        }
 
+        const prevItem = document.getElementById("latihan4PrevItem");
 
-</div>
-</div>
+        if (prevItem) {
+            prevItem.classList.toggle("disabled", page === 1);
+        }
+
+        if (page === 2) {
+            setTimeout(function () {
+                if (typeof resizeResponsive === "function") {
+                    resizeResponsive();
+                }
+            }, 80);
+        }
+
+        const target = document.querySelector(".content-gap");
+
+        if (target) {
+            target.scrollIntoView({
+                behavior: "smooth",
+                block: "start"
+            });
+        }
+    }
+
+    function nextLatihan4Page() {
+        if (currentLatihan4Page < totalLatihan4Page) {
+            changeLatihan4Page(currentLatihan4Page + 1);
+        } else {
+            window.location.href = "/petunjuk/petunjuk_bab4";
+        }
+    }
+
+    document.addEventListener("DOMContentLoaded", function () {
+        changeLatihan4Page(1);
+    });
+</script>
+
 @endsection
-
-
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-
-</body>
-</html>
