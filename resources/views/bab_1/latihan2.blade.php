@@ -385,7 +385,7 @@ canvas{
 @extends('layouts.main')
 @section('container')
 
-<div class="content-wrapper">
+<div class="content-wrapper" data-materi="materi_2" data-sub-page="latihan" data-total-pages="3">
 
 
 <!-- ====================== HALAMAN PAGINATION 1 ====================== -->
@@ -688,7 +688,7 @@ canvas{
 <div class="col-md-4">
 <div class="relasi-result-panel">
 <b>HASIL PEMERIKSAAN:</b>
-<div id="hasilText" class="mt-3"></div>
+<div id="hasilText" data-exercise="lat2diagram" class="mt-3"></div>
 </div>
 </div>
 
@@ -898,6 +898,7 @@ function periksaDiagram(){
         // range
         let range = [...new Set(kunciJawaban.map(k=>k[1]))].join(", ");
 
+        document.getElementById("hasilText").setAttribute("data-correct","true");
         output += "🎉 <b>Hebat! Relasi yang kamu buat sudah sesuai dengan cerita.</b><br><br>";
 
         output += "📘 Relasi yang terbentuk adalah relasi <b>“membuat kerajinan”</b> dari himpunan A ke himpunan B.<br><br>";
@@ -1324,7 +1325,7 @@ class Member{
  Hasil Pemeriksaan
 </h5>
 
-<div id="feedback-area"></div>
+<div id="feedback-area" data-exercise="lat2jawab"></div>
 
 </div>
 </div>
@@ -1515,7 +1516,7 @@ let j = Math.floor((p.mouseY-gridStartY)/gridSize);
 
 if(mode==="addPoint"){
 if(!labelsX[i] || !labelsY[j]){
-alert("Isi semua anggota himpunan dulu.");
+ProgressManager.showAlert('Isi semua anggota himpunan dulu.');
 return;
 }
 if(points.some(pt=>pt.i===i && pt.j===j)) return;
@@ -1538,7 +1539,7 @@ break;
 /* ===== INPUT HIMPUNAN ===== */
 function startLabelFill(type){
 if(!axisDrawn){
-alert("Klik Gambar Grafik dulu.");
+ProgressManager.showAlert('Klik Gambar Grafik dulu.');
 return;
 }
 fillingType = type;
@@ -1647,7 +1648,8 @@ let html="";
 // ================= SEMUA BENAR =================
 if(skor === total){
 
-html += "🎉 <b>Hebat sekali!</b><br><br>";
+            document.getElementById("feedback-area").setAttribute("data-correct","true");
+            html += "🎉 <b>Hebat sekali!</b><br><br>";
 html += "Semua hubungan sudah sesuai dengan cerita.<br><br>";
 
 let pasangan = "{ ";
@@ -1975,7 +1977,7 @@ new p5(koordinatSketch);
       <!-- SKOR -->
       <div id="areaSkor3" style="display:none;" class="text-center">
         <div class="big-score" id="skorText3"></div>
-        <div id="feedback3" style="margin-top:8px;"></div>
+        <div id="feedback3" data-exercise="lat2periksa3" style="margin-top:8px;"></div>
       </div>
 
     </div>
@@ -2001,7 +2003,7 @@ let b=document.getElementById("pilihB3").value;
 if(!a||!b) return;
 
 if(pasanganUser3.some(p=>p[0]===a && p[1]===b)){
-alert("Pasangan sudah ada!");
+ProgressManager.showAlert('Pasangan sudah ada!');
 return;
 }
 
@@ -2051,10 +2053,12 @@ document.getElementById("areaSkor3").style.display="block";
 document.getElementById("skorText3").innerHTML=
 "Skor: "+benar+" / "+kunci3.length;
 
-document.getElementById("feedback3").innerHTML=
-benar===kunci3.length
-? "🎉 Semua pasangan sudah benar!"
-: "💪 Masih bisa ditingkatkan.";
+if(benar===kunci3.length){
+    document.getElementById("feedback3").setAttribute("data-correct","true");
+    document.getElementById("feedback3").innerHTML = "🎉 Semua pasangan sudah benar!";
+}else{
+    document.getElementById("feedback3").innerHTML = "💪 Masih bisa ditingkatkan.";
+}
 }
 
 function reset3(){
@@ -2097,17 +2101,43 @@ const totalRelasiLatihanPage = 3;
 const relasiLatihanQuizUrl = "/petunjuk/petunjuk_bab2";
 
 function nextRelasiLatihanPage(){
+    var curEl = document.getElementById('relasiLatihanPage' + currentRelasiLatihanPage);
+    if(curEl){
+        var exs = curEl.querySelectorAll('[data-exercise]');
+        for(var i = 0; i < exs.length; i++){
+            if(exs[i].getAttribute('data-correct') !== 'true'){
+                ProgressManager.showAlert('Selesaikan semua soal pada halaman ini dengan benar terlebih dahulu!');
+                return;
+            }
+        }
+    }
+
     if(currentRelasiLatihanPage < totalRelasiLatihanPage){
+        ProgressManager.markPageDone('materi_2', 'latihan', currentRelasiLatihanPage);
         changeRelasiLatihanPage(currentRelasiLatihanPage + 1);
         return;
     }
 
+    ProgressManager.markSubPageDone('materi_2', 'latihan');
     window.location.href = relasiLatihanQuizUrl;
 }
 
 function changeRelasiLatihanPage(page){
     if(page < 1 || page > totalRelasiLatihanPage){
         return;
+    }
+
+    if(page > currentRelasiLatihanPage){
+        var prevEl = document.getElementById('relasiLatihanPage' + currentRelasiLatihanPage);
+        if(prevEl){
+            var exs = prevEl.querySelectorAll('[data-exercise]');
+            for(var i = 0; i < exs.length; i++){
+                if(exs[i].getAttribute('data-correct') !== 'true'){
+                    ProgressManager.showAlert('Selesaikan semua soal pada halaman ini dengan benar terlebih dahulu!');
+                    return;
+                }
+            }
+        }
     }
 
     currentRelasiLatihanPage = page;

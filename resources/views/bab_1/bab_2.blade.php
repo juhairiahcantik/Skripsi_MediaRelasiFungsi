@@ -1399,7 +1399,7 @@
 </style>
 
 
-<div class="content-gap">
+<div class="content-gap" data-materi="materi_2" data-sub-page="pengertian" data-total-pages="5">
 
     <!-- ====================== HALAMAN 1 ====================== -->
     <div class="relasi-page active" id="relasiPage1">
@@ -1610,7 +1610,7 @@
                         </button>
                     </div>
 
-                    <div id="feedbackRelasi" class="relasi-feedback"></div>
+                    <div id="feedbackRelasi" class="relasi-feedback" data-exercise="relasi1"></div>
                         </div>
 
                     </div>
@@ -1701,7 +1701,7 @@
                         </button>
                     </div>
 
-                    <div id="feedbackPesananR2" class="relasi-feedback"></div>
+                    <div id="feedbackPesananR2" class="relasi-feedback" data-exercise="relasi2"></div>
                 </div>
 
             </div>
@@ -1815,7 +1815,7 @@
                         </button>
                     </div>
 
-                    <div id="feedbackRelasiR3" class="relasi-feedback"></div>
+                    <div id="feedbackRelasiR3" class="relasi-feedback" data-exercise="relasi3"></div>
                 </div>
 
             </div>
@@ -2119,6 +2119,19 @@
             return;
         }
 
+        if (page > currentRelasiPage) {
+            var prevEl = document.getElementById('relasiPage' + currentRelasiPage);
+            if (prevEl) {
+                var exs = prevEl.querySelectorAll('[data-exercise]');
+                for (var i = 0; i < exs.length; i++) {
+                    if (exs[i].getAttribute('data-correct') !== 'true') {
+                        ProgressManager.showAlert('Selesaikan semua soal pada halaman ini dengan benar terlebih dahulu!');
+                        return;
+                    }
+                }
+            }
+        }
+
         currentRelasiPage = page;
 
         for (let i = 1; i <= totalRelasiPage; i++) {
@@ -2153,9 +2166,20 @@
     }
 
     function nextRelasiPage() {
+        var curEl = document.getElementById('relasiPage' + currentRelasiPage);
+        if (curEl) {
+            var exs = curEl.querySelectorAll('[data-exercise]');
+            for (var i = 0; i < exs.length; i++) {
+                if (exs[i].getAttribute('data-correct') !== 'true') {
+                    ProgressManager.showAlert('Selesaikan semua soal pada halaman ini dengan benar terlebih dahulu!');
+                    return;
+                }
+            }
+        }
         if (currentRelasiPage < totalRelasiPage) {
             changeRelasiPage(currentRelasiPage + 1);
         } else {
+            ProgressManager.markSubPageDone('materi_2', 'pengertian');
             window.location.href = "/bab_1/lanjut_2";
         }
     }
@@ -2368,6 +2392,7 @@
 
             feedback.style.display = "block";
             feedback.className = "relasi-feedback feedback-ok";
+            feedback.setAttribute('data-correct', 'true');
             feedback.innerHTML =
                 "<b>Bagus, jawabanmu sudah benar.</b><br>" +
                 "Himpunan A, Himpunan B, dan relasi yang kamu susun sudah sesuai.";
@@ -2451,6 +2476,7 @@
     ========================================================= */
 
     function periksaPesananR2() {
+        const feedback = document.getElementById("feedbackPesananR2");
         const inputPesananR2 = [
             document.getElementById("ps1").value,
             document.getElementById("ps2").value,
@@ -2511,6 +2537,7 @@
 
             feedback.style.display = "block";
             feedback.className = "relasi-feedback feedback-ok";
+            feedback.setAttribute('data-correct', 'true');
             feedback.innerHTML =
                 "<b>Bagus, jawabanmu sudah benar.</b><br>" +
                 "Semua pasangan pada relasi “memesan” sudah sesuai.";
@@ -2665,6 +2692,7 @@
 
             feedback.style.display = "block";
             feedback.className = "relasi-feedback feedback-ok";
+            feedback.setAttribute('data-correct', 'true');
             feedback.innerHTML =
                 "<b>Bagus, jawabanmu sudah benar.</b><br>" +
                 "Relasi kebalikan yang kamu tulis sudah sesuai.";

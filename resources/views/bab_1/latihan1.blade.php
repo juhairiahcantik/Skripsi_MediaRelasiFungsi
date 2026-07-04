@@ -510,7 +510,7 @@ main,
 }
 </style>
 
-<div class="content-gap">
+<div class="content-gap" data-materi="materi_1" data-sub-page="latihan" data-total-pages="1">
 
     <!-- ================= PREMIUM AYO AMATI & LATIHAN ================= -->
     <div class="materi-style-card mt-4">
@@ -647,7 +647,7 @@ main,
                                 HASIL PEMERIKSAAN
                             </div>
 
-                            <div id="hasilText"></div>
+                            <div id="hasilText" data-exercise="latihan1"></div>
                         </div>
                     </div>
 
@@ -664,7 +664,7 @@ main,
             ← Sebelumnya
         </a>
 
-        <a href="/petunjuk/petunjuk_bab1" class="latihan-nav-btn next">
+        <a href="/petunjuk/petunjuk_bab1" class="latihan-nav-btn next" onclick="if(document.getElementById('hasilText').getAttribute('data-correct') === 'true'){ ProgressManager.markSubPageDone('materi_1', 'latihan'); }else{ ProgressManager.showAlert('Selesaikan semua latihan terlebih dahulu!'); return false; }">
             Selanjutnya →
         </a>
     </div>
@@ -953,6 +953,7 @@ function periksaDiagram(){
                 Himpunan A berisi saudara, sedangkan himpunan B berisi anak-anak. Penempatanmu sudah tepat.
             </div>
         `;
+        hasilBox.setAttribute('data-correct', 'true');
         return;
     }
 

@@ -263,6 +263,25 @@
 
     </div>
 
+    @php
+        $materiMap = [
+            'Kuis 1' => 'materi_1',
+            'Kuis 2' => 'materi_2',
+            'Kuis 3' => 'materi_3',
+            'Kuis 4' => 'materi_4',
+            'Evaluasi' => 'evaluasi',
+            'evaluasi' => 'evaluasi',
+        ];
+        $currentMateri = $materiMap[$type] ?? null;
+    @endphp
+
+    <script src="{{ asset('js/progress.js') }}"></script>
+    @if($currentMateri)
+        <script>
+            ProgressManager.markSubPageDone('{{ $currentMateri }}', 'kuis');
+        </script>
+    @endif
+
 </body>
 
 </html>

@@ -2366,7 +2366,7 @@
 
 </style>
 
-<div class="content-gap">
+<div class="content-gap" data-materi="materi_1" data-sub-page="pengertian" data-total-pages="4">
 
     <h2 style="text-align:center;">HIMPUNAN</h2>
 
@@ -2480,7 +2480,7 @@
                                 </button>
                             </div>
 
-                            <div id="hasilA"></div>
+                            <div id="hasilA" data-exercise="set1"></div>
                         </div>
                     </div>
 
@@ -2523,7 +2523,7 @@
                                 </button>
                             </div>
 
-                            <div id="hasilB"></div>
+                            <div id="hasilB" data-exercise="set2"></div>
                         </div>
                     </div>
 
@@ -2560,7 +2560,7 @@
                                 </button>
                             </div>
 
-                            <div id="hasilC"></div>
+                            <div id="hasilC" data-exercise="set3"></div>
                         </div>
                     </div>
 
@@ -2692,7 +2692,7 @@
                 <button type="button" class="btn-ulang" onclick="resetContohA()">Ulangi</button>
             </div>
 
-            <div id="hasilContohA" class="hasil-box"></div>
+            <div id="hasilContohA" class="hasil-box" data-exercise="contohA"></div>
         </div>
     </div>
 
@@ -2745,7 +2745,7 @@
                 <button type="button" class="btn-ulang" onclick="resetContohB()">Ulangi</button>
             </div>
 
-            <div id="hasilContohB" class="hasil-box"></div>
+            <div id="hasilContohB" class="hasil-box" data-exercise="contohB"></div>
         </div>
     </div>
 
@@ -2798,7 +2798,7 @@
 
     </div>
 
-    <div id="feedbackUnik"></div>
+    <div id="feedbackUnik" data-exercise="unik"></div>
 </div>
 
     </div>
@@ -2890,7 +2890,7 @@
                         <button type="button" class="btn-semesta-ulang-full" onclick="resetSemestaFull()">Ulangi</button>
                     </div>
 
-                    <div id="hasilSemestaFull" class="semesta-feedback-full"></div>
+                    <div id="hasilSemestaFull" class="semesta-feedback-full" data-exercise="semesta"></div>
 
                 </div>
             </div>
@@ -2990,7 +2990,7 @@
                 <button type="button" class="kard-btn-reset" onclick="resetKardPremium()">Ulangi</button>
             </div>
 
-            <div id="hasilKardPremium" class="kard-feedback-box"></div>
+            <div id="hasilKardPremium" class="kard-feedback-box" data-exercise="kardinal"></div>
         </div>
 
     </div>
@@ -3045,6 +3045,19 @@
             return;
         }
 
+        if (page > currentMateriPage) {
+            var prevEl = document.getElementById('materiPage' + currentMateriPage);
+            if (prevEl) {
+                var exs = prevEl.querySelectorAll('[data-exercise]');
+                for (var i = 0; i < exs.length; i++) {
+                    if (exs[i].getAttribute('data-correct') !== 'true') {
+                        ProgressManager.showAlert('Selesaikan semua soal pada halaman ini dengan benar terlebih dahulu!');
+                        return;
+                    }
+                }
+            }
+        }
+
         currentMateriPage = page;
 
         for (let i = 1; i <= totalMateriPage; i++) {
@@ -3082,9 +3095,20 @@
     }
 
     function nextMateriPage() {
+        var curEl = document.getElementById('materiPage' + currentMateriPage);
+        if (curEl) {
+            var exs = curEl.querySelectorAll('[data-exercise]');
+            for (var i = 0; i < exs.length; i++) {
+                if (exs[i].getAttribute('data-correct') !== 'true') {
+                    ProgressManager.showAlert('Selesaikan semua soal pada halaman ini dengan benar terlebih dahulu!');
+                    return;
+                }
+            }
+        }
         if (currentMateriPage < totalMateriPage) {
             changeMateriPage(currentMateriPage + 1);
         } else {
+            ProgressManager.markSubPageDone('materi_1', 'pengertian');
             window.location.href = "/bab_1/lanjut_1";
         }
     }
@@ -3169,6 +3193,7 @@
         } else if (semuaBenar && jumlahPas && tidakAdaDuplikat) {
             hasil.innerHTML = "✅ Jawaban benar.";
             hasil.classList.add("hasil-benar");
+            hasil.setAttribute('data-correct', 'true');
         } else {
             hasil.innerHTML = "❌ Jawaban belum tepat. Coba periksa kembali.";
             hasil.classList.add("hasil-salah");
@@ -3224,6 +3249,7 @@
             hasil.innerHTML =
                 "✅ Jawaban benar. A = {Iful, Hendra, Ardi, Ica} merupakan <strong>kumpulan anak-anak dari Bapak Andi</strong> dan juga dapat disebut <strong>kumpulan anggota keluarga Bapak Andi yang terdiri atas Iful, Hendra, Ardi, dan Ica</strong>.";
             hasil.classList.add("hasil-benar");
+            hasil.setAttribute('data-correct', 'true');
             return;
         }
 
@@ -3279,6 +3305,7 @@
             hasil.innerHTML =
                 "✅ Jawaban benar. B = {Lala, Nabil, Alfi, Bella, Rehan} merupakan <strong>kumpulan anggota keluarga Bapak Andi yang terdiri atas Lala, Nabil, Alfi, Bella, dan Rehan</strong> dan juga <strong>kumpulan cucu-cucu dari Bapak Andi</strong>.";
             hasil.classList.add("hasil-benar");
+            hasil.setAttribute('data-correct', 'true');
             return;
         }
 
@@ -3319,6 +3346,7 @@
             box.style.background = "#d1e7dd";
             box.style.color = "#0f5132";
             box.style.borderLeft = "4px solid #198754";
+            box.setAttribute('data-correct', 'true');
         } else {
             box.innerHTML = "❌ <strong>Jawaban kurang tepat.</strong> Kumpulan tersebut <strong>bukan himpunan</strong>, karena menggunakan kata <strong>rajin</strong> yang bersifat subjektif. Artinya, ukuran rajin itu bisa berbeda-beda menurut setiap orang. Dalam himpunan, anggota harus dapat ditentukan dengan jelas. Karena pada contoh ini anggotanya tidak dapat dipastikan secara sama oleh semua orang, maka kumpulan tersebut <strong>bukan himpunan</strong>.";
             box.style.background = "#f8d7da";
@@ -3396,6 +3424,7 @@
 
         if (semuaBenar && jumlahPas && tidakAdaDuplikat) {
             window.percobaanSemestaSalah = 0;
+            hasil.setAttribute('data-correct', 'true');
 
             hasil.innerHTML =
                 "<strong>Bagus sekali!</strong><br>" +
@@ -3514,6 +3543,7 @@
 
         if (jumlahBenar === 3) {
             window.percobaanKardinalitasSalah = 0;
+            hasil.setAttribute('data-correct', 'true');
 
             hasil.innerHTML =
                 "🎉 <strong>Bagus sekali!</strong><br>" +

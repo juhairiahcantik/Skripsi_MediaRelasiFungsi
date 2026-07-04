@@ -85,7 +85,7 @@
     </style>
 </head>
 
-<body>
+<body data-materi="materi_3" data-sub-page="kuis">
 
     <div class="quiz-container text-center">
         <div class="quiz-title">KUIS 3</div>
@@ -135,6 +135,7 @@
         </div>
     </div>
 
+<script src="{{ asset('js/progress.js') }}"></script>
 </body>
 
 </html>

@@ -421,7 +421,7 @@
 
 </style>
 
-<div class="content-gap">
+<div class="content-gap" data-materi="materi_3" data-sub-page="latihan" data-total-pages="3">
 
     <!-- ====================== HALAMAN 1 ====================== -->
     <div class="fungsi-page active" id="fungsiPage1">
@@ -456,7 +456,7 @@
 
                     </div>
 
-                    <div id="feedback"></div>
+                    <div id="feedback" data-exercise="lat3fungsi"></div>
 
                     <p class="mt-3 mb-0">
                         Berdasarkan hasil penyelidikanmu tadi, sajikan relasimu
@@ -512,7 +512,7 @@
 
                     <div class="fungsi-result-box">
                         <b>HASIL PEMERIKSAAN:</b>
-                        <div id="hasilText" class="mt-3"></div>
+                        <div id="hasilText" class="mt-3" data-exercise="lat3diagram"></div>
                     </div>
                 </div>
             </div>
@@ -584,7 +584,7 @@
                     <button class="btn btn-secondary px-4" onclick="resetPasangan()">Reset</button>
                 </div>
 
-                <div id="hasilPasangan" class="mt-4"></div>
+                <div id="hasilPasangan" class="mt-4" data-exercise="lat3pasangan"></div>
             </div>
 
             <div class="fungsi-section-title">
@@ -609,7 +609,7 @@
                     <button class="btn btn-secondary px-4" onclick="resetPersamaan()">Reset</button>
                 </div>
 
-                <div id="hasilPersamaan" class="mt-4"></div>
+                <div id="hasilPersamaan" class="mt-4" data-exercise="lat3persamaan"></div>
 
                 <hr class="mt-5">
 
@@ -640,7 +640,7 @@
                     <button class="btn px-4" style="background:#9d4edd;color:white;" onclick="cekNilai()">Cek Nilai</button>
                 </div>
 
-                <div id="hasilNilai" class="mt-4"></div>
+                <div id="hasilNilai" class="mt-4" data-exercise="lat3nilai"></div>
             </div>
 
             <div class="fungsi-section-title soft mt-4">
@@ -682,7 +682,7 @@
                     <button class="btn btn-secondary px-4" onclick="resetTabelBaru()">Reset</button>
                 </div>
 
-                <div id="hasilTabelBaru" class="mt-4"></div>
+                <div id="hasilTabelBaru" class="mt-4" data-exercise="lat3tabel"></div>
             </div>
         </div>
     </div>
@@ -752,7 +752,7 @@
                             📘 Hasil Pemeriksaan
                         </h5>
 
-                        <div id="feedback-area"></div>
+                        <div id="feedback-area" data-exercise="lat3jawab"></div>
                     </div>
                 </div>
             </div>
@@ -791,6 +791,7 @@
 
         percobaanLatihanFungsiAwalSalah = 0;
 
+        feedback.setAttribute('data-correct', 'true');
         feedback.innerHTML = `
             <div class="alert alert-success mt-3">
                 <strong>Benar! Ini merupakan Fungsi.</strong><br><br>
@@ -832,6 +833,19 @@
     function changeFungsiPage(page) {
         if (page < 1 || page > totalFungsiPage) return;
 
+        if (page > currentFungsiPage) {
+            var prevEl = document.getElementById('fungsiPage' + currentFungsiPage);
+            if (prevEl) {
+                var exs = prevEl.querySelectorAll('[data-exercise]');
+                for (var i = 0; i < exs.length; i++) {
+                    if (exs[i].getAttribute('data-correct') !== 'true') {
+                        ProgressManager.showAlert('Selesaikan semua soal pada halaman ini dengan benar terlebih dahulu!');
+                        return;
+                    }
+                }
+            }
+        }
+
         currentFungsiPage = page;
 
         for (let i = 1; i <= totalFungsiPage; i++) {
@@ -857,9 +871,22 @@
     }
 
     function nextFungsiPage() {
+        var curEl = document.getElementById('fungsiPage' + currentFungsiPage);
+        if (curEl) {
+            var exs = curEl.querySelectorAll('[data-exercise]');
+            for (var i = 0; i < exs.length; i++) {
+                if (exs[i].getAttribute('data-correct') !== 'true') {
+                    ProgressManager.showAlert('Selesaikan semua soal pada halaman ini dengan benar terlebih dahulu!');
+                    return;
+                }
+            }
+        }
+
         if (currentFungsiPage < totalFungsiPage) {
+            ProgressManager.markPageDone('materi_3', 'latihan', currentFungsiPage);
             changeFungsiPage(currentFungsiPage + 1);
         } else {
+            ProgressManager.markSubPageDone('materi_3', 'latihan');
             window.location.href = "/petunjuk/petunjuk_bab3";
         }
     }
@@ -1053,6 +1080,7 @@ function periksaDiagram(){
 
     if(benar===kunciJawaban.length && salah.length===0){
 
+        document.getElementById('hasilText').setAttribute('data-correct', 'true');
         output += "🎉 <b>Hebat! Diagram panah yang kamu buat adalah FUNGSI.</b><br><br>";
 
         output += "<b>Bentuk Relasi:</b><br>";
@@ -1275,6 +1303,7 @@ function cekPasangan(){
     });
 
     if(benar){
+        document.getElementById('hasilPasangan').setAttribute('data-correct', 'true');
         document.getElementById("hasilPasangan").innerHTML = `
         <div class="alert alert-success">
         🎉 Hebat! Jawaban benar.<br><br>
@@ -1307,6 +1336,7 @@ function cekPersamaan(){
     input = input.replace(/\./g,"");
 
     if(input==="20000x" || input==="20000*x"){
+        document.getElementById('hasilPersamaan').setAttribute('data-correct', 'true');
         document.getElementById("hasilPersamaan").innerHTML = `
         <div style="background:#e9d8fd;border:2px solid #7b2cbf;
                     padding:15px;border-radius:10px;color:#240046;">
@@ -1366,6 +1396,7 @@ function cekNilai(){
 
     if(benar1 && benar2 && benar3){
 
+        document.getElementById('hasilNilai').setAttribute('data-correct', 'true');
         document.getElementById("hasilNilai").innerHTML = `
         <div style="background:#e9d8fd;border:2px solid #7b2cbf;
                     padding:15px;border-radius:10px;color:#240046;">
@@ -1434,6 +1465,7 @@ function cekTabelBaru(){
 
     if(benar4 && benar6 && benar9){
 
+        document.getElementById('hasilTabelBaru').setAttribute('data-correct', 'true');
         document.getElementById("hasilTabelBaru").innerHTML = `
         <div style="background:#e9d8fd;border:2px solid #7b2cbf;
                     padding:15px;border-radius:10px;color:#240046;">
@@ -1694,7 +1726,7 @@ let j = Math.floor((p.mouseY-gridStartY)/gridSize);
 
 if(mode==="addPoint"){
 if(!labelsX[i] || !labelsY[j]){
-alert("Isi semua anggota himpunan dulu.");
+ProgressManager.showAlert('Isi semua anggota himpunan dulu.');
 return;
 }
 if(points.some(pt=>pt.i===i && pt.j===j)) return;
@@ -1717,7 +1749,7 @@ break;
 /* ===== INPUT HIMPUNAN ===== */
 function startLabelFill(type){
 if(!axisDrawn){
-alert("Klik Gambar Grafik dulu.");
+ProgressManager.showAlert('Klik Gambar Grafik dulu.');
 return;
 }
 fillingType = type;
@@ -1891,6 +1923,7 @@ function periksaJawaban(){
   // ================= SEMUA BENAR =================
   else{
 
+    document.getElementById('feedback-area').setAttribute('data-correct', 'true');
     html += "🎉 <b>Hebat sekali!</b><br><br>";
 
     let pasangan = "{ ";

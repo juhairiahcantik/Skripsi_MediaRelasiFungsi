@@ -135,6 +135,7 @@
         </div>
     </div>
 
+<script src="{{ asset('js/progress.js') }}"></script>
 </body>
 
 </html>

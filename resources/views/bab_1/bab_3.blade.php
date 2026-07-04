@@ -1166,7 +1166,7 @@ canvas {
 }
 </style>
 
-<div class="content-gap">
+<div class="content-gap" data-materi="materi_3" data-sub-page="pengertian" data-total-pages="5">
 
     <!-- ====================== HALAMAN 1 ====================== -->
 
@@ -1292,7 +1292,7 @@ canvas {
 
         <button class="parkir-btn" onclick="cekJawabanParkir()">Periksa Jawaban</button>
 
-        <div id="hasilParkir" class="parkir-hasil"></div>
+        <div id="hasilParkir" class="parkir-hasil" data-exercise="hasilParkir"></div>
 
     </div>
 
@@ -1329,7 +1329,7 @@ canvas {
 
             <input id="pj1" class="penyajian-input" placeholder="Tulis jawabanmu">
             <button class="penyajian-btn" onclick="cekP1()">Periksa</button>
-            <div id="pf1" class="penyajian-feedback"></div>
+            <div id="pf1" class="penyajian-feedback" data-exercise="pf1"></div>
         </div>
 
         <div class="penyajian-card">
@@ -1338,7 +1338,7 @@ canvas {
 
             <input id="pj2" class="penyajian-input" placeholder="Contoh: {(1,2000),(2,4000),...}">
             <button class="penyajian-btn" onclick="cekP2()">Periksa</button>
-            <div id="pf2" class="penyajian-feedback"></div>
+            <div id="pf2" class="penyajian-feedback" data-exercise="pf2"></div>
         </div>
     </div>
 
@@ -1405,7 +1405,7 @@ canvas {
 
             <input id="pj3" class="penyajian-input" placeholder="Tulis jawabanmu">
             <button class="penyajian-btn" onclick="cekP3()">Periksa</button>
-            <div id="pf3" class="penyajian-feedback"></div>
+            <div id="pf3" class="penyajian-feedback" data-exercise="pf3"></div>
         </div>
         
         <div class="penyajian-card">
@@ -1449,7 +1449,7 @@ canvas {
             </div>
 
             <button class="penyajian-btn" onclick="cekP4()">Periksa</button>
-            <div id="pf4" class="penyajian-feedback"></div>
+            <div id="pf4" class="penyajian-feedback" data-exercise="pf4"></div>
         </div>
 
         <div class="penyajian-card">
@@ -1460,7 +1460,7 @@ canvas {
 
             <input id="pj5" class="penyajian-input" placeholder="Contoh: (1,2000)">
             <button class="penyajian-btn" onclick="cekP5()">Periksa</button>
-            <div id="pf5" class="penyajian-feedback"></div>
+            <div id="pf5" class="penyajian-feedback" data-exercise="pf5"></div>
         </div>
 </div>
 
@@ -1795,7 +1795,7 @@ canvas {
             Cek Jawaban
         </button>
 
-        <div id="hasilTabelFungsiAman"></div>
+        <div id="hasilTabelFungsiAman" data-exercise="hasilTabelFungsiAman"></div>
 
         <p class="catatan-tabel-fungsi">
             <em>Catatan: Domain ditentukan dari semua komponen pertama pada pasangan berurutan.</em>
@@ -1960,6 +1960,19 @@ function changeFungsiPage(page) {
         return;
     }
 
+    if (page > currentFungsiPage) {
+        var prevEl = document.getElementById('fungsiPage' + currentFungsiPage);
+        if (prevEl) {
+            var exs = prevEl.querySelectorAll('[data-exercise]');
+            for (var i = 0; i < exs.length; i++) {
+                if (exs[i].getAttribute('data-correct') !== 'true') {
+                    ProgressManager.showAlert('Selesaikan semua soal pada halaman ini dengan benar terlebih dahulu!');
+                    return;
+                }
+            }
+        }
+    }
+
     currentFungsiPage = page;
 
     for (let i = 1; i <= totalFungsiPage; i++) {
@@ -2002,9 +2015,21 @@ function changeFungsiPage(page) {
 }
 
 function nextFungsiPage() {
+    var curEl = document.getElementById('fungsiPage' + currentFungsiPage);
+    if (curEl) {
+        var exs = curEl.querySelectorAll('[data-exercise]');
+        for (var i = 0; i < exs.length; i++) {
+            if (exs[i].getAttribute('data-correct') !== 'true') {
+                ProgressManager.showAlert('Selesaikan semua soal pada halaman ini dengan benar terlebih dahulu!');
+                return;
+            }
+        }
+    }
+
     if (currentFungsiPage < totalFungsiPage) {
         changeFungsiPage(currentFungsiPage + 1);
     } else {
+        ProgressManager.markSubPageDone('materi_3', 'pengertian');
         window.location.href = "/bab_1/lanjut_3_1";
     }
 }
@@ -2477,6 +2502,13 @@ function tampilFeedbackFungsi(id, benar, teks) {
     }
 
     f.innerHTML = teks;
+
+    if (benar) {
+        f.setAttribute('data-correct', 'true');
+    } else {
+        f.removeAttribute('data-correct');
+    }
+
     simpanJawabanFungsi(true);
 }
 
@@ -2859,6 +2891,7 @@ window.cekTabelFungsiAman = function () {
 
     const hasil = document.getElementById('hasilTabelFungsiAman');
     hasil.style.display = 'block';
+    hasil.removeAttribute('data-correct');
 
     if (belumLengkap) {
         hasil.innerHTML = `
@@ -2875,6 +2908,7 @@ window.cekTabelFungsiAman = function () {
 
     if (!adaSalah && benar === total) {
         window.percobaanFungsi.tabel = 0;
+        hasil.setAttribute('data-correct', 'true');
         hasil.innerHTML = `
             <div class="feedback-header-tabel">
                 <div class="feedback-ringkas-tabel">

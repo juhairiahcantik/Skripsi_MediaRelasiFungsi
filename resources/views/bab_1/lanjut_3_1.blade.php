@@ -425,7 +425,7 @@
 </style>
 
 
-<div class="content-gap">
+<div class="content-gap" data-materi="materi_3" data-sub-page="penyajian" data-total-pages="5">
 
     <!-- ====================== HALAMAN 1 ====================== -->
     <div class="fungsi-page active" id="fungsiPage1">
@@ -1029,8 +1029,10 @@
 
     function nextFungsiPage() {
         if (currentFungsiPage < totalFungsiPage) {
+            ProgressManager.markPageDone('materi_3', 'penyajian', currentFungsiPage);
             changeFungsiPage(currentFungsiPage + 1);
         } else {
+            ProgressManager.markSubPageDone('materi_3', 'penyajian');
             window.location.href = "/bab_1/latihan3";
         }
     }

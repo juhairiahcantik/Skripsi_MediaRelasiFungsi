@@ -1,3 +1,23 @@
+@php
+    use App\Models\NilaiSiswa;
+    use App\Models\Kkm;
+
+    $nilaiSiswa = NilaiSiswa::where('id_user', Auth::id())
+        ->whereIn('jenis_kuis', ['Kuis 1','Kuis 2','Kuis 3','Kuis 4'])
+        ->selectRaw('jenis_kuis, MAX(nilai) as max_nilai')
+        ->groupBy('jenis_kuis')
+        ->pluck('max_nilai', 'jenis_kuis');
+
+    $kkmList = Kkm::pluck('nilai', 'kuis');
+
+    $materiUnlocked = [
+        'materi_1' => true,
+        'materi_2' => ($nilaiSiswa['Kuis 1'] ?? 0) >= ($kkmList['Kuis 1'] ?? 0),
+        'materi_3' => ($nilaiSiswa['Kuis 2'] ?? 0) >= ($kkmList['Kuis 2'] ?? 0),
+        'materi_4' => ($nilaiSiswa['Kuis 3'] ?? 0) >= ($kkmList['Kuis 3'] ?? 0),
+        'evaluasi' => ($nilaiSiswa['Kuis 4'] ?? 0) >= ($kkmList['Kuis 4'] ?? 0),
+    ];
+@endphp
 <!DOCTYPE html>
 <html lang="en">
 
@@ -12,10 +32,12 @@
 
     <link rel="stylesheet" href="{{ asset('css/sidebar.css') }}">
 
-    <title>Sidebar</title>
+    <title>RelasiFungsi</title>
 </head>
 
 <body>
+    <div id="materi-lock-data" data-locks='{{ json_encode($materiUnlocked) }}' style="display:none;"></div>
+
     <header class="atas">
         <button id="mobile-toggle" class="btn text-white ps-3 pe-0 d-md-none" style="font-size: 1.5rem; border: none;">
             <i class="bi bi-list"></i>
@@ -53,12 +75,18 @@
                         );
                     @endphp
 
-                    <li class="sidebar-item">
+                    <li class="sidebar-item" data-sidebar-materi="materi_1">
 
-                        <a href="#" class="sidebar-link {{ $himpunanActive ? '' : 'collapsed' }}"
+                        <a href="#" class="sidebar-link {{ $himpunanActive ? '' : 'collapsed' }}" data-sidebar-materi-link="materi_1"
                             data-bs-toggle="collapse" data-bs-target="#sub1">
-
-                            1. Himpunan
+                            @php
+                                $m1Locked = !$materiUnlocked['materi_1'];
+                            @endphp
+                            @if ($m1Locked)
+                                1. Himpunan 🔒
+                            @else
+                                1. Himpunan
+                            @endif
                         </a>
 
                         <ul id="sub1"
@@ -66,28 +94,28 @@
                             data-bs-parent="#sidebar">
 
                             <li>
-                                <a href="/bab_1/bab_1"
+                                <a href="/bab_1/bab_1" data-sidebar-sub="pengertian" data-sidebar-label="Pengertian Himpunan"
                                     class="sidebar-link {{ request()->is('bab_1/bab_1') ? 'active' : '' }}">
                                     Pengertian Himpunan
                                 </a>
                             </li>
 
                             <li>
-                                <a href="/bab_1/lanjut_1"
+                                <a href="/bab_1/lanjut_1" data-sidebar-sub="penyajian" data-sidebar-label="Penyajian Himpunan"
                                     class="sidebar-link {{ request()->is('bab_1/lanjut_1') ? 'active' : '' }}">
                                     Penyajian Himpunan
                                 </a>
                             </li>
 
                             <li>
-                                <a href="/bab_1/latihan1"
+                                <a href="/bab_1/latihan1" data-sidebar-sub="latihan" data-sidebar-label="Latihan"
                                     class="sidebar-link {{ request()->is('bab_1/latihan1') ? 'active' : '' }}">
                                     Latihan
                                 </a>
                             </li>
 
                             <li>
-                                <a href="{{ route('petunjuk_bab1') }}"
+                                <a href="{{ route('petunjuk_bab1') }}" data-sidebar-sub="kuis" data-sidebar-label="Kuis"
                                     class="sidebar-link {{ request()->is('quiz/quiz_bab1', 'petunjuk/petunjuk_bab1') ? 'active' : '' }}">
                                     Kuis
                                 </a>
@@ -107,39 +135,46 @@
                         );
                     @endphp
 
-                    <li class="sidebar-item">
+                    <li class="sidebar-item" data-sidebar-materi="materi_2">
 
-                        <a href="#" class="sidebar-link {{ $relasiActive ? '' : 'collapsed' }}"
+                        <a href="#" class="sidebar-link {{ $relasiActive ? '' : 'collapsed' }}" data-sidebar-materi-link="materi_2"
                             data-bs-toggle="collapse" data-bs-target="#sub2">
-                            2. Relasi
+                            @php
+                                $m2Locked = !$materiUnlocked['materi_2'];
+                            @endphp
+                            @if ($m2Locked)
+                                2. Relasi 🔒
+                            @else
+                                2. Relasi
+                            @endif
                         </a>
 
-                        <ul id="sub2" class="sidebar-dropdown list-unstyled collapse {{ $relasiActive ? 'show' : '' }}"
+                        <ul id="sub2" class="sidebar-dropdown list-unstyled collapse {{ $relasiActive && !$m2Locked ? 'show' : '' }}"
                             data-bs-parent="#sidebar">
 
                             <li>
-                                <a href="/bab_1/bab_2"
+                                <a href="/bab_1/bab_2" data-sidebar-sub="pengertian" data-sidebar-label="Pengertian Relasi"
                                     class="sidebar-link {{ request()->is('bab_1/bab_2') ? 'active' : '' }}">
                                     Pengertian Relasi
                                 </a>
                             </li>
 
                             <li>
-                                <a href="/bab_1/lanjut_2"
+                                <a href="/bab_1/lanjut_2" data-sidebar-sub="penyajian" data-sidebar-label="Penyajian Relasi"
                                     class="sidebar-link {{ request()->is('bab_1/lanjut_2') ? 'active' : '' }}">
                                     Penyajian Relasi
                                 </a>
                             </li>
 
                             <li>
-                                <a href="/bab_1/latihan2"
+                                <a href="/bab_1/latihan2" data-sidebar-sub="latihan" data-sidebar-label="Latihan"
                                     class="sidebar-link {{ request()->is('bab_1/latihan2') ? 'active' : '' }}">
                                     Latihan
                                 </a>
                             </li>
 
                             <li>
-                                <a href="{{ route('petunjuk_bab2') }}"
+                                <a href="{{ route('petunjuk_bab2') }}" data-sidebar-sub="kuis" data-sidebar-label="Kuis"
                                     class="sidebar-link {{ request()->is('quiz/quiz_bab2', 'petunjuk/petunjuk_bab2') ? 'active' : '' }}">
                                     Kuis
                                 </a>
@@ -159,39 +194,46 @@
                         );
                     @endphp
 
-                    <li class="sidebar-item">
+                    <li class="sidebar-item" data-sidebar-materi="materi_3">
 
-                        <a href="#" class="sidebar-link {{ $fungsiActive ? '' : 'collapsed' }}"
+                        <a href="#" class="sidebar-link {{ $fungsiActive ? '' : 'collapsed' }}" data-sidebar-materi-link="materi_3"
                             data-bs-toggle="collapse" data-bs-target="#sub3">
-                            3. Fungsi
+                            @php
+                                $m3Locked = !$materiUnlocked['materi_3'];
+                            @endphp
+                            @if ($m3Locked)
+                                3. Fungsi 🔒
+                            @else
+                                3. Fungsi
+                            @endif
                         </a>
 
-                        <ul id="sub3" class="sidebar-dropdown list-unstyled collapse {{ $fungsiActive ? 'show' : '' }}"
+                        <ul id="sub3" class="sidebar-dropdown list-unstyled collapse {{ $fungsiActive && !$m3Locked ? 'show' : '' }}"
                             data-bs-parent="#sidebar">
 
                             <li>
-                                <a href="/bab_1/bab_3"
+                                <a href="/bab_1/bab_3" data-sidebar-sub="pengertian" data-sidebar-label="Pengertian Fungsi"
                                     class="sidebar-link {{ request()->is('bab_1/bab_3') ? 'active' : '' }}">
                                     Pengertian Fungsi
                                 </a>
                             </li>
 
                             <li>
-                                <a href="/bab_1/lanjut_3_1"
+                                <a href="/bab_1/lanjut_3_1" data-sidebar-sub="penyajian" data-sidebar-label="Penyajian Fungsi"
                                     class="sidebar-link {{ request()->is('bab_1/lanjut_3_1') ? 'active' : '' }}">
                                     Penyajian Fungsi
                                 </a>
                             </li>
 
                             <li>
-                                <a href="/bab_1/latihan3"
+                                <a href="/bab_1/latihan3" data-sidebar-sub="latihan" data-sidebar-label="Latihan"
                                 class="sidebar-link {{ request()->is('bab_1/latihan3') ? 'active' : '' }}">
                                     Latihan
                                 </a>
                             </li>
 
                             <li>
-                                <a href="{{ route('petunjuk_bab3') }}"
+                                <a href="{{ route('petunjuk_bab3') }}" data-sidebar-sub="kuis" data-sidebar-label="Kuis"
                                     class="sidebar-link {{ request()->is('quiz/quiz_bab3', 'petunjuk/petunjuk_bab3') ? 'active' : '' }}">
                                     Kuis
                                 </a>
@@ -210,40 +252,47 @@
                         );
                     @endphp
 
-                    <li class="sidebar-item">
+                    <li class="sidebar-item" data-sidebar-materi="materi_4">
 
-                        <a href="#" class="sidebar-link {{ $korespondensiActive ? '' : 'collapsed' }}"
+                        <a href="#" class="sidebar-link {{ $korespondensiActive ? '' : 'collapsed' }}" data-sidebar-materi-link="materi_4"
                             data-bs-toggle="collapse" data-bs-target="#sub4">
-                            4. Korespondensi satu-satu
+                            @php
+                                $m4Locked = !$materiUnlocked['materi_4'];
+                            @endphp
+                            @if ($m4Locked)
+                                4. Korespondensi satu-satu 🔒
+                            @else
+                                4. Korespondensi satu-satu
+                            @endif
                         </a>
 
                         <ul id="sub4"
-                            class="sidebar-dropdown list-unstyled collapse {{ $korespondensiActive ? 'show' : '' }}"
+                            class="sidebar-dropdown list-unstyled collapse {{ $korespondensiActive && !$m4Locked ? 'show' : '' }}"
                             data-bs-parent="#sidebar">
 
                             <li>
-                                <a href="/bab_1/bab_4"
+                                <a href="/bab_1/bab_4" data-sidebar-sub="pengertian" data-sidebar-label="Pengertian Korespondensi satu-satu"
                                     class="sidebar-link {{ request()->is('bab_1/bab_4') ? 'active' : '' }}">
                                     Pengertian Korespondensi satu-satu
                                 </a>
                             </li>
 
                             <li>
-                                <a href="/bab_1/lanjut_4"
+                                <a href="/bab_1/lanjut_4" data-sidebar-sub="penyajian" data-sidebar-label="Penyajian Korespondensi satu-satu"
                                     class="sidebar-link {{ request()->is('bab_1/lanjut_4') ? 'active' : '' }}">
                                     Penyajian Korespondensi satu-satu
                                 </a>
                             </li>
 
                             <li>
-                                <a href="/bab_1/latihan4"
+                                <a href="/bab_1/latihan4" data-sidebar-sub="latihan" data-sidebar-label="Latihan"
                                 class="sidebar-link {{ request()->is('bab_1/latihan4') ? 'active' : '' }}">
                                     Latihan
                                 </a>
                             </li>
 
                             <li>
-                                <a href="{{ route('petunjuk_bab4') }}"
+                                <a href="{{ route('petunjuk_bab4') }}" data-sidebar-sub="kuis" data-sidebar-label="Kuis"
                                     class="sidebar-link {{ request()->is('quiz/quiz_bab4', 'petunjuk/petunjuk_bab4') ? 'active' : '' }}">
                                     Kuis
                                 </a>
@@ -253,10 +302,16 @@
                     </li>
 
                     {{-- MENU EVALUASI (BUKAN DROPDOWN) --}}
-                    <li class="sidebar-item">
+                    <li class="sidebar-item" data-sidebar-materi="evaluasi">
                         <a href="{{ route('petunjuk_evaluasi') }}"
-                            class="sidebar-link {{ request()->is('quiz/evaluasi', 'petunjuk/petunjuk_evaluasi') ? 'active' : '' }}">
-                            Evaluasi
+                            class="sidebar-link {{ request()->is('quiz/evaluasi', 'petunjuk/petunjuk_evaluasi') ? 'active' : '' }}"
+                            data-sidebar-sub="evaluasi" data-sidebar-label="Evaluasi">
+                            @php $evaluasiLocked = !$materiUnlocked['evaluasi']; @endphp
+                            @if ($evaluasiLocked)
+                                Evaluasi 🔒
+                            @else
+                                Evaluasi
+                            @endif
                         </a>
                     </li>
 
@@ -295,6 +350,7 @@
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="{{ asset('js/sidebar.js') }}"></script>
+    <script src="{{ asset('js/progress.js') }}"></script>
 
 </body>
 

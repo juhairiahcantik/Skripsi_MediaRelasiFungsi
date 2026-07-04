@@ -420,7 +420,7 @@
     }
 </style>
 
-<div class="content-gap">
+<div class="content-gap" data-materi="materi_4" data-sub-page="pengertian" data-total-pages="1">
 
     <!-- ====================== HALAMAN 1 ====================== -->
     <div class="korespondensi-page active" id="korespondensiPage1">
@@ -555,7 +555,7 @@
                                     </button>
                                 </div>
 
-                                <div id="ks_hasil" class="ks-hasil"></div>
+                                <div id="ks_hasil" class="ks-hasil" data-exercise="korespondensi"></div>
                             </div>
 
                             <div class="korespondensi-diagram-box">
@@ -638,6 +638,19 @@
             return;
         }
 
+        if (page > currentKorespondensiPage) {
+            var prevEl = document.getElementById('korespondensiPage' + currentKorespondensiPage);
+            if (prevEl) {
+                var exs = prevEl.querySelectorAll('[data-exercise]');
+                for (var i = 0; i < exs.length; i++) {
+                    if (exs[i].getAttribute('data-correct') !== 'true') {
+                        ProgressManager.showAlert('Selesaikan semua soal pada halaman ini dengan benar terlebih dahulu!');
+                        return;
+                    }
+                }
+            }
+        }
+
         currentKorespondensiPage = page;
 
         for (let i = 1; i <= totalKorespondensiPage; i++) {
@@ -670,9 +683,21 @@
     }
 
     function nextKorespondensiPage() {
+        var curEl = document.getElementById('korespondensiPage' + currentKorespondensiPage);
+        if (curEl) {
+            var exs = curEl.querySelectorAll('[data-exercise]');
+            for (var i = 0; i < exs.length; i++) {
+                if (exs[i].getAttribute('data-correct') !== 'true') {
+                    ProgressManager.showAlert('Selesaikan semua soal pada halaman ini dengan benar terlebih dahulu!');
+                    return;
+                }
+            }
+        }
+
         if (currentKorespondensiPage < totalKorespondensiPage) {
             changeKorespondensiPage(currentKorespondensiPage + 1);
         } else {
+            ProgressManager.markSubPageDone('materi_4', 'pengertian');
             window.location.href = "/bab_1/lanjut_4";
         }
     }
@@ -693,6 +718,7 @@
         if(a && !b && c && !d && e){
             hasil.style.display = "block";
             hasil.className = "ks-hasil ks-benar";
+            hasil.setAttribute('data-correct', 'true');
             hasil.innerHTML = `
                 <strong>Jawaban Benar!</strong><br><br>
                 Hubungan anggota keluarga dan wadai termasuk korespondensi satu-satu

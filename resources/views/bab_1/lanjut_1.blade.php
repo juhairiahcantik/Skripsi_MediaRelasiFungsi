@@ -1893,7 +1893,7 @@
 
 </style>
 
-<div class="content-gap">
+<div class="content-gap" data-materi="materi_1" data-sub-page="penyajian" data-total-pages="4">
 
   <!-- ====================== HALAMAN 1 ====================== -->
 <div class="penyajian-page active" id="penyajianPage1">
@@ -2000,7 +2000,7 @@
             </button>
         </div>
 
-        <p id="hasil"></p>
+        <p id="hasil" data-exercise="deskripsi"></p>
     </div>
 </div>
     <!-- ====================== HALAMAN 2 ====================== -->
@@ -2091,7 +2091,7 @@
                 </button>
             </div>
 
-            <div id="feedback" style="display:none;"></div>
+            <div id="feedback" data-exercise="enumerasi" style="display:none;"></div>
         </div>
     </div>
 </div>
@@ -2210,7 +2210,7 @@
                     <button type="button" class="notasi-ungu-btn-reset" onclick="notasiUnguReset()">Ulangi</button>
                 </div>
 
-                <div id="notasiUngu-feedback" class="notasi-ungu-feedback" style="display:none;"></div>
+                <div id="notasiUngu-feedback" class="notasi-ungu-feedback" data-exercise="notasi" style="display:none;"></div>
             </div>
         </div>
     </div>
@@ -2696,6 +2696,19 @@
             return;
         }
 
+        if (page > currentPenyajianPage) {
+            var prevEl = document.getElementById('penyajianPage' + currentPenyajianPage);
+            if (prevEl) {
+                var exs = prevEl.querySelectorAll('[data-exercise]');
+                for (var i = 0; i < exs.length; i++) {
+                    if (exs[i].getAttribute('data-correct') !== 'true') {
+                        ProgressManager.showAlert('Selesaikan semua soal pada halaman ini dengan benar terlebih dahulu!');
+                        return;
+                    }
+                }
+            }
+        }
+
         currentPenyajianPage = page;
 
         for (let i = 1; i <= totalPenyajianPage; i++) {
@@ -2733,9 +2746,22 @@
     }
 
     function nextPenyajianPage() {
+        var curEl = document.getElementById('penyajianPage' + currentPenyajianPage);
+        if (curEl) {
+            var exs = curEl.querySelectorAll('[data-exercise]');
+            for (var i = 0; i < exs.length; i++) {
+                if (exs[i].getAttribute('data-correct') !== 'true') {
+                    ProgressManager.showAlert('Selesaikan semua soal pada halaman ini dengan benar terlebih dahulu!');
+                    return;
+                }
+            }
+        }
+
         if (currentPenyajianPage < totalPenyajianPage) {
+            ProgressManager.markPageDone('materi_1', 'penyajian', currentPenyajianPage);
             changePenyajianPage(currentPenyajianPage + 1);
         } else {
+            ProgressManager.markSubPageDone('materi_1', 'penyajian');
             window.location.href = "/bab_1/latihan1";
         }
     }
@@ -2855,6 +2881,7 @@ function cekJawabanDeskripsi() {
         window.percobaanDeskripsiSalah = 0;
 
         hasil.classList.add("hasil-benar-final");
+        hasil.setAttribute('data-correct', 'true');
 
         hasil.innerHTML = `
             <strong>Hebat! Jawaban kamu benar semua 🎉</strong><br>
@@ -2971,6 +2998,7 @@ function cekJawabanEnumerasi() {
     if (benar === 3) {
         window.percobaanEnumerasiSalah = 0;
 
+        feedback.setAttribute('data-correct', 'true');
         feedback.innerHTML = `
             <strong>Hebat! Jawaban kamu benar semua 🎉</strong><br>
             Kamu sudah memahami cara menyajikan himpunan dengan cara enumerasi. Pertahankan semangat belajarmu!
@@ -3092,6 +3120,7 @@ function notasiUnguCheck() {
     if (benar === 4) {
         window.percobaanNotasiSalah = 0;
 
+        feedback.setAttribute('data-correct', 'true');
         feedback.innerHTML = `
             <strong>Hebat! Jawaban kamu benar semua 🎉</strong><br>
             Kamu sudah memahami cara menyatakan himpunan dalam bentuk notasi pembentuk himpunan. Pertahankan semangat belajarmu!

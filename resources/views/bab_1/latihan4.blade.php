@@ -332,7 +332,7 @@
     }
 </style>
 
-<div class="content-gap">
+<div class="content-gap" data-materi="materi_4" data-sub-page="latihan" data-total-pages="2">
 
     <!-- ====================== HALAMAN 1 ====================== -->
     <div class="latihan4-page active" id="latihan4Page1">
@@ -387,7 +387,7 @@
                         </button>
                     </div>
 
-                    <div id="feedback1" class="mt-4"></div>
+                    <div id="feedback1" class="mt-4" data-exercise="lat4isian"></div>
                 </div>
             </div>
         </div>
@@ -503,7 +503,7 @@
 
                     <div class="latihan4-result-box">
                         <b>HASIL PEMERIKSAAN:</b>
-                        <div id="hasilText" class="mt-3"></div>
+                        <div id="hasilText" class="mt-3" data-exercise="lat4diagram"></div>
                     </div>
                 </div>
             </div>
@@ -606,6 +606,7 @@ function periksaIsian(){
         dan setiap daerah memiliki tepat satu alat musik khas.
         Oleh karena itu, hubungan ini disebut <b>korespondensi satu-satu</b>.
         </div>`;
+        feedback1.setAttribute('data-correct', 'true');
         return;
     }
 
@@ -841,6 +842,7 @@ if(benar===kunciJawaban.length && salah.length===0){
     karena setiap anggota pada himpunan A memiliki tepat satu pasangan
     di himpunan B, dan sebaliknya.
     `;
+    hasilText.setAttribute('data-correct', 'true');
 
 } else {
 
@@ -1042,6 +1044,19 @@ class Member{
             return;
         }
 
+        if (page > currentLatihan4Page) {
+            var prevEl = document.getElementById('latihan4Page' + currentLatihan4Page);
+            if (prevEl) {
+                var exs = prevEl.querySelectorAll('[data-exercise]');
+                for (var i = 0; i < exs.length; i++) {
+                    if (exs[i].getAttribute('data-correct') !== 'true') {
+                        ProgressManager.showAlert('Selesaikan semua soal pada halaman ini dengan benar terlebih dahulu!');
+                        return;
+                    }
+                }
+            }
+        }
+
         currentLatihan4Page = page;
 
         for (let i = 1; i <= totalLatihan4Page; i++) {
@@ -1082,9 +1097,22 @@ class Member{
     }
 
     function nextLatihan4Page() {
+        var curEl = document.getElementById('latihan4Page' + currentLatihan4Page);
+        if (curEl) {
+            var exs = curEl.querySelectorAll('[data-exercise]');
+            for (var i = 0; i < exs.length; i++) {
+                if (exs[i].getAttribute('data-correct') !== 'true') {
+                    ProgressManager.showAlert('Selesaikan semua soal pada halaman ini dengan benar terlebih dahulu!');
+                    return;
+                }
+            }
+        }
+
         if (currentLatihan4Page < totalLatihan4Page) {
+            ProgressManager.markPageDone('materi_4', 'latihan', currentLatihan4Page);
             changeLatihan4Page(currentLatihan4Page + 1);
         } else {
+            ProgressManager.markSubPageDone('materi_4', 'latihan');
             window.location.href = "/petunjuk/petunjuk_bab4";
         }
     }

@@ -1203,7 +1203,7 @@
 
 </style>
 
-<div class="content-gap presentation-relasi-root">
+<div class="content-gap presentation-relasi-root" data-materi="materi_2" data-sub-page="penyajian" data-total-pages="5">
 
 
     <!-- ====================== HALAMAN 1 ====================== -->
@@ -2948,6 +2948,8 @@ new p5(function(p){
             koorFeedbackDiv.className =
                 "koor-feedback-box koor-feedback-success";
 
+            koorFeedbackDiv.setAttribute('data-correct', 'true');
+
             koorFeedbackDiv.innerHTML = `
                 <div class="koor-feedback-title" style="color:#166534;">
                     Bagus! Semua titik yang kamu tentukan sudah tepat.
@@ -3405,7 +3407,7 @@ new p5(function(p){
         Mode hapus pasangan aktif. Klik nama anak pada kotak menu yang ingin dihapus.
     </div>
 
-    <div id="pasberFeedback"></div>
+    <div id="pasberFeedback" data-exercise="pasber"></div>
 
 </div>
 
@@ -3702,6 +3704,8 @@ function cekPasanganBerurut(){
         feedback.style.background = "#ECFDF5";
         feedback.style.border = "1.5px solid #86EFAC";
         feedback.style.color = "#166534";
+
+        feedback.setAttribute('data-correct', 'true');
 
         feedback.innerHTML = `
             <strong>
@@ -4190,6 +4194,19 @@ updateTombolHapusPasanganBerurut();
             return;
         }
 
+        if (page > currentPresentationRelasiPage) {
+            var prevEl = document.getElementById('presentationRelasiPage' + currentPresentationRelasiPage);
+            if (prevEl) {
+                var exs = prevEl.querySelectorAll('[data-exercise]');
+                for (var i = 0; i < exs.length; i++) {
+                    if (exs[i].getAttribute('data-correct') !== 'true') {
+                        ProgressManager.showAlert('Selesaikan semua soal pada halaman ini dengan benar terlebih dahulu!');
+                        return;
+                    }
+                }
+            }
+        }
+
         currentPresentationRelasiPage = page;
 
         for (let i = 1; i <= totalPresentationRelasiPage; i++) {
@@ -4234,9 +4251,22 @@ updateTombolHapusPasanganBerurut();
     }
 
     function nextPresentationRelasiPage() {
+        var curEl = document.getElementById('presentationRelasiPage' + currentPresentationRelasiPage);
+        if (curEl) {
+            var exs = curEl.querySelectorAll('[data-exercise]');
+            for (var i = 0; i < exs.length; i++) {
+                if (exs[i].getAttribute('data-correct') !== 'true') {
+                    ProgressManager.showAlert('Selesaikan semua soal pada halaman ini dengan benar terlebih dahulu!');
+                    return;
+                }
+            }
+        }
+
         if (currentPresentationRelasiPage < totalPresentationRelasiPage) {
+            ProgressManager.markPageDone('materi_2', 'penyajian', currentPresentationRelasiPage);
             changePresentationRelasiPage(currentPresentationRelasiPage + 1);
         } else {
+            ProgressManager.markSubPageDone('materi_2', 'penyajian');
             window.location.href = "/bab_1/latihan2";
         }
     }

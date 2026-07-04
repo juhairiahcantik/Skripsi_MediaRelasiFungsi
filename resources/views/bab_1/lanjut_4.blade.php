@@ -180,7 +180,7 @@
 
 </style>
 
-<div class="content-gap">
+<div class="content-gap" data-materi="materi_4" data-sub-page="penyajian" data-total-pages="4">
 
     <!-- ====================== HALAMAN 1 ====================== -->
     <div class="kores-page active" id="koresPage1">
@@ -445,8 +445,10 @@
 
     function nextKoresPage() {
         if (currentKoresPage < totalKoresPage) {
+            ProgressManager.markPageDone('materi_4', 'penyajian', currentKoresPage);
             changeKoresPage(currentKoresPage + 1);
         } else {
+            ProgressManager.markSubPageDone('materi_4', 'penyajian');
             window.location.href = "/bab_1/latihan4";
         }
     }

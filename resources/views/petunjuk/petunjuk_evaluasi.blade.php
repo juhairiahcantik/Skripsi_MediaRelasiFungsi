@@ -87,7 +87,7 @@
 
 <body>
 
-    <div class="quiz-container text-center">
+    <div class="quiz-container text-center" data-materi="evaluasi" data-sub-page="evaluasi" data-total-pages="1">
         <div class="quiz-title">EVALUASI</div>
 
         <div class="text-start">
@@ -135,6 +135,7 @@
         </div>
     </div>
 
+<script src="{{ asset('js/progress.js') }}"></script>
 </body>
 
 </html>
