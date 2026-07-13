@@ -1396,6 +1396,34 @@
     }
 }
 
+.fase-box-gray {
+    width: 100%;
+    box-sizing: border-box;
+    margin-top: 20px;
+    padding: 16px 20px;
+
+    background-color: #ffffff;
+    color: #4b5563;
+
+    border: 1px solid #d1d5db;
+    border-radius: 12px;
+
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.06);
+
+    text-align: center;
+    font-size: 1.3rem;
+    font-weight: 700;
+}
+
+/* Tampilan pada HP */
+@media (max-width: 768px) {
+    .fase-box-gray {
+        padding: 14px 16px;
+        font-size: 1.05rem;
+        border-radius: 10px;
+    }
+}
+
 </style>
 
 
@@ -1418,7 +1446,11 @@
                     <li>Peserta didik mampu menyajikan relasi dalam bentuk diagram panah, diagram Kartesius, dan himpunan pasangan berurutan.</li>
                 </ol>
             </div>
-
+<!-- FASE 1 -->
+        <div class="fase-box-gray">
+            Fase 1: Orientasi Masalah
+        </div>
+        <br>
             <div class="relasi-card-header">
                 Perhatikan Gambar dan Cerita Berikut
             </div>
@@ -1850,10 +1882,12 @@
 
     <!-- ====================== HALAMAN 4 ====================== -->
     <div class="relasi-page" id="relasiPage4">
-
+        <div class="fase-box-gray">
+            Fase 2 Mengorganisasikan siswa untuk belajar
+        </div>
         <div class="relasi-card">
             <div class="relasi-page-title">
-                Berdasarkan masalah di atas, apakah kamu bisa memahami apa itu relasi?
+                Berdasarkan masalah di atas, apakah kamu dapat memahami apa yang dimaksud dengan Relasi?
             </div>
 
             <div class="relasi-definition-box">
@@ -1891,9 +1925,7 @@
                 </p>
 
                 <p style="margin-bottom:0;">
-                    Dalam relasi, anggota himpunan asal tidak harus semuanya memiliki
-                    pasangan. Selama terdapat hubungan antara dua himpunan, hubungan
-                    tersebut tetap disebut relasi.
+                    Dalam relasi, tidak semua anggota himpunan asal harus memiliki pasangan. Selama terdapat aturan yang menghubungkan anggota dari dua himpunan, hubungan tersebut tetap disebut relasi.
                 </p>
             </div>
         </div>
@@ -1988,13 +2020,13 @@
                 <div class="relasi-conclusion">
                     <strong>Contoh penerapan relasi</strong><br><br>
 
-                    Misalnya, terdapat dua kelompok, yaitu kumpulan siswa dan kumpulan
+                    Misalnya, terdapat dua kelompok, yaitu himpunan siswa dan Himpunan
                     makanan khas Kalimantan Selatan.<br><br>
 
-                    <strong>Kumpulan siswa:</strong><br>
+                    <strong>Himpunan siswa:</strong><br>
                     A = {Anisa, Dito, Zaki, Oca}<br><br>
 
-                    <strong>Kumpulan makanan khas Kalimantan Selatan:</strong><br>
+                    <strong>Himpunan makanan khas Kalimantan Selatan:</strong><br>
                     B = {Lontong, Soto Banjar, Mie Bancir, Nasi Kuning, Ketupat Kandangan}
                 </div>
 
@@ -2019,7 +2051,7 @@
                     <div class="relasi-term-card">
                         <strong>Domain</strong><br><br>
 
-                        Domain adalah kelompok asal, yaitu kumpulan siswa.<br><br>
+                        Domain adalah kelompok asal, yaitu himpunan siswa.<br><br>
 
                         Jadi, domainnya adalah:<br>
                         <strong>{Anisa, Dito, Zaki, Oca}</strong>
@@ -2028,7 +2060,7 @@
                     <div class="relasi-term-card">
                         <strong>Kodomain</strong><br><br>
 
-                        Kodomain adalah kelompok tujuan, yaitu kumpulan makanan khas
+                        Kodomain adalah himpunan tujuan, yaitu kumpulan makanan khas
                         Kalimantan Selatan yang tersedia.<br><br>
 
                         Jadi, kodomainnya adalah:<br>
@@ -2490,8 +2522,6 @@
             kunciPesananR2.zaki,
             kunciPesananR2.oca
         ];
-
-        const feedback = document.getElementById("feedbackPesananR2");
 
         document
             .querySelectorAll("#ps1, #ps2, #ps3, #ps4")

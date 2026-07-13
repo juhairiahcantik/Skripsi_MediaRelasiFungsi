@@ -418,6 +418,34 @@
             padding: 7px 9px;
         }
     }
+    .fase-box-gray {
+    width: 100%;
+    box-sizing: border-box;
+    margin-top: 20px;
+    padding: 16px 20px;
+
+    background-color: #ffffff;
+    color: #4b5563;
+
+    border: 1px solid #d1d5db;
+    border-radius: 12px;
+
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.06);
+
+    text-align: center;
+    font-size: 1.3rem;
+    font-weight: 700;
+}
+
+/* Tampilan pada HP */
+@media (max-width: 768px) {
+    .fase-box-gray {
+        padding: 14px 16px;
+        font-size: 1.05rem;
+        border-radius: 10px;
+    }
+}
+
 </style>
 
 <div class="content-gap" data-materi="materi_4" data-sub-page="pengertian" data-total-pages="1">
@@ -445,6 +473,11 @@
         </li>
     </ol>
 </div>
+             <!-- FASE 1 -->
+            <div class="fase-box-gray">
+                Fase 1 Orientasi Masalah
+            </div>
+
             <div class="korespondensi-card-header">
                 Perhatikan situasi berikut!
             </div>
@@ -575,21 +608,7 @@
                 </div>
             </div>
 
-            <div class="korespondensi-card-header">
-                Berdasarkan masalah di atas, apakah kamu bisa memahami apa itu korespondensi satu-satu?
-            </div>
-
-            <div class="korespondensi-definition-box">
-                <p>
-                    <strong>Korespondensi satu-satu</strong> adalah fungsi khusus yang memasangkan
-                    tepat satu anggota daerah asal dengan tepat satu anggota daerah kawan.
-                </p>
-
-                <p>
-                    Dengan kata lain, setiap anggota dari daerah asal maupun daerah kawan
-                    hanya mempunyai satu pasangan.
-                </p>
-            </div>
+           
         </div>
 
     </div>

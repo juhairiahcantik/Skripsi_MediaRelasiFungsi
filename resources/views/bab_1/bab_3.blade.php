@@ -1164,6 +1164,35 @@ canvas {
 .materi-content ol li {
     margin-bottom: 6px;
 }
+
+.fase-box-gray {
+    width: 100%;
+    box-sizing: border-box;
+    margin-top: 20px;
+    padding: 16px 20px;
+
+    background-color: #ffffff;
+    color: #4b5563;
+
+    border: 1px solid #d1d5db;
+    border-radius: 12px;
+
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.06);
+
+    text-align: center;
+    font-size: 1.3rem;
+    font-weight: 700;
+}
+
+/* Tampilan pada HP */
+@media (max-width: 768px) {
+    .fase-box-gray {
+        padding: 14px 16px;
+        font-size: 1.05rem;
+        border-radius: 10px;
+    }
+}
+
 </style>
 
 <div class="content-gap" data-materi="materi_3" data-sub-page="pengertian" data-total-pages="5">
@@ -1190,7 +1219,10 @@ canvas {
     </ol>
 </div>
     </div>
-
+<!-- FASE 1 -->
+        <div class="fase-box-gray">
+            Fase 1 Orientasi Masalah
+        </div>
     <!-- KOTAK BESAR -->
     <div class="card mt-4">
 
@@ -1474,7 +1506,9 @@ canvas {
     <!-- ====================== HALAMAN 4 ====================== -->
 
     <div class="fungsi-page" id="fungsiPage4">
-
+<div class="fase-box-gray">
+            Fase 2 Mengorganisasikan siswa untuk belajar
+        </div>
     <div class="card mt-4" style="width: 100%; border-radius:12px;">
 
         <div class="card-header"

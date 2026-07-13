@@ -2363,6 +2363,33 @@
         max-height: 175px !important;
     }
 }
+.fase-box-gray {
+    width: 100%;
+    box-sizing: border-box;
+    margin-top: 20px;
+    padding: 16px 20px;
+
+    background-color: #ffffff;
+    color: #4b5563;
+
+    border: 1px solid #d1d5db;
+    border-radius: 12px;
+
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.06);
+
+    text-align: center;
+    font-size: 1.3rem;
+    font-weight: 700;
+}
+
+/* Tampilan pada HP */
+@media (max-width: 768px) {
+    .fase-box-gray {
+        padding: 14px 16px;
+        font-size: 1.05rem;
+        border-radius: 10px;
+    }
+}
 
 </style>
 
@@ -2386,7 +2413,10 @@
                 </ol>
             </div>
         </div>
-
+        <!-- FASE 1 -->
+        <div class="fase-box-gray">
+            Fase 1 Orientasi Masalah
+        </div>
         <!-- KOTAK BESAR -->
         <div class="card mt-4 silsilah-card" style="width: 100%;">
 
@@ -2437,7 +2467,7 @@
                             Dari silsilah keluarga Bapak Andi, kita dapat membuat:
                         </p>
                     </div>
-
+                    
                     <div class="activity-guide">
                         <strong>Petunjuk:</strong>
                         Perhatikan silsilah, isi satu nama pada setiap kotak, lalu tekan tombol <strong>Periksa</strong>.
@@ -2579,7 +2609,9 @@
 
     <!-- ====================== HALAMAN 2 ====================== -->
     <div class="materi-page" id="materiPage2">
-
+    <div class="fase-box-gray">
+                Fase 2 Mengorganisasikan siswa untuk belajar
+        </div>
      <!-- ======================== CARD PEMAHAMAN HIMPUNAN ======================== -->
 <div class="pemahaman-card">
     <div class="pemahaman-header">
@@ -3358,7 +3390,7 @@
     function cekSemestaFull() {
         const jawabanBenar = [
             "andi", "lina", "iful", "ifit", "hendra", "hikmah",
-            "ardi", "nisa", "lala", "nabil", "alfi", "bella", "rehan"
+            "ardi", "ica", "lala", "nabil", "alfi", "bella", "rehan"
         ];
 
         const ids = [
@@ -3406,7 +3438,7 @@
         const tidakAdaDuplikat = new Set(isi).size === isi.length;
 
         const jawabanTampil =
-            "S = {Andi, Lina, Iful, Ifit, Hendra, Hikmah, Ardi, Nisa, Lala, Nabil, Alfi, Bella, Rehan}";
+            "S = {Andi, Lina, Iful, Ifit, Hendra, Hikmah, Ardi, ica, Lala, Nabil, Alfi, Bella, Rehan}";
 
         hasil.style.display = "block";
 

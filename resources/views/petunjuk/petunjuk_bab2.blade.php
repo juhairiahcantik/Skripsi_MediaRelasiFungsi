@@ -20,12 +20,12 @@
 
         .quiz-container {
             max-width: 900px;
-            margin: 60px auto;
-            background: #ffffff;
+            margin: 20px auto 60px; /* sebelumnya 60px auto */
+            background: #fff;
             border-radius: 20px;
             padding: 50px;
             border: 3px solid #cbb6f7;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            box-shadow: 0 10px 30px rgba(0,0,0,.05);
         }
 
         .quiz-title {
@@ -82,10 +82,45 @@
         .button-group {
             margin-top: 40px;
         }
+        .fase-box-gray {
+    max-width: 900px;
+    margin: 40px auto 20px;
+    padding: 16px 20px;
+
+    background-color: #ffffff;
+    color: #4b5563;
+
+    border: 1px solid #d1d5db;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.06);
+
+    text-align: center;
+    font-size: 1.3rem;
+    font-weight: 700;
+    box-sizing: border-box;
+}
+
+@media (max-width: 768px) {
+    .fase-box-gray {
+        margin: 20px 12px 16px;
+        padding: 14px 16px;
+        font-size: 1.05rem;
+        border-radius: 10px;
+    }
+
+    .quiz-container {
+        margin: 20px 12px;
+        padding: 25px 18px;
+    }
+}
     </style>
 </head>
 
 <body data-materi="materi_2" data-sub-page="kuis">
+  <!-- ===================== FASE 5 ===================== -->
+    <div class="fase-box-gray">
+        Fase 5 Menganalisis dan Mengevaluasi Proses Pemecahan Masalah
+    </div>
 
     <div class="quiz-container text-center">
         <div class="quiz-title">KUIS 2</div>

@@ -993,6 +993,10 @@
         if (page < 1 || page > totalFungsiPage) {
             return;
         }
+    // Tambahkan ini
+    if (page === totalFungsiPage) {
+        ProgressManager.markSubPageDone('materi_3', 'penyajian');
+    }
 
         currentFungsiPage = page;
 

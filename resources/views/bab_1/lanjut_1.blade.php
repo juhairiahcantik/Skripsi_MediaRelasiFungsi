@@ -2745,35 +2745,41 @@
         }
     }
 
-    function nextPenyajianPage() {
-        var curEl = document.getElementById('penyajianPage' + currentPenyajianPage);
-        if (curEl) {
-            var exs = curEl.querySelectorAll('[data-exercise]');
-            for (var i = 0; i < exs.length; i++) {
-                if (exs[i].getAttribute('data-correct') !== 'true') {
-                    ProgressManager.showAlert('Selesaikan semua soal pada halaman ini dengan benar terlebih dahulu!');
-                    return;
-                }
-            }
-        }
+   function nextPenyajianPage() {
+    var curEl = document.getElementById(
+        'penyajianPage' + currentPenyajianPage
+    );
 
-        if (currentPenyajianPage < totalPenyajianPage) {
-            ProgressManager.markPageDone('materi_1', 'penyajian', currentPenyajianPage);
-            changePenyajianPage(currentPenyajianPage + 1);
-        } else {
-            ProgressManager.markSubPageDone('materi_1', 'penyajian');
-            window.location.href = "/bab_1/latihan1";
+    if (curEl) {
+        var exs = curEl.querySelectorAll('[data-exercise]');
+
+        for (var i = 0; i < exs.length; i++) {
+            if (exs[i].getAttribute('data-correct') !== 'true') {
+                ProgressManager.showAlert(
+                    'Selesaikan semua soal pada halaman ini dengan benar terlebih dahulu!'
+                );
+                return;
+            }
         }
     }
 
-    document.addEventListener("DOMContentLoaded", function () {
-        changePenyajianPage(1);
-    });
+    if (currentPenyajianPage < totalPenyajianPage) {
+        ProgressManager.markPageDone(
+            'materi_1',
+            'penyajian',
+            currentPenyajianPage
+        );
 
-  window.pilihanAktif = null;
-window.jawaban = {};
-window.percobaanDeskripsiSalah = 0;
+        changePenyajianPage(currentPenyajianPage + 1);
+    } else {
+        ProgressManager.markSubPageDone(
+            'materi_1',
+            'penyajian'
+        );
 
+        window.location.href = "/bab_1/latihan1";
+    }
+}
 function pilihJawaban(el, id) {
     document.querySelectorAll('.pilihan').forEach(function(item) {
         item.classList.remove('active');

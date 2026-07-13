@@ -198,7 +198,7 @@ var ProgressManager = {
         }
         var isMateriUnlocked = materiUnlocked[materiId] === true;
 
-        if (!isMateriUnlocked || !this.isSubPageUnlocked(materiId, subPage)) {
+       if (!this.isSubPageUnlocked(materiId, subPage)) {
             var overlay = document.getElementById("lock-overlay");
             if (!overlay) {
                 overlay = document.createElement("div");

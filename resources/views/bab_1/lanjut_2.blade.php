@@ -1374,7 +1374,9 @@
         <div class="diagram-main-box">
             
 
-            <div id="diagram-panah-wrapper">
+           <div id="diagram-panah-wrapper"
+     data-exercise
+     data-correct="false">
                 <div id="diagram-panah-p5" style="width:100%;"></div>
 
                 <div id="diagram-panah-tombol-row">
@@ -1679,6 +1681,14 @@ function periksaJawabanDiagramPanah(){
     }else{
         percobaanSalahDiagramPanah++;
     }
+    const wrapper = document.getElementById("diagram-panah-wrapper");
+
+if (wrapper) {
+    wrapper.setAttribute(
+        "data-correct",
+        semuaBenar ? "true" : "false"
+    );
+}
 
     simpanJawabanDiagramPanah();
 }
@@ -4268,7 +4278,7 @@ updateTombolHapusPasanganBerurut();
         } else {
             ProgressManager.markSubPageDone('materi_2', 'penyajian');
             window.location.href = "/bab_1/latihan2";
-        }
+        }     
     }
 
     document.addEventListener("DOMContentLoaded", function () {

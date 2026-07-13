@@ -13,80 +13,151 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
 
     <style>
-        body {
-            background-color: #f3f0f9;
-            font-family: 'Poppins', sans-serif;
-        }
+      body {
+    background-color: #f3f0f9;
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
+}
 
-        .quiz-container {
-            max-width: 900px;
-            margin: 60px auto;
-            background: #ffffff;
-            border-radius: 20px;
-            padding: 50px;
-            border: 3px solid #cbb6f7;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
-        }
+/* =========================
+   BOX FASE
+========================= */
+.fase-box-gray {
+    max-width: 1000px;
+    margin: 20px auto 12px auto;
+    padding: 16px 20px;
 
-        .quiz-title {
-            font-size: 42px;
-            font-weight: 700;
-            color: #6f42c1;
-        }
+    background: #ffffff;
+    color: #374151;
 
-        .section-title {
-            font-weight: 600;
-            color: #5a2ea6;
-            margin-bottom: 20px;
-        }
+    border: 1px solid #d1d5db;
+    border-radius: 18px;
 
-        .instructions {
-            font-size: 16px;
-            line-height: 1.8;
-            color: #333;
-        }
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.06);
 
-        .instructions li {
-            margin-bottom: 15px;
-        }
+    text-align: center;
+    font-size: 1.3rem;
+    font-weight: 700;
+}
 
-        .btn-purple {
-            background: linear-gradient(135deg, #7b4ce2, #9f7aea);
-            color: white;
-            border: none;
-            padding: 14px 40px;
-            border-radius: 15px;
-            font-weight: 600;
-            transition: 0.3s;
-        }
+/* =========================
+   CONTAINER KUIS
+========================= */
+.quiz-container {
+    max-width: 1000px;
+    margin: 0 auto 40px auto;
+    background: #ffffff;
+    border-radius: 20px;
+    padding: 50px;
+    border: 3px solid #cbb6f7;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+}
 
-        .btn-purple:hover {
-            opacity: 0.9;
-            transform: translateY(-2px);
-        }
+/* =========================
+   JUDUL
+========================= */
+.quiz-title {
+    font-size: 42px;
+    font-weight: 700;
+    color: #6f42c1;
+    margin-bottom: 25px;
+}
 
-        .btn-gray {
-            background-color: #d9d9df;
-            color: #333;
-            border: none;
-            padding: 14px 40px;
-            border-radius: 15px;
-            font-weight: 600;
-            transition: 0.3s;
-        }
+.section-title {
+    font-weight: 600;
+    color: #5a2ea6;
+    margin-bottom: 20px;
+}
 
-        .btn-gray:hover {
-            background-color: #c8c8cf;
-        }
+/* =========================
+   PETUNJUK
+========================= */
+.instructions {
+    font-size: 16px;
+    line-height: 1.8;
+    color: #333;
+}
 
-        .button-group {
-            margin-top: 40px;
-        }
+.instructions li {
+    margin-bottom: 15px;
+}
+
+/* =========================
+   BUTTON
+========================= */
+.btn-purple {
+    background: linear-gradient(135deg, #7b4ce2, #9f7aea);
+    color: #fff;
+    border: none;
+    padding: 14px 40px;
+    border-radius: 15px;
+    font-weight: 600;
+    transition: .3s;
+}
+
+.btn-purple:hover {
+    opacity: .9;
+    transform: translateY(-2px);
+}
+
+.btn-gray {
+    background: #d9d9df;
+    color: #333;
+    border: none;
+    padding: 14px 40px;
+    border-radius: 15px;
+    font-weight: 600;
+    transition: .3s;
+}
+
+.btn-gray:hover {
+    background: #c8c8cf;
+}
+
+.button-group {
+    margin-top: 40px;
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+@media (max-width: 768px) {
+
+    .fase-box-gray {
+        margin: 15px 12px 8px;
+        padding: 14px 16px;
+        font-size: 1.05rem;
+        border-radius: 12px;
+    }
+
+    .quiz-container {
+        margin: 0 12px 20px;
+        padding: 28px 20px;
+        border-radius: 16px;
+    }
+
+    .quiz-title {
+        font-size: 32px;
+    }
+
+    .button-group {
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .btn-purple,
+    .btn-gray {
+        width: 100%;
+    }
+}
     </style>
 </head>
 
 <body data-materi="materi_3" data-sub-page="kuis">
-
+ <div class="fase-box-gray">
+        Fase 5 Menganalisis dan Mengevaluasi Proses Pemecahan Masalah
+    </div>
     <div class="quiz-container text-center">
         <div class="quiz-title">KUIS 3</div>
 
