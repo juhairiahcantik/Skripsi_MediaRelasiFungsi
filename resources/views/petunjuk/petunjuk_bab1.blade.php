@@ -38,27 +38,7 @@
             padding: 14px 0 30px;
         }
 
-        /* ===================== KOTAK FASE 5 ===================== */
-
-        .fase-box-gray {
-            width: calc(100% - 40px);
-            max-width: 1080px;
-            margin: 0 auto 14px;
-            padding: 18px 24px;
-
-            background-color: #ffffff;
-            color: #4b5563;
-
-            border: 1px solid #d1d5db;
-            border-radius: 14px;
-
-            box-shadow: 0 5px 12px rgba(0, 0, 0, 0.06);
-
-            text-align: center;
-            font-size: 1.35rem;
-            font-weight: 700;
-            line-height: 1.5;
-        }
+  
 
         /* ===================== KOTAK KUIS ===================== */
 
@@ -342,10 +322,7 @@
 
 <body>
 
-    <!-- ===================== FASE 5 ===================== -->
-    <div class="fase-box-gray">
-        Fase 5 Menganalisis dan Mengevaluasi Proses Pemecahan Masalah
-    </div>
+    
 
     <!-- ===================== KOTAK KUIS ===================== -->
     <div class="quiz-container">

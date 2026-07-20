@@ -82,23 +82,7 @@
         .button-group {
             margin-top: 40px;
         }
-        .fase-box-gray {
-    max-width: 900px;
-    margin: 40px auto 20px;
-    padding: 16px 20px;
-
-    background-color: #ffffff;
-    color: #4b5563;
-
-    border: 1px solid #d1d5db;
-    border-radius: 12px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.06);
-
-    text-align: center;
-    font-size: 1.3rem;
-    font-weight: 700;
-    box-sizing: border-box;
-}
+    
 
 @media (max-width: 768px) {
     .fase-box-gray {
@@ -117,10 +101,7 @@
 </head>
 
 <body data-materi="materi_2" data-sub-page="kuis">
-  <!-- ===================== FASE 5 ===================== -->
-    <div class="fase-box-gray">
-        Fase 5 Menganalisis dan Mengevaluasi Proses Pemecahan Masalah
-    </div>
+ 
 
     <div class="quiz-container text-center">
         <div class="quiz-title">KUIS 2</div>

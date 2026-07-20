@@ -386,9 +386,7 @@ canvas{
 @section('container')
 
 <div class="content-wrapper" data-materi="materi_2" data-sub-page="latihan" data-total-pages="3">
- <div class="fase-box-gray">
-                Fase 3 Membimbing penyelidikan
- </div>
+
 <!-- ====================== HALAMAN PAGINATION 1 ====================== -->
 <section class="relasi-latihan-page active" id="relasiLatihanPage1">
 <!-- ================= LATIHAN 2 ================= -->
@@ -523,33 +521,7 @@ canvas{
               line-height:1.72;
           }
       }
-      .fase-box-gray {
-    width: 100%;
-    box-sizing: border-box;
-    margin-top: 20px;
-    margin-bottom: 18px;
-    padding: 16px 20px;
-
-    background-color: #ffffff;
-    color: #4b5563;
-
-    border: 1px solid #d1d5db;
-    border-radius: 12px;
-
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.06);
-
-    text-align: center;
-    font-size: 1.3rem;
-    font-weight: 700;
-}
-
-@media (max-width: 768px) {
-    .fase-box-gray {
-        padding: 14px 16px;
-        font-size: 1.05rem;
-        border-radius: 10px;
-    }
-}
+  
     </style>
 
     <div class="latihan2-row">
@@ -595,9 +567,7 @@ canvas{
   </div>
 </div>
 <br>
- <div class="fase-box-gray">
-                Fase 4 Mengembangkan dan menyajikan hasil karya
-        </div>
+
 <!-- ================= END LATIHAN 2 ================= -->
 
 <div class="card shadow-lg mt-3 relasi-latihan-card">

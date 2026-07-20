@@ -1396,33 +1396,7 @@
     }
 }
 
-.fase-box-gray {
-    width: 100%;
-    box-sizing: border-box;
-    margin-top: 20px;
-    padding: 16px 20px;
 
-    background-color: #ffffff;
-    color: #4b5563;
-
-    border: 1px solid #d1d5db;
-    border-radius: 12px;
-
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.06);
-
-    text-align: center;
-    font-size: 1.3rem;
-    font-weight: 700;
-}
-
-/* Tampilan pada HP */
-@media (max-width: 768px) {
-    .fase-box-gray {
-        padding: 14px 16px;
-        font-size: 1.05rem;
-        border-radius: 10px;
-    }
-}
 
 </style>
 
@@ -1446,10 +1420,7 @@
                     <li>Peserta didik mampu menyajikan relasi dalam bentuk diagram panah, diagram Kartesius, dan himpunan pasangan berurutan.</li>
                 </ol>
             </div>
-<!-- FASE 1 -->
-        <div class="fase-box-gray">
-            Fase 1: Orientasi Masalah
-        </div>
+
         <br>
             <div class="relasi-card-header">
                 Perhatikan Gambar dan Cerita Berikut
@@ -1882,9 +1853,7 @@
 
     <!-- ====================== HALAMAN 4 ====================== -->
     <div class="relasi-page" id="relasiPage4">
-        <div class="fase-box-gray">
-            Fase 2 Mengorganisasikan siswa untuk belajar
-        </div>
+     
         <div class="relasi-card">
             <div class="relasi-page-title">
                 Berdasarkan masalah di atas, apakah kamu dapat memahami apa yang dimaksud dengan Relasi?

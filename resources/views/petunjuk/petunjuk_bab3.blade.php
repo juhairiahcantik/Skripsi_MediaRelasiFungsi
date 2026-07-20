@@ -20,26 +20,6 @@
     padding: 0;
 }
 
-/* =========================
-   BOX FASE
-========================= */
-.fase-box-gray {
-    max-width: 1000px;
-    margin: 20px auto 12px auto;
-    padding: 16px 20px;
-
-    background: #ffffff;
-    color: #374151;
-
-    border: 1px solid #d1d5db;
-    border-radius: 18px;
-
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.06);
-
-    text-align: center;
-    font-size: 1.3rem;
-    font-weight: 700;
-}
 
 /* =========================
    CONTAINER KUIS
@@ -124,13 +104,6 @@
 ========================= */
 @media (max-width: 768px) {
 
-    .fase-box-gray {
-        margin: 15px 12px 8px;
-        padding: 14px 16px;
-        font-size: 1.05rem;
-        border-radius: 12px;
-    }
-
     .quiz-container {
         margin: 0 12px 20px;
         padding: 28px 20px;
@@ -155,9 +128,7 @@
 </head>
 
 <body data-materi="materi_3" data-sub-page="kuis">
- <div class="fase-box-gray">
-        Fase 5 Menganalisis dan Mengevaluasi Proses Pemecahan Masalah
-    </div>
+
     <div class="quiz-container text-center">
         <div class="quiz-title">KUIS 3</div>
 

@@ -508,39 +508,11 @@ main,
 .content-gap .materi-style-card:last-of-type {
     margin-bottom: 18px !important;
 }
-.fase-box-gray {
-    width: 100%;
-    box-sizing: border-box;
-    margin-top: 20px;
-    margin-bottom: 18px;
-    padding: 16px 20px;
 
-    background-color: #ffffff;
-    color: #4b5563;
-
-    border: 1px solid #d1d5db;
-    border-radius: 12px;
-
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.06);
-
-    text-align: center;
-    font-size: 1.3rem;
-    font-weight: 700;
-}
-
-@media (max-width: 768px) {
-    .fase-box-gray {
-        padding: 14px 16px;
-        font-size: 1.05rem;
-        border-radius: 10px;
-    }
-}
 </style>
 
 <div class="content-gap" data-materi="materi_1" data-sub-page="latihan" data-total-pages="1">
- <div class="fase-box-gray">
-                Fase 3 Membimbing penyelidikan
-        </div>
+
     <!-- ================= PREMIUM AYO AMATI & LATIHAN ================= -->
     <div class="materi-style-card mt-4">
 
@@ -583,9 +555,7 @@ main,
 
         </div>
     </div>
- <div class="fase-box-gray">
-                Fase 4 Mengembangkan dan menyajikan hasil karya
-        </div>
+
     <!-- ================= LATIHAN 1 ================= -->
     <div class="materi-style-card mt-3">
 

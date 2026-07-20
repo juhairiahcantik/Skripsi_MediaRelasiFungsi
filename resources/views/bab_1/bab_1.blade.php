@@ -2363,33 +2363,6 @@
         max-height: 175px !important;
     }
 }
-.fase-box-gray {
-    width: 100%;
-    box-sizing: border-box;
-    margin-top: 20px;
-    padding: 16px 20px;
-
-    background-color: #ffffff;
-    color: #4b5563;
-
-    border: 1px solid #d1d5db;
-    border-radius: 12px;
-
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.06);
-
-    text-align: center;
-    font-size: 1.3rem;
-    font-weight: 700;
-}
-
-/* Tampilan pada HP */
-@media (max-width: 768px) {
-    .fase-box-gray {
-        padding: 14px 16px;
-        font-size: 1.05rem;
-        border-radius: 10px;
-    }
-}
 
 </style>
 
@@ -2413,10 +2386,7 @@
                 </ol>
             </div>
         </div>
-        <!-- FASE 1 -->
-        <div class="fase-box-gray">
-            Fase 1 Orientasi Masalah
-        </div>
+     
         <!-- KOTAK BESAR -->
         <div class="card mt-4 silsilah-card" style="width: 100%;">
 
@@ -2609,9 +2579,7 @@
 
     <!-- ====================== HALAMAN 2 ====================== -->
     <div class="materi-page" id="materiPage2">
-    <div class="fase-box-gray">
-                Fase 2 Mengorganisasikan siswa untuk belajar
-        </div>
+ 
      <!-- ======================== CARD PEMAHAMAN HIMPUNAN ======================== -->
 <div class="pemahaman-card">
     <div class="pemahaman-header">

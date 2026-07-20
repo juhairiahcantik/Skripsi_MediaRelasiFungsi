@@ -418,42 +418,14 @@
     background: linear-gradient(135deg, #B91C1C, #EF4444) !important;
     border-color: #B91C1C !important;
 }
-.fase-box-gray {
-    width: 100%;
-    box-sizing: border-box;
-    margin-top: 20px;
-    padding: 16px 20px;
 
-    background-color: #ffffff;
-    color: #4b5563;
-
-    border: 1px solid #d1d5db;
-    border-radius: 12px;
-
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.06);
-
-    text-align: center;
-    font-size: 1.3rem;
-    font-weight: 700;
-}
-
-/* Tampilan pada HP */
-@media (max-width: 768px) {
-    .fase-box-gray {
-        padding: 14px 16px;
-        font-size: 1.05rem;
-        border-radius: 10px;
-    }
-}
 
 </style>
 
 <div class="content-gap" data-materi="materi_3" data-sub-page="latihan" data-total-pages="3">
     <!-- ====================== HALAMAN 1 ====================== -->
     <div class="fungsi-page active" id="fungsiPage1">
-    <div class="fase-box-gray">
-        Fase 3 Membimbing penyelidikan
-    </div>
+   
 
     <div class="fungsi-card">
         
@@ -495,9 +467,7 @@
                     </p>
                 </div>
             </div>
-   <div class="fase-box-gray">
-        Fase 4 Mengembangkan dan menyajikan hasil karya
-    </div>
+
             <div class="fungsi-section-title">
                 Cara 1: Diagram Panah
             </div>
